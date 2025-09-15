@@ -15,6 +15,7 @@
         background-color: #f0f2f5;
         color: #1a202c;
         overflow-x: hidden;
+        scroll-behavior: smooth;
       }
 
       /* --- Custom Animations --- */
@@ -73,7 +74,7 @@
         height: 100%;
         background: url("./img/sunny-landscape-with-windmills.avif") no-repeat
           center center/cover;
-        transition: filter 1.5s ease-in-out;
+        transition: filter 0.5s ease-in-out;
       }
 
       #hero-background.hazy {
@@ -115,7 +116,7 @@
         height: 300vw;
         opacity: 0;
       }
-      
+
       /* --- Before/After Slider --- */
       .comparison-slider {
         position: relative;
@@ -251,13 +252,43 @@
     </style>
   </head>
   <body class="antialiased">
+    <header
+      class="fixed top-0 left-1/2 -translate-x-1/2 w-[96vw] bg-white backdrop-blur rounded-full mx-auto my-4 shadow-sm z-50"
+    >
+      <nav
+      class="container w-full mx-auto flex justify-between items-center py-4 px-6"
+      >
+      <a href="#hero-section"  class="scroll-link"
+        ><img
+        src="./img/WhatsApp Image 2025-09-08 at 15.14.26_163dd658_2.jpg"
+        class="w-[140px]"
+        alt=""
+      /></a>
+
+      <ul class="flex gap-6 text-sm font-medium">
+        <li><a href="#Features-section" class="scroll-link">Features</a></li>
+        <li><a href="#product-section" class="scroll-link">Technology</a></li>
+        <li>
+        <a href="#Experience-section" class="scroll-link">Experience</a>
+        </li>
+      </ul>
+      <a href="#reservation-section" class="scroll-link">
+      <button 
+        class="bg-green-800 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-500"
+      >
+        Reserve Now
+      </button>
+      </a>
+      </nav>
+    </header>
+
     <section
       id="hero-section"
       class="flex flex-col items-center justify-center text-white text-center"
     >
       <div id="hero-background" class="hazy"></div>
       <div id="clean-air-pulse"></div>
-      <div id="aura-purifier-hero" class="drop-shadow-2xl"></div>
+      <div id="aura-purifier-hero" class="drop-shadow-2xl rounded-2xl"></div>
       <div
         id="hero-content"
         class="z-20 p-8 transition-opacity duration-1000 opacity-0"
@@ -266,7 +297,7 @@
           class="text-5xl md:text-8xl font-black tracking-tighter"
           style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6)"
         >
-          Change the air
+          Change the <span class="text-green-700">Air</span>
         </h1>
         <h1
           class="text-5xl md:text-8xl font-black tracking-tighter"
@@ -297,7 +328,10 @@
     </section>
 
     <div class="bg-white">
-      <section class="py-20 md:py-32 container mx-auto px-6 text-center">
+      <section
+        class="py-20 md:py-32 container mx-auto px-6 text-center"
+        id="Features-section"
+      >
         <div class="reveal-on-scroll">
           <h2
             class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
@@ -320,7 +354,7 @@
           style="transition-delay: 200ms"
         >
           <video
-            class="max-w-3xl w-full rounded-2xl shadow-2xl"
+            class="max-w-4xl w-full rounded-2xl shadow-2xl"
             src="./video/VN20250912_112708.mp4"
             autoplay
             muted
@@ -350,7 +384,7 @@
             <h2
               class="text-4xl md:text-6xl font-bold text-white tracking-tight"
             >
-              Purity by Design.
+              Purity by <span class="text-green-700">Design.</span> 
             </h2>
             <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-200">
               Click on the pulsing hotspots to explore the technology inside the
@@ -447,6 +481,7 @@
           -ms-user-select: none;
           user-select: none;
         "
+        id="Experience-section"
       >
         <div class="container mx-auto px-6 text-center">
           <div class="reveal-on-scroll">
@@ -505,15 +540,6 @@
             <div class="md:sticky top-24 h-96 md:h-[70vh] mb-12 md:mb-0">
               <div id="product-viewer" class="relative w-full h-full">
                 <img
-                  id="image-main"
-                  src="./img/Picsart_25-09-10_11-46-12-304.png"
-                  alt="Air Finery Purifier"
-                  class="product-image"
-                  style="opacity: 1"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <img
                   id="image-filter"
                   src="./img/Picsart_25-09-12_16-55-18-947.jpg"
                   alt="Microfiber Media Highlight"
@@ -537,6 +563,15 @@
                   alt="NO₂ Separation Highlight"
                   class="product-image"
                   style="opacity: 0"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  id="image-main"
+                  src="./img/Picsart_25-09-10_11-46-12-304.png"
+                  alt="Air Finery Purifier"
+                  class="product-image"
+                  style="opacity: 1"
                   loading="lazy"
                   decoding="async"
                 />
@@ -588,6 +623,7 @@
 
       <section
         class="py-20 md:py-32 bg-green-700 text-white relative overflow-hidden"
+        id="reservation-section"
       >
         <video
           class="absolute inset-0 w-full h-full object-cover z-0"
@@ -628,6 +664,23 @@
         <p>&copy; 2024 Air Finery. All Rights Reserved.</p>
       </div>
     </footer>
+    <script>
+      // Smooth scroll for nav links
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".scroll-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+            if (href && href.startsWith("#")) {
+              const target = document.querySelector(href);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: "smooth" });
+              }
+            }
+          });
+        });
+      });
+    </script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -681,38 +734,38 @@
           }
         );
         revealElements.forEach((el) => revealObserver.observe(el));
-        
+
         // --- Before & After Slider ---
         const slider = document.getElementById("comparison-slider");
         if (slider) {
-            const beforeImage = slider.querySelector(".comparison-image-before");
-            const handle = slider.querySelector(".slider-handle");
+          const beforeImage = slider.querySelector(".comparison-image-before");
+          const handle = slider.querySelector(".slider-handle");
 
-            let isDragging = false;
+          let isDragging = false;
 
-            function startDrag(e) {
-                isDragging = true;
-            }
-            function stopDrag() {
-                isDragging = false;
-            }
+          function startDrag(e) {
+            isDragging = true;
+          }
+          function stopDrag() {
+            isDragging = false;
+          }
 
-            function onDrag(e) {
-                if (!isDragging) return;
-                const x = e.clientX || e.touches[0].clientX;
-                const rect = slider.getBoundingClientRect();
-                let position = ((x - rect.left) / rect.width) * 100;
-                position = Math.max(0, Math.min(position, 100));
-                beforeImage.style.clipPath = `polygon(0 0, ${position}% 0, ${position}% 100%, 0 100%)`;
-                handle.style.left = `${position}%`;
-            }
+          function onDrag(e) {
+            if (!isDragging) return;
+            const x = e.clientX || e.touches[0].clientX;
+            const rect = slider.getBoundingClientRect();
+            let position = ((x - rect.left) / rect.width) * 100;
+            position = Math.max(0, Math.min(position, 100));
+            beforeImage.style.clipPath = `polygon(0 0, ${position}% 0, ${position}% 100%, 0 100%)`;
+            handle.style.left = `${position}%`;
+          }
 
-            slider.addEventListener("mousedown", startDrag);
-            slider.addEventListener("touchstart", startDrag);
-            window.addEventListener("mouseup", stopDrag);
-            window.addEventListener("touchend", stopDrag);
-            window.addEventListener("mousemove", onDrag);
-            window.addEventListener("touchmove", onDrag);
+          slider.addEventListener("mousedown", startDrag);
+          slider.addEventListener("touchstart", startDrag);
+          window.addEventListener("mouseup", stopDrag);
+          window.addEventListener("touchend", stopDrag);
+          window.addEventListener("mousemove", onDrag);
+          window.addEventListener("touchmove", onDrag);
         }
 
         // --- Interactive Specs Section (Image changes on scroll) ---
@@ -748,17 +801,15 @@
         specItems.forEach((item) => {
           specObserver.observe(item);
         });
-        
+
         // --- Interactive Deconstruction Logic (Hotspots) ---
         const hotspots = document.querySelectorAll(".hotspot");
         const components = document.querySelectorAll(".component-flyout");
         const hotspotInfos = document.querySelectorAll(".hotspot-info");
-        const productContainer = document.getElementById(
-          "product-interactive-container"
-        );
+        const productContainer = document.getElementById("product-section");
 
         hotspots.forEach((hotspot) => {
-          hotspot.addEventListener("click", (e) => {
+          hotspot.addEventListener("mouseover", (e) => {
             e.stopPropagation();
             const targetId = hotspot.dataset.target;
             const targetComponent = document.getElementById(targetId);
@@ -785,7 +836,6 @@
             hotspotInfos.forEach((i) => i.classList.remove("is-active"));
           });
         }
-
 
         // --- Video Autoplay on Scroll ---
         const videos = document.querySelectorAll("video");
