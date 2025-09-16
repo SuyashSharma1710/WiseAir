@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Air Flow Canvas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            overflow: hidden;
+            height: 100vh;
+            cursor: none;
+        }
+
+        #air-canvas {
+            display: block;
+            background: transparent;
+        }
+
+        .cursor-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            transition: transform 0.15s ease;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .info {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="air-canvas"></canvas>
+    <div class="cursor-dot" id="cursor"></div>
+    <div class="info">Move to interact with air flow</div>
+
+    <script>
+        class ProfessionalAirFlow {
+            constructor() {
+                this.canvas = document.getElementById('air-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.cursor = document.getElementById('cursor');
+                
+                this.particles = [];
+                this.mouse = { x: 0, y: 0 };
+                this.particleCount = 80;
+                
+                this.init();
+                this.bindEvents();
+                this.animate();
+            }
+            
+            init() {
+                this.resizeCanvas();
+                this.createParticles();
+                window.addEventListener('resize', () => {
+                    this.resizeCanvas();
+                    this.createParticles();
+                });
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                this.particles = [];
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        baseX: 0,
+                        baseY: 0,
+                        vx: Math.random() * 0.3 + 0.1,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        radius: Math.random() * 2 + 0.5,
+                        alpha: Math.random() * 0.3 + 0.1,
+                        phase: Math.random() * Math.PI * 2
+                    });
+                }
+                
+                this.particles.forEach(particle => {
+                    particle.baseX = particle.x;
+                    particle.baseY = particle.y;
+                });
+            }
+            
+            bindEvents() {
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                    
+                    this.cursor.style.left = (e.clientX - 4) + 'px';
+                    this.cursor.style.top = (e.clientY - 4) + 'px';
+                });
+                
+                document.addEventListener('mouseenter', () => {
+                    this.cursor.style.opacity = '1';
+                });
+                
+                document.addEventListener('mouseleave', () => {
+                    this.cursor.style.opacity = '0';
+                });
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    // Gentle flowing movement
+                    particle.phase += 0.01;
+                    const drift = Math.sin(particle.phase) * 0.3;
+                    
+                    // Base flowing motion
+                    particle.x += particle.vx;
+                    particle.y += particle.vy + drift;
+                    
+                    // Mouse interaction - very subtle
+                    if (this.mouse.x && this.mouse.y) {
+                        const dx = this.mouse.x - particle.x;
+                        const dy = this.mouse.y - particle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            const force = (100 - distance) / 100;
+                            const angle = Math.atan2(dy, dx);
+                            
+                            // Very gentle push away from mouse
+                            particle.x -= Math.cos(angle) * force * 0.5;
+                            particle.y -= Math.sin(angle) * force * 0.5;
+                        }
+                    }
+                    
+                    // Wrap around edges
+                    if (particle.x > this.canvas.width + 20) {
+                        particle.x = -20;
+                        particle.y = Math.random() * this.canvas.height;
+                    }
+                    if (particle.y > this.canvas.height + 20) {
+                        particle.y = -20;
+                    }
+                    if (particle.y < -20) {
+                        particle.y = this.canvas.height + 20;
+                    }
+                });
+            }
+            
+            drawParticles() {
+                // Clear with subtle fade
+                this.ctx.fillStyle = 'rgba(248, 250, 252, 0.08)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw particles
+                this.particles.forEach(particle => {
+                    this.ctx.save();
+                    
+                    // Simple, clean particles
+                    this.ctx.globalAlpha = particle.alpha;
+                    this.ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    this.ctx.restore();
+                });
+                
+                // Draw subtle connections
+                this.drawConnections();
+            }
+            
+            drawConnections() {
+                this.particles.forEach((particle, i) => {
+                    this.particles.slice(i + 1).forEach(otherParticle => {
+                        const dx = particle.x - otherParticle.x;
+                        const dy = particle.y - otherParticle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 60) {
+                            this.ctx.save();
+                            this.ctx.globalAlpha = (60 - distance) / 60 * 0.15;
+                            this.ctx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(particle.x, particle.y);
+                            this.ctx.lineTo(otherParticle.x, otherParticle.y);
+                            this.ctx.stroke();
+                            this.ctx.restore();
+                        }
+                    });
+                });
+            }
+            
+            animate() {
+                this.updateParticles();
+                this.drawParticles();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProfessionalAirFlow();
+        });
+    </script>
+</body>
+</html>

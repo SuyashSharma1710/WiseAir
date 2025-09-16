@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air Finery - Outdoor Air Purifier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f2f5;
+        color: #1a202c;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      /* --- Custom Animations --- */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+      }
+
+      /* For scroll-triggered animations */
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- New Hero Section Styles --- */
+      #hero-section {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        background-color: #000;
+        color: white;
+      }
+
+      .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("./img/sunny-landscape-with-windmills.avif");
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+        filter: blur(10px);
+        transition: filter 3s ease-out;
+      }
+
+      .hero-background.clear {
+        filter: blur(0px);
+      }
+
+      #mist-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+
+      #hero-content {
+        position: relative;
+        z-index: 3;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.5s ease-out 0.5s, transform 1.5s ease-out 0.5s; /* Added delay */
+      }
+
+      #hero-content.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- Preloader Styles --- */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          #1a365d 0%,
+          #2d5a87 50%,
+          #4a90a4 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+      }
+
+      #preloader.fade-out {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .preloader-logo {
+        font-size: 3rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 0.5s forwards;
+      }
+
+      .preloader-logo .air-text {
+        color: #68d391;
+      }
+
+      .loading-animation {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top: 4px solid #68d391;
+        border-radius: 50%;
+        animation: spin 1.2s linear infinite;
+      }
+
+      .loading-dots {
+        display: flex;
+        gap: 8px;
+        margin-top: 1.5rem;
+      }
+
+      .loading-dots .dot {
+        width: 12px;
+        height: 12px;
+        background: #68d391;
+        border-radius: 50%;
+        animation: pulse-dot 1.4s ease-in-out infinite;
+      }
+
+      .loading-dots .dot:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .loading-dots .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .loading-dots .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      .preloader-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        margin-top: 1rem;
+        opacity: 0;
+        animation: fadeInUp 1s ease-out 1s forwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse-dot {
+        0%,
+        80%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+    </style>
+
+    <!-- carousel style  -->
+    <style>
+      /* Carousel Styles */
+      .carousel-wrapper {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      .carousel-track {
+        display: flex;
+        width: 300%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .carousel-item {
+        width: 33.333%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        opacity: 0.7;
+        transition: opacity 0.8s ease;
+      }
+
+      .carousel-item.active {
+        opacity: 1;
+      }
+
+      .carousel-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 2;
+        max-width: 500px;
+        padding: 2rem;
+      }
+
+      .carousel-icon {
+        margin: 0 auto 1.5rem;
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        animation: iconFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes iconFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .carousel-features {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .feature-tag {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .feature-tag:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Navigation Styles */
+      .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 3;
+        color: #374151;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .carousel-nav:hover {
+        background: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .carousel-prev {
+        left: 20px;
+      }
+
+      .carousel-next {
+        right: 20px;
+      }
+
+      /* Indicators */
+      .carousel-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 12px;
+        z-index: 3;
+      }
+
+      .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .indicator.active {
+        background: white;
+        border-color: white;
+        transform: scale(1.2);
+      }
+
+      .indicator:hover {
+        border-color: rgba(255, 255, 255, 0.8);
+        transform: scale(1.1);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .carousel-wrapper {
+          height: 400px;
+        }
+
+        .carousel-content {
+          padding: 1.5rem;
+          max-width: 350px;
+        }
+
+        .carousel-content h3 {
+          font-size: 1.75rem;
+        }
+
+        .carousel-content p {
+          font-size: 1rem;
+        }
+
+        .carousel-nav {
+          width: 40px;
+          height: 40px;
+        }
+
+        .carousel-prev {
+          left: 15px;
+        }
+
+        .carousel-next {
+          right: 15px;
+        }
+
+        .feature-tag {
+          font-size: 0.75rem;
+          padding: 0.375rem 0.75rem;
+        }
+      }
+
+      /* Touch/Swipe Support Preparation */
+      .carousel-wrapper {
+        touch-action: pan-y;
+      }
+    </style>
+
+
+    <!-- dragger image reveal section  -->
+     <style>
+        .comparison-slider {
+        position: relative;
+        overflow: hidden;
+        cursor: col-resize;
+      }
+      .comparison-image-before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+      }
+      .comparison-image-after {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .slider-handle {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 100%;
+        background: white;
+        z-index: 10;
+      }
+      .slider-handle:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 2px solid white;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      .slider-handle:after {
+        content: "↔";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.2rem;
+      }
+
+     </style>
+
+     <!-- cursur effect style  -->
+      <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            overflow: hidden;
+            height: 100vh;
+            cursor: none;
+        }
+
+        #air-canvas {
+            display: block;
+            background: transparent;
+        }
+
+        .cursor-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            transition: transform 0.15s ease;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .info {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 5;
+        }
+    </style>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <!-- <div id="preloader">
+      <div class="preloader-logo"><span class="air-text">Air</span> Finery</div>
+      <div class="loading-animation"></div>
+      <div class="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="preloader-text">Purifying your experience...</div>
+    </div> -->
+
+    <!-- header section code -->
+    <header
+      class="fixed top-0 left-1/2 -translate-x-1/2 w-[96vw] bg-white backdrop-blur rounded-full mx-auto my-4 shadow-sm z-50"
+    >
+      <nav
+        class="container w-full mx-auto flex justify-between items-center py-4 px-6"
+      >
+        <a href="#hero-section" class="scroll-link"
+          ><img
+            src="./img/WhatsApp Image 2025-09-08 at 15.14.26_163dd658_2.jpg"
+            class="w-[140px]"
+            alt=""
+        /></a>
+
+        <ul class="flex gap-6 text-sm font-medium">
+          <li><a href="#Features-section" class="scroll-link">Features</a></li>
+          <li><a href="#product-section" class="scroll-link">Technology</a></li>
+          <li>
+            <a href="#Experience-section" class="scroll-link">Experience</a>
+          </li>
+        </ul>
+        <a href="#reservation-section" class="scroll-link">
+          <button
+            class="bg-green-800 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition duration-500"
+          >
+            Reserve Now
+          </button>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Section 1: The Interactive Reveal (Hero Section) -->
+    <section id="hero-section">
+      <!-- The background image that will be blurred/cleared -->
+      <div class="hero-background"></div>
+
+      <!-- The canvas for the mist/smoke animation, initially hidden -->
+      <canvas id="mist-canvas"></canvas>
+
+      <!-- The text content that fades in after the animation -->
+      <div
+        id="hero-content"
+        class="h-full flex flex-col items-center justify-center text-center p-4"
+      >
+        <h1
+          class="text-5xl md:text-8xl font-black tracking-tighter"
+          style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6)"
+        >
+          Change the <span class="text-green-700">Air</span>
+        </h1>
+        <h1
+          class="text-5xl md:text-8xl font-black tracking-tighter"
+          style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6)"
+        >
+          around you.
+        </h1>
+        <p
+          class="mt-4 text-lg md:text-xl max-w-2xl"
+          style="text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6)"
+        >
+          Experience the future of outdoor living.
+        </p>
+      </div>
+
+      <div
+        class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce text-white"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- what you cant see section -->
+    <section
+      class="relative md:py-32 grid items-center justify-center h-screen container mx-auto px-6 text-center"
+      id="Features-section"
+    >
+      <video
+        class="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="./video/VN20250912_112708.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+      ></video>
+      <div class="reveal-on-scroll">
+        <h2 class="text-4xl md:text-6xl font-bold text-gray-50 tracking-tight">
+          What you can't see,
+        </h2>
+        <h2
+          class="text-4xl md:text-6xl font-bold text-green-700 tracking-tight"
+        >
+          you breathe.
+        </h2>
+        <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
+          Every day, our outdoor spaces are filled with invisible pollutants.
+          From traffic emissions to industrial dust, these particles affect our
+          health and wellbeing.
+        </p>
+      </div>
+    </section>
+
+    <!-- Trust & Legacy Section -->
+    <section class="py-40 bg-white">
+      <div class="container mx-auto px-6 text-center">
+        <h3
+          class="text-lg font-bold text-gray-500 uppercase tracking-widest reveal-on-scroll"
+        >
+          Trusted By Industry Leaders & Experts
+        </h3>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 100ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_12-27-03-047.jpg"
+              alt="MANN+HUMMEL Logo"
+              class="h-[240px] partner-logo"
+            />
+          </div>
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 200ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_11-39-38-753.jpg"
+              alt="IIT Delhi Logo"
+              class="h-[240px] partner-logo"
+            />
+          </div>
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 300ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_11-43-37-710.jpg"
+              alt="GD Goenka Logo"
+              class="h-[240px] partner-logo"
+            />
+          </div>
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 400ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_11-44-19-434.jpg"
+              alt="OK Play Logo"
+              class="h-[240px] partner-logo"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- carousel section code  -->
+
+    <!-- Applications Section - Stylish Carousel -->
+    <section id="applications-section" class="py-20 md:py-28 overflow-hidden">
+      <div class="container mx-auto px-6 text-center">
+        <div class="reveal-on-scroll">
+          <h2
+            class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+          >
+            Suitable for Every Industry.
+          </h2>
+          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+            From school playgrounds to corporate campuses and public plazas,
+            AirFinery is fully customizable in color and branding to seamlessly
+            integrate into any semi-indoor or large outdoor space.
+          </p>
+        </div>
+
+        <!-- Carousel Container -->
+        <div
+          class="mt-16 relative reveal-on-scroll"
+          style="transition-delay: 200ms"
+        >
+          <div class="carousel-wrapper">
+            <div class="carousel-track" id="carousel-track">
+              <!-- Carousel Item 1 - Schools -->
+              <div
+                class="carousel-item active"
+                data-bg='linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(21, 128, 61, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f0f9ff" width="1200" height="800"/><circle fill="%23dbeafe" cx="200" cy="200" r="120"/><circle fill="%23bfdbfe" cx="800" cy="300" r="80"/><circle fill="%2393c5fd" cx="1000" cy="600" r="100"/></svg>&apos;)'
+              >
+                <div class="carousel-content">
+                  <div class="carousel-icon">
+                    <svg
+                      class="w-16 h-16 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                      />
+                    </svg>
+                  </div>
+                  <h3 class="text-3xl font-bold text-white mb-4">
+                    Schools & Universities
+                  </h3>
+                  <p class="text-white/90 text-lg leading-relaxed">
+                    Protecting students and staff in playgrounds, assembly
+                    areas, and corridors.
+                    <span class="font-semibold">As trusted by GD Goenka.</span>
+                  </p>
+                  <div class="carousel-features">
+                    <span class="feature-tag">Safe Learning</span>
+                    <span class="feature-tag">Clean Playgrounds</span>
+                    <span class="feature-tag">Healthy Environment</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Carousel Item 2 - Corporate -->
+              <div
+                class="carousel-item"
+                data-bg='linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(29, 78, 216, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f8fafc" width="1200" height="800"/><rect fill="%23e2e8f0" x="100" y="100" width="200" height="300" rx="10"/><rect fill="%23cbd5e1" x="400" y="150" width="150" height="250" rx="8"/><rect fill="%2394a3b8" x="700" y="200" width="180" height="200" rx="6"/></svg>&apos;)'
+              >
+                <div class="carousel-content">
+                  <div class="carousel-icon">
+                    <svg
+                      class="w-16 h-16 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      />
+                    </svg>
+                  </div>
+                  <h3 class="text-3xl font-bold text-white mb-4">
+                    Corporate & Hospitality
+                  </h3>
+                  <p class="text-white/90 text-lg leading-relaxed">
+                    Enhance wellness for employees and guests in outdoor
+                    seating, entryways, and recreational zones.
+                  </p>
+                  <div class="carousel-features">
+                    <span class="feature-tag">Employee Wellness</span>
+                    <span class="feature-tag">Guest Comfort</span>
+                    <span class="feature-tag">Premium Experience</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Carousel Item 3 - Public Spaces -->
+              <div
+                class="carousel-item"
+                data-bg='linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(124, 58, 237, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23fefce8" width="1200" height="800"/><polygon fill="%23fef3c7" points="300,200 400,100 500,200 500,400 300,400"/><polygon fill="%23fde68a" points="700,250 850,150 1000,250 1000,450 700,450"/><circle fill="%23fbbf24" cx="200" cy="600" r="60"/></svg>&apos;)'
+              >
+                <div class="carousel-content">
+                  <div class="carousel-icon">
+                    <svg
+                      class="w-16 h-16 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 class="text-3xl font-bold text-white mb-4">
+                    Public & Semi-Indoor Spaces
+                  </h3>
+                  <p class="text-white/90 text-lg leading-relaxed">
+                    Ideal for metro stations, plazas, and stadiums, providing
+                    cleaner air for the public.
+                  </p>
+                  <div class="carousel-features">
+                    <span class="feature-tag">Public Health</span>
+                    <span class="feature-tag">Urban Wellness</span>
+                    <span class="feature-tag">Community Care</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Arrows -->
+          <button class="carousel-nav carousel-prev" id="carousel-prev">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <button class="carousel-nav carousel-next" id="carousel-next">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+
+          <!-- Carousel Indicators -->
+          <div class="carousel-indicators" id="carousel-indicators">
+            <button class="indicator active" data-slide="0"></button>
+            <button class="indicator" data-slide="1"></button>
+            <button class="indicator" data-slide="2"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- dragging image reveal section -->
+    <section
+      class="py-20 md:py-32 select-none"
+      style="
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      "
+      id="Experience-section"
+    >
+      <div class="container mx-auto px-6 text-center">
+        <div class="reveal-on-scroll">
+          <h2
+            class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+          >
+            Experience the difference.
+          </h2>
+          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+            Drag the slider to see the immediate impact Air Finery has on your
+            environment. Go from hazy and polluted to crisp and clear in an
+            instant.
+          </p>
+        </div>
+        <div
+          class="mt-16 max-w-6xl mx-auto rounded-2xl shadow-2xl overflow-hidden reveal-on-scroll"
+          style="transition-delay: 200ms"
+        >
+          <div id="comparison-slider" class="comparison-slider aspect-video">
+            <img
+              src="./img/ChatGPT Image Sep 12, 2025, 12_36_09 PM.png"
+              alt="Clear air"
+              class="comparison-image-after"
+              draggable="false"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="./img/ChatGPT Image Sep 12, 2025, 12_36_07 PM.png"
+              alt="Polluted air"
+              class="comparison-image-before"
+              draggable="false"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="slider-handle"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- nessesory javascript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- General Reveal on Scroll ---
+        const revealElements = document.querySelectorAll(".reveal-on-scroll");
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+          }
+        );
+        revealElements.forEach((el) => revealObserver.observe(el));
+
+        // --- Video Autoplay on Scroll ---
+        const videos = document.querySelectorAll("video");
+        const videoObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.play().catch(() => {});
+              } else {
+                entry.target.pause();
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
+        videos.forEach((video) => videoObserver.observe(video));
+      });
+
+      // --- Preloader Logic ---
+      window.addEventListener("load", function () {
+        const preloader = document.getElementById("preloader");
+        const mainContent = document.querySelector(".main-content");
+
+        // Minimum loading time of 2 seconds for better UX
+        setTimeout(() => {
+          preloader.classList.add("fade-out");
+          mainContent.classList.add("loaded");
+
+          // Start hero animations after preloader is gone
+          setTimeout(() => {
+            initHeroAnimations();
+          }, 800);
+        }, 2000);
+      });
+    </script>
+
+    <!-- hero section script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- New Hero Section Animation ---
+        const canvas = document.getElementById("mist-canvas");
+        if (canvas) {
+          const ctx = canvas.getContext("2d");
+          const textElement = document.getElementById("hero-content");
+          const bgImage = document.querySelector(".hero-background");
+
+          let particles = [];
+          const numParticles = 500;
+          let isDissipating = false;
+
+          function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            if (particles.length > 0) {
+              init();
+            }
+          }
+          window.addEventListener("resize", resizeCanvas);
+          resizeCanvas();
+
+          class Particle {
+            constructor() {
+              this.x = Math.random() * canvas.width;
+              this.y = Math.random() * canvas.height;
+              this.radius = Math.random() * 50 + 100;
+              this.alpha = Math.random() * 0.5 + 0.25;
+              this.initialAlpha = this.alpha;
+              this.vx = (Math.random() - 0.5) * 0.2;
+              this.vy = (Math.random() - 0.5) * 0.2;
+              this.fadeOutSpeed = 0.005 + Math.random() * 0.003;
+            }
+            draw() {
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+              const gradient = ctx.createRadialGradient(
+                this.x,
+                this.y,
+                0,
+                this.x,
+                this.y,
+                this.radius
+              );
+              gradient.addColorStop(0, `rgba(200, 200, 200, ${this.alpha})`);
+              gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+              ctx.fillStyle = gradient;
+              ctx.fill();
+            }
+            update() {
+              if (isDissipating) {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.alpha > 0) {
+                  this.alpha -= this.fadeOutSpeed;
+                }
+              }
+            }
+          }
+
+          function init() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+              particles.push(new Particle());
+            }
+          }
+
+          function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const particle of particles) {
+              particle.update();
+              particle.draw();
+            }
+            requestAnimationFrame(animate);
+          }
+
+          init();
+          animate();
+
+          setTimeout(() => {
+            isDissipating = true;
+            bgImage.classList.add("clear");
+          }, 1000);
+
+          setTimeout(() => {
+            textElement.classList.add("is-visible");
+          }, 1500);
+        }
+
+        // --- General Reveal on Scroll ---
+        const revealElements = document.querySelectorAll(".reveal-on-scroll");
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+          }
+        );
+        revealElements.forEach((el) => revealObserver.observe(el));
+      });
+    </script>
+
+    <!-- carousel script  -->
+    <script>
+      // Enhanced Carousel Functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const track = document.getElementById("carousel-track");
+        const items = document.querySelectorAll(".carousel-item");
+        const prevBtn = document.getElementById("carousel-prev");
+        const nextBtn = document.getElementById("carousel-next");
+        const indicators = document.querySelectorAll(".indicator");
+
+        let currentSlide = 0;
+        let isAnimating = false;
+        let autoPlayInterval;
+
+        // Set initial backgrounds
+        items.forEach((item) => {
+          const bg = item.getAttribute("data-bg");
+          item.style.background = bg;
+        });
+
+        function updateCarousel() {
+          if (isAnimating) return;
+          isAnimating = true;
+
+          const translateX = -currentSlide * (100 / 3);
+          track.style.transform = `translateX(${translateX}%)`;
+
+          // Update active states
+          items.forEach((item, index) => {
+            item.classList.toggle("active", index === currentSlide);
+          });
+
+          indicators.forEach((indicator, index) => {
+            indicator.classList.toggle("active", index === currentSlide);
+          });
+
+          setTimeout(() => {
+            isAnimating = false;
+          }, 800);
+        }
+
+        function nextSlide() {
+          currentSlide = (currentSlide + 1) % items.length;
+          updateCarousel();
+        }
+
+        function prevSlide() {
+          currentSlide = (currentSlide - 1 + items.length) % items.length;
+          updateCarousel();
+        }
+
+        function goToSlide(index) {
+          currentSlide = index;
+          updateCarousel();
+        }
+
+        // Event Listeners
+        nextBtn.addEventListener("click", nextSlide);
+        prevBtn.addEventListener("click", prevSlide);
+
+        indicators.forEach((indicator, index) => {
+          indicator.addEventListener("click", () => goToSlide(index));
+        });
+
+        // Auto-play functionality
+        function startAutoPlay() {
+          autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+          clearInterval(autoPlayInterval);
+        }
+
+        // Start auto-play
+        startAutoPlay();
+
+        // Pause auto-play on hover
+        const carouselWrapper = document.querySelector(".carousel-wrapper");
+        carouselWrapper.addEventListener("mouseenter", stopAutoPlay);
+        carouselWrapper.addEventListener("mouseleave", startAutoPlay);
+
+        // Touch/Swipe Support
+        let startX = 0;
+        let moveX = 0;
+
+        carouselWrapper.addEventListener("touchstart", (e) => {
+          startX = e.touches[0].clientX;
+          stopAutoPlay();
+        });
+
+        carouselWrapper.addEventListener("touchmove", (e) => {
+          moveX = e.touches[0].clientX;
+        });
+
+        carouselWrapper.addEventListener("touchend", () => {
+          const diff = startX - moveX;
+
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              nextSlide();
+            } else {
+              prevSlide();
+            }
+          }
+
+          startAutoPlay();
+        });
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") {
+            prevSlide();
+          } else if (e.key === "ArrowRight") {
+            nextSlide();
+          }
+        });
+      });
+    </script>
+
+
+<!-- dragging image reveal section  -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const slider = document.getElementById("comparison-slider");
+        if (slider) {
+          const beforeImage = slider.querySelector(".comparison-image-before");
+          const handle = slider.querySelector(".slider-handle");
+
+          let isDragging = false;
+
+          function startDrag(e) {
+            isDragging = true;
+          }
+          function stopDrag() {
+            isDragging = false;
+          }
+
+          function onDrag(e) {
+            if (!isDragging) return;
+            const x = e.clientX || e.touches[0].clientX;
+            const rect = slider.getBoundingClientRect();
+            let position = ((x - rect.left) / rect.width) * 100;
+            position = Math.max(0, Math.min(position, 100));
+            beforeImage.style.clipPath = `polygon(0 0, ${position}% 0, ${position}% 100%, 0 100%)`;
+            handle.style.left = `${position}%`;
+          }
+
+          slider.addEventListener("mousedown", startDrag);
+          slider.addEventListener("touchstart", startDrag);
+          window.addEventListener("mouseup", stopDrag);
+          window.addEventListener("touchend", stopDrag);
+          window.addEventListener("mousemove", onDrag);
+          window.addEventListener("touchmove", onDrag);
+        }
+      });
+    </script>
+
+    <script>
+        class ProfessionalAirFlow {
+            constructor() {
+                this.canvas = document.getElementById('air-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.cursor = document.getElementById('cursor');
+                
+                this.particles = [];
+                this.mouse = { x: 0, y: 0 };
+                this.particleCount = 80;
+                
+                this.init();
+                this.bindEvents();
+                this.animate();
+            }
+            
+            init() {
+                this.resizeCanvas();
+                this.createParticles();
+                window.addEventListener('resize', () => {
+                    this.resizeCanvas();
+                    this.createParticles();
+                });
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createParticles() {
+                this.particles = [];
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        baseX: 0,
+                        baseY: 0,
+                        vx: Math.random() * 0.3 + 0.1,
+                        vy: (Math.random() - 0.5) * 0.2,
+                        radius: Math.random() * 2 + 0.5,
+                        alpha: Math.random() * 0.3 + 0.1,
+                        phase: Math.random() * Math.PI * 2
+                    });
+                }
+                
+                this.particles.forEach(particle => {
+                    particle.baseX = particle.x;
+                    particle.baseY = particle.y;
+                });
+            }
+            
+            bindEvents() {
+                document.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                    
+                    this.cursor.style.left = (e.clientX - 4) + 'px';
+                    this.cursor.style.top = (e.clientY - 4) + 'px';
+                });
+                
+                document.addEventListener('mouseenter', () => {
+                    this.cursor.style.opacity = '1';
+                });
+                
+                document.addEventListener('mouseleave', () => {
+                    this.cursor.style.opacity = '0';
+                });
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    // Gentle flowing movement
+                    particle.phase += 0.01;
+                    const drift = Math.sin(particle.phase) * 0.3;
+                    
+                    // Base flowing motion
+                    particle.x += particle.vx;
+                    particle.y += particle.vy + drift;
+                    
+                    // Mouse interaction - very subtle
+                    if (this.mouse.x && this.mouse.y) {
+                        const dx = this.mouse.x - particle.x;
+                        const dy = this.mouse.y - particle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            const force = (100 - distance) / 100;
+                            const angle = Math.atan2(dy, dx);
+                            
+                            // Very gentle push away from mouse
+                            particle.x -= Math.cos(angle) * force * 0.5;
+                            particle.y -= Math.sin(angle) * force * 0.5;
+                        }
+                    }
+                    
+                    // Wrap around edges
+                    if (particle.x > this.canvas.width + 20) {
+                        particle.x = -20;
+                        particle.y = Math.random() * this.canvas.height;
+                    }
+                    if (particle.y > this.canvas.height + 20) {
+                        particle.y = -20;
+                    }
+                    if (particle.y < -20) {
+                        particle.y = this.canvas.height + 20;
+                    }
+                });
+            }
+            
+            drawParticles() {
+                // Clear with subtle fade
+                this.ctx.fillStyle = 'rgba(248, 250, 252, 0.08)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw particles
+                this.particles.forEach(particle => {
+                    this.ctx.save();
+                    
+                    // Simple, clean particles
+                    this.ctx.globalAlpha = particle.alpha;
+                    this.ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    this.ctx.restore();
+                });
+                
+                // Draw subtle connections
+                this.drawConnections();
+            }
+            
+            drawConnections() {
+                this.particles.forEach((particle, i) => {
+                    this.particles.slice(i + 1).forEach(otherParticle => {
+                        const dx = particle.x - otherParticle.x;
+                        const dy = particle.y - otherParticle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 60) {
+                            this.ctx.save();
+                            this.ctx.globalAlpha = (60 - distance) / 60 * 0.15;
+                            this.ctx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(particle.x, particle.y);
+                            this.ctx.lineTo(otherParticle.x, otherParticle.y);
+                            this.ctx.stroke();
+                            this.ctx.restore();
+                        }
+                    });
+                });
+            }
+            
+            animate() {
+                this.updateParticles();
+                this.drawParticles();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProfessionalAirFlow();
+        });
+    </script>
+  </body>
+</html>
