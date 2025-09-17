@@ -36,21 +36,13 @@
             box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
         }
 
-        .info {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            color: #64748b;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 5;
-        }
+       
     </style>
 </head>
 <body>
     <canvas id="air-canvas"></canvas>
     <div class="cursor-dot" id="cursor"></div>
-    <div class="info">Move to interact with air flow</div>
+    
 
     <script>
         class ProfessionalAirFlow {
@@ -61,7 +53,7 @@
                 
                 this.particles = [];
                 this.mouse = { x: 0, y: 0 };
-                this.particleCount = 80;
+                this.particleCount = 300;
                 
                 this.init();
                 this.bindEvents();
@@ -93,7 +85,7 @@
                         vx: Math.random() * 0.3 + 0.1,
                         vy: (Math.random() - 0.5) * 0.2,
                         radius: Math.random() * 2 + 0.5,
-                        alpha: Math.random() * 0.3 + 0.1,
+                        alpha: Math.random() * 0.3 + 0.5,
                         phase: Math.random() * Math.PI * 2
                     });
                 }
@@ -143,8 +135,8 @@
                             const angle = Math.atan2(dy, dx);
                             
                             // Very gentle push away from mouse
-                            particle.x -= Math.cos(angle) * force * 0.5;
-                            particle.y -= Math.sin(angle) * force * 0.5;
+                            particle.x -= Math.cos(angle) * force * 2;
+                            particle.y -= Math.sin(angle) * force * 2;
                         }
                     }
                     

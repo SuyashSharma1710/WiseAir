@@ -221,7 +221,7 @@
       }
     </style>
 
-    <!-- carousel style  -->
+    <!-- carousel style  -->
     <style>
       /* Carousel Styles */
       .carousel-wrapper {
@@ -424,7 +424,7 @@
       }
     </style>
 
-    <!-- dragger image reveal section  -->
+    <!-- dragger image reveal section  -->
     <style>
       .comparison-slider {
         position: relative;
@@ -526,30 +526,30 @@
     </style>
 
     <!-- <style>
-      #air-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0; /* behind content */
-        pointer-events: none; /* allow clicks through */
-        background: transparent;
-      }
-    </style> -->
+      #air-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* behind content */
+        pointer-events: none; /* allow clicks through */
+        background: transparent;
+      }
+    </style> -->
   </head>
   <body>
     <!-- Preloader -->
     <!-- <div id="preloader">
-      <div class="preloader-logo"><span class="air-text">Air</span> Finery</div>
-      <div class="loading-animation"></div>
-      <div class="loading-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-      <div class="preloader-text">Purifying your experience...</div>
-    </div> -->
+      <div class="preloader-logo"><span class="air-text">Air</span> Finery</div>
+      <div class="loading-animation"></div>
+      <div class="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="preloader-text">Purifying your experience...</div>
+    </div> -->
 
     <!-- header section code -->
     <header
@@ -664,10 +664,16 @@
     </section>
 
     <!-- Trust & Legacy Section -->
-    <section class="relative  bg-white overflow-hidden">
-      <video autoplay loop muted playsinline class="absolute z-0 w-full object-contain z-0">
-                <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
-            </video>
+    <section class="relative bg-white overflow-hidden">
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        class="absolute z-0 w-full object-contain z-0"
+      >
+        <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
+      </video>
       <div class="container py-32 mx-auto px-6 text-center">
         <h3
           class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight reveal-on-scroll"
@@ -722,7 +728,7 @@
       </div>
     </section>
 
-    <!-- carousel section code  -->
+    <!-- carousel section code  -->
 
     <!-- Applications Section - Stylish Carousel -->
     <section id="applications-section" class="py-20 md:py-28 overflow-hidden">
@@ -1233,7 +1239,7 @@
       });
     </script>
 
-    <!-- carousel script  -->
+    <!-- carousel script  -->
     <script>
       // Enhanced Carousel Functionality
       document.addEventListener("DOMContentLoaded", function () {
@@ -1262,15 +1268,15 @@
 
           // Update active states
           items.forEach((item, index) => {
-        item.classList.toggle("active", index === currentSlide);
+            item.classList.toggle("active", index === currentSlide);
           });
 
           indicators.forEach((indicator, index) => {
-        indicator.classList.toggle("active", index === currentSlide);
+            indicator.classList.toggle("active", index === currentSlide);
           });
 
           setTimeout(() => {
-        isAnimating = false;
+            isAnimating = false;
           }, 800);
         }
 
@@ -1332,11 +1338,11 @@
           const diff = startX - moveX;
 
           if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
+            if (diff > 0) {
+              nextSlide();
+            } else {
+              prevSlide();
+            }
           }
 
           startAutoPlay();
@@ -1345,15 +1351,15 @@
         // Keyboard navigation
         document.addEventListener("keydown", (e) => {
           if (e.key === "ArrowLeft") {
-        prevSlide();
+            prevSlide();
           } else if (e.key === "ArrowRight") {
-        nextSlide();
+            nextSlide();
           }
         });
       });
     </script>
 
-    <!-- dragging image reveal section  -->
+    <!-- dragging image reveal section  -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const slider = document.getElementById("comparison-slider");
@@ -1390,7 +1396,7 @@
       });
     </script>
 
-    <!-- tech filter scrolling section  -->
+    <!-- tech filter scrolling section  -->
     <script>
       // --- Specs Section (Image changes on scroll) ---
       const specItems = document.querySelectorAll(".spec-item");
@@ -1550,4 +1556,5 @@
       });
     </script>
   </body>
-</html> 
+</html>
+

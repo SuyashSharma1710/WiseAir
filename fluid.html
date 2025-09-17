@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smoke Effect with Cursor</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<canvas id="smoke"></canvas>
+
+<script>
+const canvas = document.getElementById("smoke");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let w = canvas.width;
+let h = canvas.height;
+
+let particles = [];
+let mouse = { x: w/2, y: h/2, radius: 120 };
+
+// create smoke-like particles
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 20 + 100;
+    this.speedX = Math.random() * 1 - 0.5;
+    this.speedY = Math.random() * 1 - 0.5;
+    this.alpha = Math.random() * 0.2 + 0.05;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    // attract/repel with mouse
+    let dx = this.x - mouse.x;
+    let dy = this.y - mouse.y;
+    let dist = Math.sqrt(dx*dx + dy*dy);
+
+    if(dist < mouse.radius){
+      this.x += dx / dist * 2;
+      this.y += dy / dist * 2;
+    }
+
+    // wrap around
+    if(this.x < 0) this.x = w;
+    if(this.x > w) this.x = 0;
+    if(this.y < 0) this.y = h;
+    if(this.y > h) this.y = 0;
+  }
+draw() {
+    // Create a radial gradient for a soft smoke effect
+    const gradient = ctx.createRadialGradient(
+        this.x, this.y, this.size * 0.2,
+        this.x, this.y, this.size
+    );
+    gradient.addColorStop(0, `rgba(200, 200, 200, ${this.alpha})`);
+    gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+}
+}
+
+// generate particles
+function init(){
+  particles = [];
+  for(let i=0; i<100; i++){
+    particles.push(new Particle(Math.random()*w, Math.random()*h));
+  }
+}
+init();
+
+// animation loop
+function animate(){
+  ctx.fillStyle = "rgba(0,0,0,0.1)"; 
+  ctx.fillRect(0, 0, w, h);
+
+  for(let i=0; i<particles.length; i++){
+    particles[i].update();
+    particles[i].draw();
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+// mouse move
+canvas.addEventListener("mousemove", e => {
+  mouse.x = e.x;
+  mouse.y = e.y;
+});
+
+// resize
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  w = canvas.width;
+  h = canvas.height;
+  init();
+});
+</script>
+</body>
+</html>
