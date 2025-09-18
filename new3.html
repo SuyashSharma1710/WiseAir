@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air Finery - The Art of Atmosphere</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-primary: #10b981; /* Emerald 500 */
+        --color-secondary: #0a0a0a; /* Near Black */
+        --color-light: #f1f5f9; /* Slate 100 */
+        --color-text-dark: #a1a1aa; /* Zinc 400 */
+        --color-text-light: #18181b; /* Zinc 900 */
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--color-secondary);
+        color: var(--color-text-dark);
+        overflow-x: hidden;
+      }
+
+      /* --- Global Elements --- */
+      #webgl-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        outline: none;
+        z-index: 0;
+      }
+
+      .content-section {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1.5rem;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+      
+      .content-box {
+        max-width: 48rem;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+      .content-box.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+      }
+      
+      .light-section {
+          background-color: #ffffff;
+          color: var(--color-text-light);
+          text-shadow: none;
+      }
+      
+      .section-heading {
+          font-size: clamp(2.5rem, 6vw, 4rem);
+          font-weight: 900;
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+      }
+      
+      .section-subheading {
+          font-size: clamp(1.125rem, 2vw, 1.25rem);
+          margin-top: 1.5rem;
+          max-width: 42rem;
+          margin-left: auto;
+          margin-right: auto;
+      }
+
+      /* --- Preloader --- */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-secondary);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease-in-out;
+      }
+      #preloader.loaded {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loader-bar {
+        width: 150px;
+        height: 2px;
+        background-color: rgba(255,255,255,0.2);
+        margin-top: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .loader-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        background-color: var(--color-primary);
+        transition: width 0.3s;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="preloader">
+      <div class="text-white text-2xl font-bold tracking-widest">AIRFINERY</div>
+    </div>
+  
+    <canvas id="webgl-canvas"></canvas>
+
+    <div id="content-container">
+      <!-- Section 1: Hero -->
+      <section id="section-hero" class="content-section">
+        <div class="content-box">
+          <h1 class="section-heading">Define Your Atmosphere</h1>
+          <p class="section-subheading text-zinc-400">
+            A revolutionary approach to air purification. We combine German engineering with sophisticated design to create healthier, more productive, and prestigious environments.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: The Problem -->
+      <section id="section-problem" class="content-section">
+        <div class="content-box">
+          <h2 class="section-heading">The Invisible Compromise</h2>
+          <p class="section-subheading text-zinc-400">
+            Your space is constantly infiltrated by microscopic pollutants. This unseen threat impacts wellness, perception, and performance, silently defining the experience of everyone who enters.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: The Solution -->
+      <section id="section-solution" class="content-section">
+        <div class="content-box">
+          <h2 class="section-heading"><span class="text-emerald-400">Purity</span>, Engineered.</h2>
+          <p class="section-subheading text-zinc-400">
+            The AirFinery unit is more than a purifier; it's a statement of quality. As you scroll, explore the technology that sets a new standard for clean air.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 4: The Result (Light Section) -->
+      <section id="section-result" class="content-section light-section">
+        <div class="content-box">
+          <h2 class="section-heading">Experience The <span class="text-emerald-500">Transformation.</span></h2>
+          <p class="section-subheading text-zinc-600">
+            This is the tangible result of superior technology. An environment transformed—vibrant, healthy, and pure. This is the new atmosphere you can provide for your clients, guests, and teams.
+          </p>
+        </div>
+      </section>
+      
+      <!-- Section 5: Applications (Light Section) -->
+      <section id="section-applications" class="content-section light-section">
+        <div class="container mx-auto px-6 w-full">
+          <div class="text-center mb-16">
+            <h2 class="section-heading">Integrated Excellence For Any Environment</h2>
+            <p class="section-subheading text-zinc-600">
+              Our systems are designed for seamless integration, offering bespoke solutions that enhance the atmosphere of any prestigious space.
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="application-card border border-slate-200 text-zinc-800 p-8 rounded-2xl">
+              <h3 class="text-2xl font-bold mb-3 text-emerald-600">Corporate & Commercial</h3>
+              <p class="text-zinc-600">Elevate productivity and client perception in headquarters, MNCs, airports, and luxury real estate.</p>
+            </div>
+            <div class="application-card border border-slate-200 text-zinc-800 p-8 rounded-2xl">
+              <h3 class="text-2xl font-bold mb-3 text-emerald-600">Luxury Hospitality</h3>
+              <p class="text-zinc-600">Enhance the guest experience in hotels, exclusive clubs, and high-end venues. Offer the ultimate luxury: pure air.</p>
+            </div>
+            <div class="application-card border border-slate-200 text-zinc-800 p-8 rounded-2xl">
+              <h3 class="text-2xl font-bold mb-3 text-emerald-600">Healthcare & Wellness</h3>
+              <p class="text-zinc-600">Provide an environment of absolute purity in hospitals, clinics, and wellness centers where air quality is paramount.</p>
+            </div>
+            <div class="application-card border border-slate-200 text-zinc-800 p-8 rounded-2xl">
+              <h3 class="text-2xl font-bold mb-3 text-emerald-600">Embassies & Residences</h3>
+              <p class="text-zinc-600">Create a secure haven for diplomatic missions and upmarket homes, ensuring health and peace of mind.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+       <!-- Section 6: CTA -->
+       <section id="section-cta" class="content-section">
+        <div class="content-box">
+          <h2 class="section-heading">Define Your Standard</h2>
+          <p class="section-subheading text-zinc-400">
+             Contact our specialists for a consultation. Discover how AirFinery can transform your space into a sanctuary of pure air and a testament to your commitment to quality.
+          </p>
+           <button class="mt-10 px-12 py-4 bg-emerald-500 text-white font-bold text-lg rounded-full shadow-lg hover:bg-emerald-600 transform hover:scale-105 transition-all duration-300">
+              Request a Consultation
+           </button>
+        </div>
+      </section>
+
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+      // --- Preloader ---
+      const preloader = document.getElementById('preloader');
+      
+      // --- Content Sections ---
+      const contentBoxes = document.querySelectorAll('.content-box');
+
+      window.onload = function () {
+          setTimeout(() => {
+              if (preloader) preloader.classList.add('loaded');
+              if(contentBoxes.length > 0) contentBoxes[0].classList.add('is-visible');
+          }, 500);
+      };
+
+      setTimeout(() => {
+        if (preloader && !preloader.classList.contains('loaded')) preloader.classList.add('loaded');
+      }, 4000);
+
+      // --- Scene Setup ---
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl-canvas'), antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // --- Lighting ---
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+      
+      // --- GLB Model Loading ---
+      const gltfLoader = new GLTFLoader();
+      let model = null;
+      let fan, filter1, filter2; // Variables to hold named parts of the model
+
+      // IMPORTANT: Replace this URL with the path to your own GLB model
+      const modelURL = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb';
+      
+      gltfLoader.load(modelURL, (gltf) => {
+          model = gltf.scene;
+          model.scale.set(1.1, 1.1, 1.1);
+          model.position.y = 0;
+          model.position.x = 1;
+          
+          // IMPORTANT: These names MUST match the object names in your 3D model software (e.g., Blender)
+          // The placeholder model does not have these parts, so these will be null.
+          fan = model.getObjectByName('Fan_Assembly');
+          filter1 = model.getObjectByName('Filter_Pleated');
+          filter2 = model.getObjectByName('Filter_Carbon');
+
+          model.visible = false;
+          scene.add(model);
+        },
+        undefined,
+        (error) => {
+            console.error('An error happened while loading the model.', error);
+        }
+      );
+      
+      // --- Particle Systems ---
+      const createParticles = (count, color, size) => {
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(count * 3);
+        for (let i = 0; i < count * 3; i++) {
+          positions[i] = (Math.random() - 0.5) * 20;
+        }
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const material = new THREE.PointsMaterial({
+          color: color,
+          size: size,
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
+        });
+        return new THREE.Points(geometry, material);
+      };
+      const pollutedParticles = createParticles(500, 0x52525b, 0.03);
+      const cleanParticles = createParticles(1000, 0x10b981, 0.05);
+      cleanParticles.visible = false;
+      scene.add(pollutedParticles, cleanParticles);
+
+      // --- Interactivity & Scroll Logic ---
+      let scrollY = window.scrollY;
+      let currentSection = 0;
+      const sizes = { width: window.innerWidth, height: window.innerHeight }
+      const mouse = new THREE.Vector2();
+
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+        const newSection = Math.round(scrollY / sizes.height);
+        if (newSection !== currentSection) {
+            currentSection = newSection;
+            contentBoxes.forEach((box, index) => {
+                box.classList.toggle('is-visible', index === currentSection);
+            });
+        }
+      });
+      
+      window.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / sizes.width) * 2 - 1;
+        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+      });
+
+      const clock = new THREE.Clock();
+      const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+        const scrollPercent = (scrollY % sizes.height) / sizes.height;
+        
+        pollutedParticles.rotation.y = elapsedTime * 0.05;
+        cleanParticles.rotation.y = elapsedTime * 0.1;
+
+        // Animate model based on current section
+        if (model) {
+            // SCENE 0 & 1: Hide model
+            if (currentSection < 2) model.visible = false;
+            
+            // SCENE 2: Reveal & Explode
+            if (currentSection === 2) {
+                const progress = scrollPercent;
+                model.visible = true;
+                model.rotation.y = -Math.PI / 4 + progress * 2.5;
+
+                // Explode animation (only if parts are found)
+                if(fan) fan.position.z = progress * 1.5;
+                if(filter1) filter1.position.z = -progress * 1;
+                if(filter2) filter2.position.z = -progress * 1.5;
+            }
+            
+            // SCENE 3 & BEYOND: Hide model
+            if (currentSection >= 3) model.visible = false;
+
+            // Mouse parallax effect when visible
+            if(model.visible) {
+                 model.rotation.x += (mouse.y * 0.2 - model.rotation.x) * 0.02;
+                 model.rotation.y += (mouse.x * 0.2 - model.rotation.y) * 0.02;
+            }
+        }
+        
+        // Animate camera and particles
+        if (currentSection < 2) {
+             camera.position.z = 5 - (scrollY / (sizes.height * 2)) * 2;
+             pollutedParticles.visible = true;
+             cleanParticles.visible = false;
+        } else if (currentSection === 2) {
+            pollutedParticles.material.opacity = 1 - scrollPercent;
+            camera.position.z = 3;
+        } else if (currentSection >= 3) {
+            pollutedParticles.visible = false;
+            cleanParticles.visible = true;
+            const progress = currentSection === 3 ? scrollPercent : 1;
+            cleanParticles.material.opacity = progress;
+            camera.position.z = 3 + progress * 2;
+        }
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+      
+      tick();
+
+      // --- Resize Handler ---
+      window.addEventListener('resize', () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+    </script>
+  </body>
+</html>
+

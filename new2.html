@@ -25,7 +25,7 @@
         overflow-x: hidden;
         scroll-behavior: smooth;
       }
-      
+
       ::selection {
         background-color: var(--color-primary);
         color: white;
@@ -33,18 +33,29 @@
 
       /* --- Animations & Transitions --- */
       @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
       @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .reveal-on-scroll {
         opacity: 0;
         transform: translateY(40px);
-        transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1),
+          transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
       .reveal-on-scroll.is-visible {
         opacity: 1;
@@ -73,11 +84,12 @@
         color: white;
       }
       .scroll-indicator {
-          transition: opacity 0.5s;
+        transition: opacity 0.5s;
       }
 
       /* --- Trusted By Section --- */
       .partner-logo {
+        mix-blend-mode: darken;
         transition: transform 0.3s ease, filter 0.3s ease;
         filter: grayscale(100%) opacity(0.6);
       }
@@ -88,20 +100,25 @@
 
       /* --- Applications Section --- */
       .application-card {
-        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+          box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
-       .application-card:hover {
+      .application-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
       }
       .application-card .icon-bg {
-          background-image: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
       }
 
       /* --- Specs Section --- */
       #specs-section {
-          background-color: var(--color-secondary);
-          color: var(--color-light);
+        background-color: var(--color-secondary);
+        color: var(--color-light);
       }
       .spec-item {
         opacity: 0.4;
@@ -124,45 +141,75 @@
         transform: scale(1.05);
       }
       .product-image.is-active {
-          opacity: 1;
-          transform: scale(1);
+        opacity: 1;
+        transform: scale(1);
       }
 
       /* --- CTA Section --- */
       #cta-section {
-          position: relative;
-          overflow: hidden;
-          background-color: var(--color-light);
+        position: relative;
+        overflow: hidden;
+        background-color: var(--color-light);
       }
       #cta-video {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          min-width: 100%;
-          min-height: 100%;
-          width: auto;
-          height: auto;
-          z-index: 0;
-          transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: 0;
+        transform: translateX(-50%) translateY(-50%);
       }
-      
     </style>
   </head>
   <body class="antialiased">
-    
     <!-- Header Section -->
-    <header class="fixed top-0 left-0 w-full bg-transparent text-white z-50 transition-all duration-300" id="main-header">
-      <nav class="container w-full mx-auto flex justify-between items-center py-5 px-6">
-        <a href="#hero-section" class="scroll-link font-black text-2xl tracking-wider">
-          AIRFINERY
+    <header
+      class="fixed top-0 left-0 w-full bg-transparent text-white z-50 transition-all duration-300"
+      id="main-header"
+    >
+      <nav
+        class="container w-full mx-auto flex justify-between items-center py-5 px-6"
+      >
+        <a
+          href="#hero-section"
+          class="scroll-link font-black text-2xl tracking-wider"
+        >
+          <img
+            src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png"
+            alt="mrh mann+hummel filtered"
+            class="h-10"
+          />
         </a>
         <ul class="hidden md:flex gap-8 text-sm font-medium items-center">
-          <li><a href="#problem-section" class="scroll-link hover:text-white transition">The Invisible Threat</a></li>
-          <li><a href="#solution-section" class="scroll-link hover:text-white transition">Our Solution</a></li>
-          <li><a href="#specs-section" class="scroll-link hover:text-white transition">Technology</a></li>
+          <li>
+            <a
+              href="#problem-section"
+              class="scroll-link hover:text-white transition"
+              >The Invisible Threat</a
+            >
+          </li>
+          <li>
+            <a
+              href="#solution-section"
+              class="scroll-link hover:text-white transition"
+              >Our Solution</a
+            >
+          </li>
+          <li>
+            <a
+              href="#specs-section"
+              class="scroll-link hover:text-white transition"
+              >Technology</a
+            >
+          </li>
         </ul>
         <a href="#cta-section" class="scroll-link">
-          <button class="bg-white text-gray-800 px-6 py-2 rounded-full shadow-lg font-bold hover:bg-gray-200 transition duration-300 transform hover:scale-105">
+          <button
+            class="bg-white text-gray-800 px-6 py-2 rounded-full shadow-lg font-bold hover:bg-gray-200 transition duration-300 transform hover:scale-105"
+          >
             Enquire Now
           </button>
         </a>
@@ -170,40 +217,79 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="hero-section" class="flex items-center justify-center text-center">
+    <section
+      id="hero-section"
+      class="flex items-center justify-center text-center"
+    >
       <canvas id="hero-canvas"></canvas>
       <div id="hero-content" class="container mx-auto px-6">
-        <h1 class="text-5xl md:text-8xl font-black tracking-tighter uppercase reveal-on-scroll">
+        <h1
+          class="text-5xl md:text-8xl font-black text-slate-50 tracking-tighter uppercase reveal-on-scroll"
+        >
           The Atmosphere <span class="text-emerald-400">is Everything.</span>
         </h1>
-        <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-300 reveal-on-scroll" style="transition-delay: 150ms;">
-          We introduce a new standard of air purity for the world's most exclusive spaces. German-engineered, performance-certified, and designed to integrate seamlessly into your environment.
+        <p
+          class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-slate-800 reveal-on-scroll"
+          style="transition-delay: 150ms"
+        >
+          We introduce a new standard of air purity for the world's most
+          exclusive spaces. German-engineered, performance-certified, and
+          designed to integrate seamlessly into your environment.
         </p>
       </div>
-       <div class="scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce text-white">
-        <svg class="w-8 h-8" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+      <div
+        class="scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce text-white"
+      >
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
       </div>
     </section>
 
     <main class="bg-white">
-    
       <!-- The Invisible Threat Section -->
-      <section id="problem-section" class="py-20 md:py-32 container mx-auto px-6 text-center">
+      <section
+        id="problem-section"
+        class="py-20 md:py-32 container mx-auto px-6 text-center"
+      >
         <div class="reveal-on-scroll">
-          <h2 class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight">
+          <h2
+            class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+          >
             What you can't see,
           </h2>
-          <h2 class="text-4xl md:text-6xl font-bold text-emerald-600 tracking-tight mt-2">
+          <h2
+            class="text-4xl md:text-6xl font-bold text-emerald-600 tracking-tight mt-2"
+          >
             is compromising your space.
           </h2>
           <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
-            Every day, your environment is infiltrated by invisible pollutants. From vehicle emissions to industrial dust, these microscopic particles impact the health, comfort, and perception of your clients, guests, and employees, silently defining their experience.
+            Every day, your environment is infiltrated by invisible pollutants.
+            From vehicle emissions to industrial dust, these microscopic
+            particles impact the health, comfort, and perception of your
+            clients, guests, and employees, silently defining their experience.
           </p>
         </div>
-        <div class="mt-16 relative flex justify-center items-center reveal-on-scroll" style="transition-delay: 200ms">
-          <video class="max-w-4xl w-full rounded-2xl shadow-2xl" src="./video/VN20250912_112708.mp4" autoplay muted loop playsinline></video>
+        <div
+          class="mt-16 relative flex justify-center items-center reveal-on-scroll"
+          style="transition-delay: 200ms"
+        >
+          <video
+            class="max-w-4xl w-full rounded-2xl shadow-2xl"
+            src="./video/VN20250912_112708.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+          ></video>
         </div>
       </section>
 
@@ -211,23 +297,57 @@
       <section class="py-20 md:py-28 bg-gray-50">
         <div class="container mx-auto px-6 text-center">
           <div class="reveal-on-scroll">
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight">A Legacy of <span class="text-emerald-600">Purity.</span></h2>
+            <h2
+              class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+            >
+              A Legacy of <span class="text-emerald-600">Purity.</span>
+            </h2>
             <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
-              Our solutions are born from a partnership between global leaders in filtration technology and certified experts in environmental science. This is our commitment to excellence.
+              Our solutions are born from a partnership between global leaders
+              in filtration technology and certified experts in environmental
+              science. This is our commitment to excellence.
             </p>
           </div>
           <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-            <div class="flex justify-center reveal-on-scroll" style="transition-delay: 100ms">
-              <img src="./img/Picsart_25-09-16_12-27-03-047.jpg" alt="MANN+HUMMEL Logo" class="h-16 md:h-40 partner-logo"/>
+            <div
+              class="flex justify-center reveal-on-scroll"
+              style="transition-delay: 100ms"
+            >
+              <img
+                src="./img/Picsart_25-09-16_12-27-03-047.jpg"
+                alt="MANN+HUMMEL Logo"
+                class="h-16 md:h-40 mix-blend-darken partner-logo"
+              />
             </div>
-            <div class="flex justify-center reveal-on-scroll" style="transition-delay: 200ms">
-              <img src="./img/Picsart_25-09-16_11-39-38-753.jpg" alt="IIT Delhi Logo" class="h-16 md:h-40 partner-logo"/>
+            <div
+              class="flex justify-center reveal-on-scroll"
+              style="transition-delay: 200ms"
+            >
+              <img
+                src="./img/Picsart_25-09-16_11-39-38-753.jpg"
+                alt="IIT Delhi Logo"
+                class="h-16 md:h-40 partner-logo"
+              />
             </div>
-            <div class="flex justify-center reveal-on-scroll" style="transition-delay: 300ms">
-              <img src="./img/Picsart_25-09-16_11-43-37-710.jpg" alt="GD Goenka Logo" class="h-16 md:h-40 partner-logo"/>
+            <div
+              class="flex justify-center reveal-on-scroll"
+              style="transition-delay: 300ms"
+            >
+              <img
+                src="./img/Picsart_25-09-16_11-43-37-710.jpg"
+                alt="GD Goenka Logo"
+                class="h-16 md:h-40 partner-logo"
+              />
             </div>
-            <div class="flex justify-center reveal-on-scroll" style="transition-delay: 400ms">
-              <img src="./img/Picsart_25-09-16_11-44-19-434.jpg" alt="OK Play Logo" class="h-16 md:h-40 partner-logo"/>
+            <div
+              class="flex justify-center reveal-on-scroll"
+              style="transition-delay: 400ms"
+            >
+              <img
+                src="./img/Picsart_25-09-16_11-44-19-434.jpg"
+                alt="OK Play Logo"
+                class="h-16 md:h-40 partner-logo"
+              />
             </div>
           </div>
         </div>
@@ -237,35 +357,102 @@
       <section id="solution-section" class="py-20 md:py-32">
         <div class="container mx-auto px-6">
           <div class="text-center reveal-on-scroll mb-16">
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight">Pristine Air for Every <span class="text-emerald-600">Prestigious Space.</span></h2>
+            <h2
+              class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+            >
+              Pristine Air for Every
+              <span class="text-emerald-600">Prestigious Space.</span>
+            </h2>
             <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
-              Our technology seamlessly integrates into any environment, ensuring an unparalleled atmosphere of health, wellness, and prestige.
+              Our technology seamlessly integrates into any environment,
+              ensuring an unparalleled atmosphere of health, wellness, and
+              prestige.
             </p>
           </div>
           <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Card 1 -->
-            <div class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll" style="transition-delay: 100ms;">
-              <div class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"><img src="https://img.icons8.com/plasticine/100/000000/building.png" alt="Corporate Icon" /></div>
-              <h3 class="text-2xl font-bold mb-3 text-emerald-400">Corporate & Commercial</h3>
-              <p class="text-slate-300">Enhance productivity and client perception in corporate headquarters, MNCs, airports, and luxury real estate.</p>
+            <div
+              class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll"
+              style="transition-delay: 100ms"
+            >
+              <div
+                class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://img.icons8.com/plasticine/100/000000/building.png"
+                  alt="Corporate Icon"
+                />
+              </div>
+              <h3 class="text-2xl font-bold mb-3 text-emerald-400">
+                Corporate & Commercial
+              </h3>
+              <p class="text-slate-300">
+                Enhance productivity and client perception in corporate
+                headquarters, MNCs, airports, and luxury real estate.
+              </p>
             </div>
             <!-- Card 2 -->
-             <div class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll" style="transition-delay: 200ms;">
-              <div class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"><img src="https://img.icons8.com/plasticine/100/000000/bed.png" alt="Hospitality Icon"/></div>
-              <h3 class="text-2xl font-bold mb-3 text-emerald-400">Luxury Hospitality</h3>
-              <p class="text-slate-300">Elevate the guest experience in hotels, exclusive clubs, and high-end venues. Offer the ultimate luxury: pure air.</p>
+            <div
+              class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll"
+              style="transition-delay: 200ms"
+            >
+              <div
+                class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://img.icons8.com/plasticine/100/000000/bed.png"
+                  alt="Hospitality Icon"
+                />
+              </div>
+              <h3 class="text-2xl font-bold mb-3 text-emerald-400">
+                Luxury Hospitality
+              </h3>
+              <p class="text-slate-300">
+                Elevate the guest experience in hotels, exclusive clubs, and
+                high-end venues. Offer the ultimate luxury: pure air.
+              </p>
             </div>
             <!-- Card 3 -->
-             <div class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll" style="transition-delay: 300ms;">
-              <div class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"><img src="https://img.icons8.com/plasticine/100/000000/hospital.png" alt="Healthcare Icon"/></div>
-              <h3 class="text-2xl font-bold mb-3 text-emerald-400">Healthcare & Wellness</h3>
-              <p class="text-slate-300">Provide an environment of absolute purity in hospitals, clinics, and wellness centers where air quality is paramount.</p>
+            <div
+              class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll"
+              style="transition-delay: 300ms"
+            >
+              <div
+                class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://img.icons8.com/plasticine/100/000000/hospital.png"
+                  alt="Healthcare Icon"
+                />
+              </div>
+              <h3 class="text-2xl font-bold mb-3 text-emerald-400">
+                Healthcare & Wellness
+              </h3>
+              <p class="text-slate-300">
+                Provide an environment of absolute purity in hospitals, clinics,
+                and wellness centers where air quality is paramount.
+              </p>
             </div>
-             <!-- Card 4 -->
-            <div class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll" style="transition-delay: 400ms;">
-              <div class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"><img src="https://img.icons8.com/plasticine/100/000000/home.png" alt="Residences Icon" /></div>
-              <h3 class="text-2xl font-bold mb-3 text-emerald-400">Embassies & Residences</h3>
-              <p class="text-slate-300">Create a secure haven of clean air for diplomatic missions and upmarket homes, ensuring health and peace of mind.</p>
+            <!-- Card 4 -->
+            <div
+              class="application-card bg-slate-800 text-white p-8 rounded-2xl reveal-on-scroll"
+              style="transition-delay: 400ms"
+            >
+              <div
+                class="icon-bg h-20 w-20 rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://img.icons8.com/plasticine/100/000000/home.png"
+                  alt="Residences Icon"
+                />
+              </div>
+              <h3 class="text-2xl font-bold mb-3 text-emerald-400">
+                Embassies & Residences
+              </h3>
+              <p class="text-slate-300">
+                Create a secure haven of clean air for diplomatic missions and
+                upmarket homes, ensuring health and peace of mind.
+              </p>
             </div>
           </div>
         </div>
@@ -273,48 +460,89 @@
 
       <!-- Technology Specs Section -->
       <section id="specs-section" class="relative py-20 md:py-32">
+        <canvas
+          id="air-canvas"
+          class="absolute mt[-100vh] top-0 left-0 w-full h-full object-cover z-0"
+        ></canvas>
         <div class="container mx-auto px-6">
           <div class="text-center reveal-on-scroll mb-16 md:mb-24">
             <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
-              The Art of Purity: <span class="text-emerald-400">German Engineered.</span>
+              The Art of Purity:
+              <span class="text-emerald-400">German Engineered.</span>
             </h2>
             <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-400">
-              Our technology is a testament to meticulous engineering. We've harnessed decades of innovation to deliver the purest air possible, certified by the most rigorous standards.
+              Our technology is a testament to meticulous engineering. We've
+              harnessed decades of innovation to deliver the purest air
+              possible, certified by the most rigorous standards.
             </p>
           </div>
           <div class="md:grid md:grid-cols-2 md:gap-24 items-start">
             <div class="md:sticky top-24 h-96 md:h-[80vh] mb-12 md:mb-0">
               <div id="product-viewer" class="relative w-full h-full">
-                <img id="image-main" src="./img/Picsart_25-09-10_11-46-12-304.png" alt="Air Finery Purifier" class="product-image is-active" />
-                <img id="image-filter" src="./img/Picsart_25-09-12_16-55-18-947.jpg" alt="Microfiber Media Highlight" class="product-image" />
-                <img id="image-carbon" src="./img/Picsart_25-09-12_16-55-37-317.jpg" alt="Carbon Layer Highlight" class="product-image"/>
-                <img id="image-separation" src="./img/Frame 3.png" alt="NO₂ Separation Highlight" class="product-image" />
+                <img
+                  id="image-main"
+                  src="./img/Picsart_25-09-10_11-46-12-304.png"
+                  alt="Air Finery Purifier"
+                  class="product-image is-active"
+                />
+                <img
+                  id="image-filter"
+                  src="./img/Picsart_25-09-18_13-30-44-784.png"
+                  alt="Microfiber Media Highlight"
+                  class="product-image"
+                />
+                <img
+                  id="image-carbon"
+                  src="./img/Picsart_25-09-18_13-14-52-259.png"
+                  alt="Carbon Layer Highlight"
+                  class="product-image"
+                />
+                <img
+                  id="image-separation"
+                  src="./img/Picsart_25-09-18_13-26-57-834.png"
+                  alt="NO₂ Separation Highlight"
+                  class="product-image"
+                />
               </div>
             </div>
             <div class="relative z-10">
               <div class="spec-item pl-8" data-highlight="image-main">
-                <h3 class="text-3xl font-bold text-emerald-400">Certified Filtration</h3>
+                <h3 class="text-3xl font-bold text-emerald-400">
+                  Certified Filtration
+                </h3>
                 <p class="mt-4 text-lg text-gray-400">
-                    PM2.5: 67% | PM10: 87% | NOx: 80% <br />
-                    These ratings are a guarantee of safer air, backed by rigorous German testing standards.
+                  PM2.5: 67% | PM10: 87% | NOx: 80% <br />
+                  These ratings are a guarantee of safer air, backed by rigorous
+                  German testing standards.
                 </p>
               </div>
               <div class="spec-item pl-8" data-highlight="image-filter">
-                <h3 class="text-3xl font-bold text-emerald-400">Advanced Microfiber Media</h3>
+                <h3 class="text-3xl font-bold text-emerald-400">
+                  Advanced Microfiber Media
+                </h3>
                 <p class="mt-4 text-lg text-gray-400">
-                  Our filters utilize highly developed microfiber media, an innovation from German material science, for superior air purification and exceptional longevity.
+                  Our filters utilize highly developed microfiber media, an
+                  innovation from German material science, for superior air
+                  purification and exceptional longevity.
                 </p>
               </div>
               <div class="spec-item pl-8" data-highlight="image-carbon">
-                <h3 class="text-3xl font-bold text-emerald-400">Activated Carbon Layer</h3>
+                <h3 class="text-3xl font-bold text-emerald-400">
+                  Activated Carbon Layer
+                </h3>
                 <p class="mt-4 text-lg text-gray-400">
-                  A specialized carbon layer, formulated in Germany, neutralizes NOx and other harmful gases with exceptional efficiency.
+                  A specialized carbon layer, formulated in Germany, neutralizes
+                  NOx and other harmful gases with exceptional efficiency.
                 </p>
               </div>
               <div class="spec-item pl-8" data-highlight="image-separation">
-                <h3 class="text-3xl font-bold text-emerald-400">NO₂ Separation Tech</h3>
+                <h3 class="text-3xl font-bold text-emerald-400">
+                  NO₂ Separation Tech
+                </h3>
                 <p class="mt-4 text-lg text-gray-400">
-                  Proprietary German technology captures and neutralizes NO₂ through a sophisticated process of adsorption, binding, and catalytic reduction.
+                  Proprietary German technology captures and neutralizes NO₂
+                  through a sophisticated process of adsorption, binding, and
+                  catalytic reduction.
                 </p>
               </div>
             </div>
@@ -324,186 +552,369 @@
 
       <!-- CTA Section -->
       <section id="cta-section" class="py-20 md:py-40">
-           <video id="cta-video" autoplay muted loop playsinline preload="auto">
-               <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
-           </video>
-           <div class="absolute inset-0 bg-slate-900/60 z-10"></div>
-            <div class="container mx-auto px-6 text-center text-white relative z-20 reveal-on-scroll">
-                <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
-                    Ready to Redefine Your Environment?
-                </h2>
-                <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-300">
-                    Contact our specialists today for a consultation and discover how AirFinery can transform your space into a sanctuary of pure air.
-                </p>
-                <button class="mt-10 px-12 py-4 bg-emerald-500 text-white font-bold text-lg rounded-full shadow-lg hover:bg-emerald-600 transform hover:scale-105 transition-all duration-300">
-                    Request a Consultation
-                </button>
-            </div>
+        <video id="cta-video" autoplay muted loop playsinline preload="auto">
+          <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-slate-900/60 z-10"></div>
+        <div
+          class="container mx-auto px-6 text-center text-white relative z-20 reveal-on-scroll"
+        >
+          <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
+            Ready to Redefine Your Environment?
+          </h2>
+          <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-300">
+            Contact our specialists today for a consultation and discover how
+            AirFinery can transform your space into a sanctuary of pure air.
+          </p>
+          <button
+            class="mt-10 px-12 py-4 bg-emerald-500 text-white font-bold text-lg rounded-full shadow-lg hover:bg-emerald-600 transform hover:scale-105 transition-all duration-300"
+          >
+            Request a Consultation
+          </button>
+        </div>
       </section>
-
     </main>
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-white py-12">
       <div class="container mx-auto px-6 text-center">
-        <p class="text-slate-400">&copy; 2025 MRH Technologies Pvt. Ltd. All Rights Reserved.</p>
-        <p class="text-sm text-slate-500 mt-2">A partnership with MANN+HUMMEL and OK Play.</p>
+        <p class="text-slate-400">
+          &copy; 2025 MRH Technologies Pvt. Ltd. All Rights Reserved.
+        </p>
+        <p class="text-sm text-slate-500 mt-2">
+          A partnership with MANN+HUMMEL and OK Play.
+        </p>
       </div>
     </footer>
 
-
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            
-            // --- Header Scroll Effect ---
-            const header = document.getElementById('main-header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('bg-slate-900/80', 'backdrop-blur-sm', 'shadow-lg');
-                    header.classList.remove('bg-transparent', 'text-white');
-                } else {
-                    header.classList.remove('bg-slate-900/80', 'backdrop-blur-sm', 'shadow-lg');
-                    header.classList.add('bg-transparent', 'text-white');
-                }
-            });
-
-            // --- Hero Canvas Animation ---
-            const heroCanvas = document.getElementById("hero-canvas");
-            if (heroCanvas) {
-                const ctx = heroCanvas.getContext("2d");
-                let particles = [];
-                const particleCount = 150;
-                let mouse = { x: null, y: null, radius: 150 };
-
-                const resizeCanvas = () => {
-                    heroCanvas.width = window.innerWidth;
-                    heroCanvas.height = window.innerHeight;
-                };
-                window.addEventListener("resize", resizeCanvas);
-                resizeCanvas();
-
-                window.addEventListener('mousemove', (event) => {
-                    mouse.x = event.x;
-                    mouse.y = event.y;
-                });
-                
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * heroCanvas.width;
-                        this.y = Math.random() * heroCanvas.height;
-                        this.size = Math.random() * 2 + 1;
-                        this.baseX = this.x;
-                        this.baseY = this.y;
-                        this.density = (Math.random() * 30) + 1;
-                        this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2})`;
-                    }
-                    draw() {
-                        ctx.fillStyle = this.color;
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.closePath();
-                        ctx.fill();
-                    }
-                    update() {
-                        let dx = mouse.x - this.x;
-                        let dy = mouse.y - this.y;
-                        let distance = Math.sqrt(dx * dx + dy * dy);
-                        let forceDirectionX = dx / distance;
-                        let forceDirectionY = dy / distance;
-                        let maxDistance = mouse.radius;
-                        let force = (maxDistance - distance) / maxDistance;
-                        let directionX = forceDirectionX * force * this.density;
-                        let directionY = forceDirectionY * force * this.density;
-
-                        if (distance < mouse.radius) {
-                            this.x -= directionX;
-                            this.y -= directionY;
-                        } else {
-                            if (this.x !== this.baseX) {
-                                let dx = this.x - this.baseX;
-                                this.x -= dx / 10;
-                            }
-                            if (this.y !== this.baseY) {
-                                let dy = this.y - this.baseY;
-                                this.y -= dy / 10;
-                            }
-                        }
-                    }
-                }
-
-                const initParticles = () => {
-                    particles = [];
-                    for (let i = 0; i < particleCount; i++) {
-                        particles.push(new Particle());
-                    }
-                };
-                initParticles();
-
-                const animate = () => {
-                    ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-                    for (let i = 0; i < particles.length; i++) {
-                        particles[i].draw();
-                        particles[i].update();
-                    }
-                    connect();
-                    requestAnimationFrame(animate);
-                };
-                animate();
-
-                function connect() {
-                    let opacityValue = 1;
-                    for (let a = 0; a < particles.length; a++) {
-                        for (let b = a; b < particles.length; b++) {
-                            let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) +
-                                ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
-                            if (distance < (heroCanvas.width / 7) * (heroCanvas.height / 7)) {
-                                opacityValue = 1 - (distance / 20000);
-                                ctx.strokeStyle = `rgba(255,255,255,${opacityValue})`;
-                                ctx.lineWidth = 1;
-                                ctx.beginPath();
-                                ctx.moveTo(particles[a].x, particles[a].y);
-                                ctx.lineTo(particles[b].x, particles[b].y);
-                                ctx.stroke();
-                            }
-                        }
-                    }
-                }
-            }
-            
-             // --- General Reveal on Scroll ---
-            const revealElements = document.querySelectorAll(".reveal-on-scroll");
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-visible");
-                    }
-                });
-            }, { threshold: 0.1 });
-            revealElements.forEach((el) => revealObserver.observe(el));
-
-
-            // --- Specs Section (Image changes on scroll) ---
-            const specItems = document.querySelectorAll(".spec-item");
-            const productImages = document.querySelectorAll(".product-image");
-
-            if (specItems.length > 0) {
-                const specObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                            const targetId = entry.target.dataset.highlight;
-                            specItems.forEach((item) => item.classList.remove("is-active"));
-                            entry.target.classList.add("is-active");
-                            productImages.forEach((img) => {
-                                img.classList.toggle("is-active", img.id === targetId);
-                            });
-                        }
-                    });
-                }, { threshold: 0.5 });
-                specItems.forEach((item) => specObserver.observe(item));
-            }
-
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- Header Scroll Effect ---
+        const header = document.getElementById("main-header");
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 50) {
+            header.classList.add(
+              "bg-slate-50/80",
+              "backdrop-blur-sm",
+              "shadow-lg"
+            );
+            header.classList.remove("bg-transparent", "text-white");
+          } else {
+            header.classList.remove(
+              "bg-slate-50/80",
+              "backdrop-blur-sm",
+              "shadow-lg"
+            );
+            header.classList.add("bg-transparent", "text-white");
+          }
         });
+
+        // --- Hero Canvas Animation ---
+        const heroCanvas = document.getElementById("hero-canvas");
+        if (heroCanvas) {
+          const ctx = heroCanvas.getContext("2d");
+          let particles = [];
+          const particleCount = 150;
+          let mouse = { x: null, y: null, radius: 150 };
+
+          const resizeCanvas = () => {
+            heroCanvas.width = window.innerWidth;
+            heroCanvas.height = window.innerHeight;
+          };
+          window.addEventListener("resize", resizeCanvas);
+          resizeCanvas();
+
+          window.addEventListener("mousemove", (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+          });
+
+          class Particle {
+            constructor() {
+              this.x = Math.random() * heroCanvas.width;
+              this.y = Math.random() * heroCanvas.height;
+              // Using radius for gradient system
+              this.radius = Math.random() * 100 + 100;
+              this.size = this.radius; // Keep for compatibility
+              this.baseX = this.x;
+              this.baseY = this.y;
+              this.density = Math.random() * 30 + 1;
+
+              // Alpha system for gradient transparency
+              this.alpha = Math.random() * 0.5 + 0.25;
+              this.initialAlpha = this.alpha;
+
+              // Optional velocity system
+              this.vx = (Math.random() - 0.5) * 0.2;
+              this.vy = (Math.random() - 0.5) * 0.2;
+              this.fadeOutSpeed = 0.005 + Math.random() * 0.003;
+            }
+
+            draw() {
+              // Gradient particle design
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+              const gradient = ctx.createRadialGradient(
+                this.x,
+                this.y,
+                0,
+                this.x,
+                this.y,
+                this.radius
+              );
+
+              // Gradient colors with alpha transparency
+              gradient.addColorStop(0, `rgba(200, 200, 200, ${this.alpha})`);
+              gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+
+              ctx.fillStyle = gradient;
+              ctx.fill();
+            }
+
+            update() {
+              let dx = mouse.x - this.x;
+              let dy = mouse.y - this.y;
+              let distance = Math.sqrt(dx * dx + dy * dy);
+              let forceDirectionX = dx / distance;
+              let forceDirectionY = dy / distance;
+              let maxDistance = mouse.radius;
+              let force = (maxDistance - distance) / maxDistance;
+              let directionX = forceDirectionX * force * this.density;
+              let directionY = forceDirectionY * force * this.density;
+
+              if (distance < mouse.radius) {
+                this.x -= directionX;
+                this.y -= directionY;
+              } else {
+                if (this.x !== this.baseX) {
+                  let dx = this.x - this.baseX;
+                  this.x -= dx / 10;
+                }
+                if (this.y !== this.baseY) {
+                  let dy = this.y - this.baseY;
+                  this.y -= dy / 10;
+                }
+              }
+            }
+          }
+
+          const initParticles = () => {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+              particles.push(new Particle());
+            }
+          };
+          initParticles();
+
+          const animate = () => {
+            ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+            for (let i = 0; i < particles.length; i++) {
+              particles[i].draw();
+              particles[i].update();
+            }
+            connect();
+            requestAnimationFrame(animate);
+          };
+          animate();
+
+          function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+              for (let b = a; b < particles.length; b++) {
+                let distance =
+                  (particles[a].x - particles[b].x) *
+                    (particles[a].x - particles[b].x) +
+                  (particles[a].y - particles[b].y) *
+                    (particles[a].y - particles[b].y);
+                if (
+                  distance <
+                  (heroCanvas.width / 7) * (heroCanvas.height / 7)
+                ) {
+                  opacityValue = 0;
+                  // opacityValue = 1 - (distance / 20000);
+                  ctx.strokeStyle = `rgba(0,0,0,${opacityValue})`;
+                  ctx.lineWidth = 1;
+                  ctx.beginPath();
+                  ctx.moveTo(particles[a].x, particles[a].y);
+                  ctx.lineTo(particles[b].x, particles[b].y);
+                  ctx.stroke();
+                }
+              }
+            }
+          }
+        }
+
+        // --- General Reveal on Scroll ---
+        const revealElements = document.querySelectorAll(".reveal-on-scroll");
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        revealElements.forEach((el) => revealObserver.observe(el));
+
+        // --- Specs Section (Image changes on scroll) ---
+        const specItems = document.querySelectorAll(".spec-item");
+        const productImages = document.querySelectorAll(".product-image");
+
+        if (specItems.length > 0) {
+          const specObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                  const targetId = entry.target.dataset.highlight;
+                  specItems.forEach((item) =>
+                    item.classList.remove("is-active")
+                  );
+                  entry.target.classList.add("is-active");
+                  productImages.forEach((img) => {
+                    img.classList.toggle("is-active", img.id === targetId);
+                  });
+                }
+              });
+            },
+            { threshold: 0.5 }
+          );
+          specItems.forEach((item) => specObserver.observe(item));
+        }
+      });
     </script>
+    <!-- <script>
+      class ProfessionalAirFlow {
+        constructor() {
+          this.canvas = document.getElementById("air-canvas");
+          if (!this.canvas) return;
+
+          this.ctx = this.canvas.getContext("2d");
+          this.particles = [];
+          this.mouse = { x: 0, y: 0 };
+          this.particleCount = 500;
+          this.init();
+          this.bindEvents();
+          this.animate();
+        }
+
+        init() {
+          this.resizeCanvas();
+          this.createParticles();
+          window.addEventListener("resize", () => {
+            this.resizeCanvas();
+            this.createParticles();
+          });
+        }
+
+        resizeCanvas() {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+        }
+
+        createParticles() {
+          this.particles = [];
+          for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push({
+              x: Math.random() * this.canvas.width,
+              y: Math.random() * this.canvas.height,
+              baseX: 0,
+              baseY: 0,
+              vx: Math.random() * 0.3 + 0.1,
+              vy: (Math.random() - 0.5) * 0.2,
+              radius: Math.random() * 2 + 0.5,
+              alpha: Math.random() * 0.4 + 0.3,
+              phase: Math.random() * Math.PI * 2,
+            });
+          }
+          this.particles.forEach((particle) => {
+            particle.baseX = particle.x;
+            particle.baseY = particle.y;
+          });
+        }
+
+        bindEvents() {
+          // Keep simple for background effect
+        }
+
+        updateParticles() {
+          this.particles.forEach((particle) => {
+            particle.phase += 0.01;
+            const drift = Math.sin(particle.phase) * 0.3;
+
+            particle.x += particle.vx;
+            particle.y += particle.vy + drift;
+
+            if (particle.x > this.canvas.width + 20) {
+              particle.x = -20;
+              particle.y = Math.random() * this.canvas.height;
+            }
+            if (particle.y > this.canvas.height + 20) {
+              particle.y = -20;
+            }
+            if (particle.y < -20) {
+              particle.y = this.canvas.height + 20;
+            }
+          });
+        }
+
+        drawParticles() {
+          // FIXED: Clear canvas completely to remove trail effect
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+          // Draw visible particles
+          this.particles.forEach((particle) => {
+            this.ctx.save();
+            this.ctx.globalAlpha = particle.alpha;
+            this.ctx.fillStyle = "rgba(150, 150, 150, 1)";
+            this.ctx.beginPath();
+            this.ctx.arc(
+              particle.x,
+              particle.y,
+              particle.radius,
+              0,
+              Math.PI * 2
+            );
+            this.ctx.fill();
+            this.ctx.restore();
+          });
+
+          this.drawConnections();
+        }
+
+        drawConnections() {
+          this.particles.forEach((particle, i) => {
+            this.particles.slice(i + 1).forEach((otherParticle) => {
+              const dx = particle.x - otherParticle.x;
+              const dy = particle.y - otherParticle.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+
+              if (distance < 60) {
+                this.ctx.save();
+                this.ctx.globalAlpha = ((60 - distance) / 60) * 0.15;
+                this.ctx.strokeStyle = "rgba(77, 124, 15, 0)";
+                this.ctx.beginPath();
+                this.ctx.moveTo(particle.x, particle.y);
+                this.ctx.lineTo(otherParticle.x, otherParticle.y);
+                this.ctx.stroke();
+                this.ctx.restore();
+              }
+            });
+          });
+        }
+
+        animate() {
+          this.updateParticles();
+          this.drawParticles();
+          requestAnimationFrame(() => this.animate());
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        new ProfessionalAirFlow();
+      });
+    </script> -->
   </body>
 </html>
-

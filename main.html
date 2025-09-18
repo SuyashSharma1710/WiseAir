@@ -481,48 +481,35 @@
 
     <!--spec section-->
     <style>
+      #specs-section {
+        background-color: var(--color-secondary);
+        color: var(--color-light);
+      }
+      .spec-item {
+        opacity: 0.4;
+        transition: opacity 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        padding: 10rem 0;
+        border-left: 2px solid var(--color-primary-dark);
+      }
+      .spec-item.is-active {
+        opacity: 1;
+        border-left: 2px solid var(--color-primary);
+      }
       .product-image {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
         object-fit: contain;
-        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+        transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+        transform: scale(1.05);
       }
-
-      .spec-item {
-        opacity: 0.3;
-        transition: opacity 0.5s ease-in-out;
-        padding: 10rem 0;
-        position: relative;
-        z-index: 10; /* Higher z-index */
-        /* Semi-transparent background */
-        backdrop-filter: blur(2px); /* Subtle blur effect */
-        border-radius: 8px;
-        padding: 2rem;
-        margin: 300px 0;
-      }
-
-      .spec-item.is-active {
+      .product-image.is-active {
         opacity: 1;
+        transform: scale(1);
       }
 
-      #air-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1; /* Behind content */
-        pointer-events: none;
-        background: transparent;
-      }
-
-      /* Ensure content container has proper stacking */
-      .container {
-        position: relative;
-        z-index: 5;
-      }
     </style>
 
     <!-- <style>
@@ -537,8 +524,110 @@
         background: transparent;
       }
     </style> -->
+
+
+    <!-- new3 component  -->
+
+    <style>
+       /* --- Global Elements --- */
+      #webgl-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        outline: none;
+        z-index: 0;
+      }
+
+      .content-section {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1.5rem;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      }
+      
+      .content-box {
+        max-width: 48rem;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+      .content-box.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+      }
+      
+      .light-section {
+          background-color: #ffffff;
+          color: var(--color-text-light);
+          text-shadow: none;
+      }
+      
+      .section-heading {
+          font-size: clamp(2.5rem, 6vw, 4rem);
+          font-weight: 900;
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+      }
+      
+      .section-subheading {
+          font-size: clamp(1.125rem, 2vw, 1.25rem);
+          margin-top: 1.5rem;
+          max-width: 42rem;
+          margin-left: auto;
+          margin-right: auto;
+      }
+
+      /* --- Preloader --- */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-secondary);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease-in-out;
+      }
+      #preloader.loaded {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loader-bar {
+        width: 150px;
+        height: 2px;
+        background-color: rgba(255,255,255,0.2);
+        margin-top: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .loader-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        background-color: var(--color-primary);
+        transition: width 0.3s;
+      }
+
+    </style>
   </head>
   <body>
+    
+    <!-- new3 sections full content  -->
+
+     <canvas id="webgl-canvas"></canvas>
     <!-- Preloader -->
     <!-- <div id="preloader">
       <div class="preloader-logo"><span class="air-text">Air</span> Finery</div>
@@ -560,8 +649,8 @@
       >
         <a href="#hero-section" class="scroll-link"
           ><img
-            src="./img/WhatsApp Image 2025-09-08 at 15.14.26_163dd658_2.jpg"
-            class="w-[140px]"
+            src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png"
+            class="h-10"
             alt=""
         /></a>
 
@@ -583,7 +672,8 @@
     </header>
 
     <!-- Section 1: The Interactive Reveal (Hero Section) -->
-    <section id="hero-section">
+    <section id="hero-section" class="relative">
+
       <!-- The background image that will be blurred/cleared -->
       <div class="hero-background"></div>
 
@@ -639,7 +729,7 @@
     >
       <video
         class="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="./video/VN20250912_112708.mp4"
+        src="./video/VN20250918_175645.mp4"
         autoplay
         muted
         loop
@@ -663,66 +753,153 @@
       </div>
     </section>
 
-    <!-- Trust & Legacy Section -->
-    <section class="relative  bg-white overflow-hidden">
-      <video autoplay loop muted playsinline class="absolute z-0 w-full object-contain z-0">
-                <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
-            </video>
-      <div class="container py-32 mx-auto px-6 text-center">
-        <h3
-          class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight reveal-on-scroll"
+
+             <!--- Scrolling section tech --->
+            <!-- Specs Section -->
+        
+    <section id="specs-section" class="relative ">
+                <div class="container  mx-auto px-6 bg-black/90 py-20 ">
+                  <div class="text-center reveal-on-scroll mb-16 md:mb-24">
+                    <h2 class="text-4xl md:text-6xl text-gray-50 font-bold tracking-tight">
+                      The Art of Purity:
+                      <span class="text-emerald-400">German Engineered.</span>
+                    </h2>
+                    <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-400">
+                      Our technology is a testament to meticulous engineering. We've
+                      harnessed decades of innovation to deliver the purest air
+                      possible, certified by the most rigorous standards.
+                    </p>
+                  </div>
+                  <div class="md:grid md:grid-cols-2 md:gap-24 items-start">
+                    <div class="md:sticky top-24 h-96 md:h-[80vh] mb-12 md:mb-0">
+                      <div id="product-viewer" class="relative w-full h-full">
+                        <img
+                          id="image-main"
+                          src="./img/Picsart_25-09-10_11-46-12-304.png"
+                          alt="Air Finery Purifier"
+                          class="product-image is-active"
+                        />
+                        <img
+                          id="image-filter"
+                          src="./img/Picsart_25-09-18_13-30-44-784.png"
+                          alt="Microfiber Media Highlight"
+                          class="product-image"
+                        />
+                        <img
+                          id="image-carbon"
+                          src="./img/Picsart_25-09-18_13-14-52-259.png"
+                          alt="Carbon Layer Highlight"
+                          class="product-image"
+                        />
+                        <img
+                          id="image-separation"
+                          src="./img/Picsart_25-09-18_13-26-57-834.png"
+                          alt="NO₂ Separation Highlight"
+                          class="product-image"
+                        />
+                      </div>
+                    </div>
+                    <div class="relative z-10">
+                      <div class="spec-item pl-8" data-highlight="image-main">
+                        <h3 class="text-3xl font-bold text-emerald-400">
+                          Certified Filtration
+                        </h3>
+                        <p class="mt-4 text-lg text-gray-400">
+                          PM2.5: 67% | PM10: 87% | NOx: 80% <br />
+                          These ratings are a guarantee of safer air, backed by rigorous
+                          German testing standards.
+                        </p>
+                      </div>
+                      <div class="spec-item pl-8" data-highlight="image-filter">
+                        <h3 class="text-3xl font-bold text-emerald-400">
+                          Advanced Microfiber Media
+                        </h3>
+                        <p class="mt-4 text-lg text-gray-400">
+                          Our filters utilize highly developed microfiber media, an
+                          innovation from German material science, for superior air
+                          purification and exceptional longevity.
+                        </p>
+                      </div>
+                      <div class="spec-item pl-8" data-highlight="image-carbon">
+                        <h3 class="text-3xl font-bold text-emerald-400">
+                          Activated Carbon Layer
+                        </h3>
+                        <p class="mt-4 text-lg text-gray-400">
+                          A specialized carbon layer, formulated in Germany, neutralizes
+                          NOx and other harmful gases with exceptional efficiency.
+                        </p>
+                      </div>
+                      <div class="spec-item pl-8" data-highlight="image-separation">
+                        <h3 class="text-3xl font-bold text-emerald-400">
+                          NO₂ Separation Tech
+                        </h3>
+                        <p class="mt-4 text-lg text-gray-400">
+                          Proprietary German technology captures and neutralizes NO₂
+                          through a sophisticated process of adsorption, binding, and
+                          catalytic reduction.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    </section>
+
+
+ <!-- dragging image reveal section -->
+    <section
+      class="py-20 md:py-32 select-none"
+      style="
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      "
+      id="Experience-section"
+    >
+      <div class="container mx-auto px-6 text-center">
+        <div class="reveal-on-scroll">
+          <h2
+            class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+          >
+            Experience the difference.
+          </h2>
+          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+            Drag the slider to see the immediate impact Air Finery has on your
+            environment. Go from hazy and polluted to crisp and clear in an
+            instant.
+          </p>
+        </div>
+        <div
+          class="mt-16 max-w-6xl mx-auto rounded-2xl shadow-2xl overflow-hidden reveal-on-scroll"
+          style="transition-delay: 200ms"
         >
-          <span class="text-green-700">Trusted </span> By
-        </h3>
-        <h3 class="text-lg text-gray-500 mt-6 reveal-on-scroll">
-          Industry Leaders & Experts
-        </h3>
-        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-          <div
-            class="flex justify-center reveal-on-scroll"
-            style="transition-delay: 100ms"
-          >
+          <div id="comparison-slider" class="comparison-slider aspect-video">
             <img
-              src="./img/Picsart_25-09-16_12-27-03-047.jpg"
-              alt="MANN+HUMMEL Logo"
-              class="h-[240px] rounded-2xl partner-logo"
+              src="./img/Group 4.png"
+              alt="Clear air"
+              class="comparison-image-after"
+              draggable="false"
+              loading="lazy"
+              decoding="async"
             />
-          </div>
-          <div
-            class="flex justify-center reveal-on-scroll"
-            style="transition-delay: 200ms"
-          >
             <img
-              src="./img/Picsart_25-09-16_11-39-38-753.jpg"
-              alt="IIT Delhi Logo"
-              class="h-[240px] rounded-2xl partner-logo"
+              src="./img/Group 3.png"
+              alt="Polluted air"
+              class="comparison-image-before"
+              draggable="false"
+              loading="lazy"
+              decoding="async"
             />
-          </div>
-          <div
-            class="flex justify-center reveal-on-scroll"
-            style="transition-delay: 300ms"
-          >
-            <img
-              src="./img/Picsart_25-09-16_11-43-37-710.jpg"
-              alt="GD Goenka Logo"
-              class="h-[240px] rounded-2xl partner-logo"
-            />
-          </div>
-          <div
-            class="flex justify-center reveal-on-scroll"
-            style="transition-delay: 400ms"
-          >
-            <img
-              src="./img/Picsart_25-09-16_11-44-19-434.jpg"
-              alt="OK Play Logo"
-              class="h-[240px] rounded-2xl partner-logo"
-            />
+            <div class="slider-handle"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- carousel section code  -->
+
+
+
+    
+   <!-- carousel section code  -->
 
     <!-- Applications Section - Stylish Carousel -->
     <section id="applications-section" class="py-20 md:py-28 overflow-hidden">
@@ -752,6 +929,7 @@
                 class="carousel-item active"
                 data-bg='linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(21, 128, 61, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f0f9ff" width="1200" height="800"/><circle fill="%23dbeafe" cx="200" cy="200" r="120"/><circle fill="%23bfdbfe" cx="800" cy="300" r="80"/><circle fill="%2393c5fd" cx="1000" cy="600" r="100"/></svg>&apos;)'
               >
+              <img src="./img/Picsart_25-09-18_17-11-33-250.png" class="h-[500px] ml-16" alt="">
                 <div class="carousel-content">
                   <div class="carousel-icon">
                     <svg
@@ -789,6 +967,7 @@
                 class="carousel-item"
                 data-bg='linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(29, 78, 216, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f8fafc" width="1200" height="800"/><rect fill="%23e2e8f0" x="100" y="100" width="200" height="300" rx="10"/><rect fill="%23cbd5e1" x="400" y="150" width="150" height="250" rx="8"/><rect fill="%2394a3b8" x="700" y="200" width="180" height="200" rx="6"/></svg>&apos;)'
               >
+              <img src="./img/Picsart_25-09-18_17-11-04-016.png" class="h-[500px] ml-16" alt="">
                 <div class="carousel-content">
                   <div class="carousel-icon">
                     <svg
@@ -825,6 +1004,7 @@
                 class="carousel-item"
                 data-bg='linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(124, 58, 237, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23fefce8" width="1200" height="800"/><polygon fill="%23fef3c7" points="300,200 400,100 500,200 500,400 300,400"/><polygon fill="%23fde68a" points="700,250 850,150 1000,250 1000,450 700,450"/><circle fill="%23fbbf24" cx="200" cy="600" r="60"/></svg>&apos;)'
               >
+              <img src="./img/Picsart_25-09-18_17-11-20-291.png" class="h-[500px] ml-16" alt="">
                 <div class="carousel-content">
                   <div class="carousel-icon">
                     <svg
@@ -906,168 +1086,70 @@
       </div>
     </section>
 
-    <!-- dragging image reveal section -->
-    <section
-      class="py-20 md:py-32 select-none"
-      style="
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      "
-      id="Experience-section"
-    >
-      <div class="container mx-auto px-6 text-center">
-        <div class="reveal-on-scroll">
-          <h2
-            class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
-          >
-            Experience the difference.
-          </h2>
-          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
-            Drag the slider to see the immediate impact Air Finery has on your
-            environment. Go from hazy and polluted to crisp and clear in an
-            instant.
-          </p>
-        </div>
-        <div
-          class="mt-16 max-w-6xl mx-auto rounded-2xl shadow-2xl overflow-hidden reveal-on-scroll"
-          style="transition-delay: 200ms"
+
+
+    <!-- Trust & Legacy Section -->
+    <section class="relative  bg-white overflow-hidden">
+      <video autoplay loop muted playsinline class="absolute z-0 w-full object-contain z-0">
+                <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
+            </video>
+      <div class="container py-32 mx-auto px-6 text-center">
+        <h3
+          class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight reveal-on-scroll"
         >
-          <div id="comparison-slider" class="comparison-slider aspect-video">
-            <img
-              src="./img/Group 4.png"
-              alt="Clear air"
-              class="comparison-image-after"
-              draggable="false"
-              loading="lazy"
-              decoding="async"
-            />
-            <img
-              src="./img/Group 3.png"
-              alt="Polluted air"
-              class="comparison-image-before"
-              draggable="false"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="slider-handle"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--- Scrolling section tech --->
-    <!-- Specs Section -->
-
-    <section id="specs-section" class="relative py-20 md:py-32 bg-white">
-      <canvas
-        id="air-canvas"
-        class="sticky top-0 left-0 w-full object-cover z-0"
-      ></canvas>
-      <div class="container mx-auto px-6">
-        <div class="text-center reveal-on-scroll mb-16 md:mb-24">
-          <h2
-            class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight"
+          <span class="text-green-700">Trusted </span> By
+        </h3>
+        <h3 class="text-lg text-gray-500 mt-6 reveal-on-scroll">
+          Industry Leaders & Experts
+        </h3>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 100ms"
           >
-            The Art of Purity:
-            <span class="text-green-700">German Engineered.</span>
-          </h2>
-          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
-            Born from a legacy of German innovation, every Air Finery unit is a
-            testament to meticulous engineering and unparalleled quality. We've
-            harnessed cutting-edge technology, perfected over decades, to
-            deliver the purest air possible.
-          </p>
-        </div>
-        <div class="md:grid md:grid-cols-2 md:gap-16 items-start">
-          <div class="md:sticky top-24 h-96 md:h-[70vh] mb-12 md:mb-0">
-            <div id="product-viewer" class="relative w-full h-full">
-              <img
-                id="image-filter"
-                src="./img/Picsart_25-09-12_16-55-18-947.jpg"
-                alt="Microfiber Media Highlight"
-                class="product-image"
-                style="opacity: 0"
-                loading="lazy"
-                decoding="async"
-              />
-              <img
-                id="image-carbon"
-                src="./img/Picsart_25-09-12_16-55-37-317.jpg"
-                alt="Carbon Layer Highlight"
-                class="product-image"
-                style="opacity: 0"
-                loading="lazy"
-                decoding="async"
-              />
-              <img
-                id="image-separation"
-                src="./img/Frame 3.png"
-                alt="NO₂ Separation Highlight"
-                class="product-image"
-                style="opacity: 0"
-                loading="lazy"
-                decoding="async"
-              />
-              <img
-                id="image-main"
-                src="./img/Picsart_25-09-10_11-46-12-304.png"
-                alt="Air Finery Purifier"
-                class="product-image"
-                style="opacity: 1"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+            <img
+              src="./img/Picsart_25-09-16_12-27-03-047.jpg"
+              alt="MANN+HUMMEL Logo"
+              class="h-[240px] rounded-2xl partner-logo"
+            />
           </div>
-          <div>
-            <div class="spec-item" data-highlight="image-filter">
-              <h3 class="text-3xl font-bold text-green-700">
-                Advanced Microfiber Media
-              </h3>
-              <p class="mt-4 text-lg text-gray-600">
-                Our filters utilize highly developed microfiber media, an
-                innovation from German material science, to achieve superior air
-                purification performance and exceptional longevity.
-              </p>
-            </div>
-            <div class="spec-item" data-highlight="image-carbon">
-              <h3 class="text-3xl font-bold text-green-700">
-                Activated Carbon Layer
-              </h3>
-              <p class="mt-4 text-lg text-gray-600">
-                A specialized activated carbon layer, formulated in Germany, is
-                used to neutralize NOx and other harmful gases with exceptional
-                efficiency, ensuring only clean air is circulated.
-              </p>
-            </div>
-            <div class="spec-item" data-highlight="image-separation">
-              <h3 class="text-3xl font-bold text-green-700">
-                NO₂ Separation Technology
-              </h3>
-              <p class="mt-4 text-lg text-gray-600">
-                Featuring proprietary German separation technology, the
-                activated carbon layer captures and neutralizes NO₂ through a
-                sophisticated process of physical adsorption, chemical binding,
-                and catalytic reduction.
-              </p>
-            </div>
-            <div class="spec-item" data-highlight="image-main">
-              <h3 class="text-3xl font-bold text-green-700">
-                Certified Filtration Efficiency
-              </h3>
-              <p class="mt-4 text-lg text-gray-600">
-                PM2.5: 67% <br />
-                PM10: 87% <br />
-                NOx: 80% <br /><br />
-                These ratings are a guarantee of safer air, backed by rigorous
-                German testing standards.
-              </p>
-            </div>
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 200ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_11-39-38-753.jpg"
+              alt="IIT Delhi Logo"
+              class="h-[240px] rounded-2xl partner-logo"
+            />
+          </div>
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 300ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_11-43-37-710.jpg"
+              alt="GD Goenka Logo"
+              class="h-[240px] rounded-2xl partner-logo"
+            />
+          </div>
+          <div
+            class="flex justify-center reveal-on-scroll"
+            style="transition-delay: 400ms"
+          >
+            <img
+              src="./img/Picsart_25-09-16_11-44-19-434.jpg"
+              alt="OK Play Logo"
+              class="h-[240px] rounded-2xl partner-logo"
+            />
           </div>
         </div>
       </div>
     </section>
+
+ 
+
+   
 
     <!---------------------------------------------------------------- ALL SCRIPTS ---------------------------------------------------------------->
     <!-- nessesory javascript -->
@@ -1394,159 +1476,216 @@
     <script>
       // --- Specs Section (Image changes on scroll) ---
       const specItems = document.querySelectorAll(".spec-item");
-      const productImages = document.querySelectorAll(".product-image");
+        const productImages = document.querySelectorAll(".product-image");
 
-      if (specItems.length > 0) {
-        const specObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-                const targetId = entry.target.dataset.highlight;
-                specItems.forEach((item) => item.classList.remove("is-active"));
-                entry.target.classList.add("is-active");
-                productImages.forEach((img) => {
-                  img.style.opacity = img.id === targetId ? "1" : "0";
-                });
-              }
-            });
-          },
-          {
-            threshold: 0.6,
-          }
-        );
-        specItems.forEach((item) => specObserver.observe(item));
+        if (specItems.length > 0) {
+          const specObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                  const targetId = entry.target.dataset.highlight;
+                  specItems.forEach((item) =>
+                    item.classList.remove("is-active")
+                  );
+                  entry.target.classList.add("is-active");
+                  productImages.forEach((img) => {
+                    img.classList.toggle("is-active", img.id === targetId);
+                  });
+                }
+              });
+            },
+            { threshold: 0.5 }
+          );
+          specItems.forEach((item) => specObserver.observe(item));
+        }
+    </script>
+
+
+<!-- new 3 javascript -->
+
+<script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+        }
       }
     </script>
 
-    <script>
-      class ProfessionalAirFlow {
-        constructor() {
-          this.canvas = document.getElementById("air-canvas");
-          if (!this.canvas) return;
+    <script type="module">
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-          this.ctx = this.canvas.getContext("2d");
-          this.particles = [];
-          this.mouse = { x: 0, y: 0 };
-          this.particleCount = 500;
-          this.init();
-          this.bindEvents();
-          this.animate();
+      // --- Preloader ---
+      const preloader = document.getElementById('preloader');
+      
+      // --- Content Sections ---
+      const contentBoxes = document.querySelectorAll('.content-box');
+
+      window.onload = function () {
+          setTimeout(() => {
+              if (preloader) preloader.classList.add('loaded');
+              if(contentBoxes.length > 0) contentBoxes[0].classList.add('is-visible');
+          }, 500);
+      };
+      setTimeout(() => {
+        if (preloader && !preloader.classList.contains('loaded')) preloader.classList.add('loaded');
+      }, 4000);
+
+      // --- Scene Setup ---
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl-canvas'), antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // --- Lighting ---
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+      
+      // --- GLB Model Loading ---
+      const gltfLoader = new GLTFLoader();
+      let model = null;
+      let fan, filter1, filter2; // Variables to hold named parts of the model
+
+      // IMPORTANT: Replace this URL with the path to your own GLB model
+      const modelURL = '';
+      // const modelURL = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb';
+      
+      gltfLoader.load(modelURL, (gltf) => {
+          model = gltf.scene;
+          model.scale.set(1.2, 1.2, 1.2);
+          model.position.y = 0;
+          model.position.x = 2;
+          
+          // IMPORTANT: These names MUST match the object names in your 3D model software (e.g., Blender)
+          // The placeholder model does not have these parts, so these will be null.
+          fan = model.getObjectByName('Fan_Assembly');
+          filter1 = model.getObjectByName('Filter_Pleated');
+          filter2 = model.getObjectByName('Filter_Carbon');
+
+          model.visible = false;
+          scene.add(model);
+        },
+        undefined,
+        (error) => {
+            console.error('An error happened while loading the model.', error);
         }
-
-        init() {
-          this.resizeCanvas();
-          this.createParticles();
-          window.addEventListener("resize", () => {
-            this.resizeCanvas();
-            this.createParticles();
-          });
+      );
+      
+      // --- Particle Systems ---
+      const createParticles = (count, color, size) => {
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(count * 3);
+        for (let i = 0; i < count * 3; i++) {
+          positions[i] = (Math.random() - 0.5) * 20;
         }
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const material = new THREE.PointsMaterial({
+          color: color,
+          size: size,
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
+        });
+        return new THREE.Points(geometry, material);
+      };
+      const pollutedParticles = createParticles(500, 0x52525b, 0.03);
+      const cleanParticles = createParticles(1000, 0x10b981, 0.05);
+      cleanParticles.visible = false;
+      scene.add(pollutedParticles, cleanParticles);
 
-        resizeCanvas() {
-          this.canvas.width = window.innerWidth;
-          this.canvas.height = window.innerHeight;
-        }
+      // --- Interactivity & Scroll Logic ---
+      let scrollY = window.scrollY;
+      let currentSection = 0;
+      const sizes = { width: window.innerWidth, height: window.innerHeight }
+      const mouse = new THREE.Vector2();
 
-        createParticles() {
-          this.particles = [];
-          for (let i = 0; i < this.particleCount; i++) {
-            this.particles.push({
-              x: Math.random() * this.canvas.width,
-              y: Math.random() * this.canvas.height,
-              baseX: 0,
-              baseY: 0,
-              vx: Math.random() * 0.3 + 0.1,
-              vy: (Math.random() - 0.5) * 0.2,
-              radius: Math.random() * 2 + 0.5,
-              alpha: Math.random() * 0.4 + 0.3,
-              phase: Math.random() * Math.PI * 2,
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY;
+        const newSection = Math.round(scrollY / sizes.height);
+        if (newSection !== currentSection) {
+            currentSection = newSection;
+            contentBoxes.forEach((box, index) => {
+                box.classList.toggle('is-visible', index === currentSection);
             });
-          }
-          this.particles.forEach((particle) => {
-            particle.baseX = particle.x;
-            particle.baseY = particle.y;
-          });
         }
+      });
+      
+      window.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / sizes.width) * 2 - 1;
+        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+      });
 
-        bindEvents() {
-          // Keep simple for background effect
-        }
+      const clock = new THREE.Clock();
+      const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+        const scrollPercent = (scrollY % sizes.height) / sizes.height;
+        
+        pollutedParticles.rotation.y = elapsedTime * 0.05;
+        cleanParticles.rotation.y = elapsedTime * 0.1;
 
-        updateParticles() {
-          this.particles.forEach((particle) => {
-            particle.phase += 0.01;
-            const drift = Math.sin(particle.phase) * 0.3;
+        // Animate model based on current section
+        if (model) {
+            // SCENE 0 & 1: Hide model
+            if (currentSection < 2) model.visible = false;
+            
+            // SCENE 2: Reveal & Explode
+            if (currentSection === 2) {
+                const progress = scrollPercent;
+                model.visible = true;
+                model.rotation.y = -Math.PI / 4 + progress * 2.5;
 
-            particle.x += particle.vx;
-            particle.y += particle.vy + drift;
-
-            if (particle.x > this.canvas.width + 20) {
-              particle.x = -20;
-              particle.y = Math.random() * this.canvas.height;
+                // Explode animation (only if parts are found)
+                if(fan) fan.position.z = progress * 1.5;
+                if(filter1) filter1.position.z = -progress * 1;
+                if(filter2) filter2.position.z = -progress * 1.5;
             }
-            if (particle.y > this.canvas.height + 20) {
-              particle.y = -20;
+            
+            // SCENE 3 & BEYOND: Hide model
+            if (currentSection >= 3) model.visible = false;
+
+            // Mouse parallax effect when visible
+            if(model.visible) {
+                 model.rotation.x += (mouse.y * 0.2 - model.rotation.x) * 0.02;
+                 model.rotation.y += (mouse.x * 0.2 - model.rotation.y) * 0.02;
             }
-            if (particle.y < -20) {
-              particle.y = this.canvas.height + 20;
-            }
-          });
+        }
+        
+        // Animate camera and particles
+        if (currentSection < 2) {
+             camera.position.z = 5 - (scrollY / (sizes.height * 2)) * 2;
+             pollutedParticles.visible = true;
+             cleanParticles.visible = false;
+        } else if (currentSection === 2) {
+            pollutedParticles.material.opacity = 1 - scrollPercent;
+            camera.position.z = 3;
+        } else if (currentSection >= 3) {
+            pollutedParticles.visible = false;
+            cleanParticles.visible = true;
+            const progress = currentSection === 3 ? scrollPercent : 1;
+            cleanParticles.material.opacity = progress;
+            camera.position.z = 3 + progress * 2;
         }
 
-        drawParticles() {
-          // FIXED: Clear canvas completely to remove trail effect
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+      
+      tick();
 
-          // Draw visible particles
-          this.particles.forEach((particle) => {
-            this.ctx.save();
-            this.ctx.globalAlpha = particle.alpha;
-            this.ctx.fillStyle = "rgba(150, 150, 150, 1)";
-            this.ctx.beginPath();
-            this.ctx.arc(
-              particle.x,
-              particle.y,
-              particle.radius,
-              0,
-              Math.PI * 2
-            );
-            this.ctx.fill();
-            this.ctx.restore();
-          });
-
-          this.drawConnections();
-        }
-
-        drawConnections() {
-          this.particles.forEach((particle, i) => {
-            this.particles.slice(i + 1).forEach((otherParticle) => {
-              const dx = particle.x - otherParticle.x;
-              const dy = particle.y - otherParticle.y;
-              const distance = Math.sqrt(dx * dx + dy * dy);
-
-              if (distance < 60) {
-                this.ctx.save();
-                this.ctx.globalAlpha = ((60 - distance) / 60) * 0.15;
-                this.ctx.strokeStyle = "rgba(77, 124, 15, 0)";
-                this.ctx.beginPath();
-                this.ctx.moveTo(particle.x, particle.y);
-                this.ctx.lineTo(otherParticle.x, otherParticle.y);
-                this.ctx.stroke();
-                this.ctx.restore();
-              }
-            });
-          });
-        }
-
-        animate() {
-          this.updateParticles();
-          this.drawParticles();
-          requestAnimationFrame(() => this.animate());
-        }
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        new ProfessionalAirFlow();
+      // --- Resize Handler ---
+      window.addEventListener('resize', () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       });
     </script>
   </body>
