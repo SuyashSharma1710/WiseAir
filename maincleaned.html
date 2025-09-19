@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive 3D Scroll with Particles</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1e1e1e; /* Dark background */
+            color: white;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+            sans-serif;
+            overscroll-behavior: none;
+        }
+
+        /* --- Canvas & Content --- */
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: -1; /* Canvas is on top of the background */
+        }
+
+        #content-container {
+            position: relative;
+            z-index: 2; /* Text content is on top of the canvas */
+        }
+
+        .content-section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 4rem 1.5rem;
+            box-sizing: border-box; /* Ensures padding doesn't add to height */
+        }
+
+        /* --- Text Styling & Animation --- */
+        .content-box {
+            max-width: 28rem;
+            opacity: 0; /* Hidden by default */
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .content-box.is-visible {
+            opacity: 1; /* Fades in when active */
+            transform: translateY(0);
+        }
+
+        .section-heading {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .section-subheading {
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            margin-top: 1.5rem;
+            color: #a1a1aa; /* Zinc 400 */
+        }
+
+        /* --- Layout Helpers --- */
+        .justify-center { justify-content: center; }
+        .justify-start { justify-content: flex-start; }
+        .justify-end { justify-content: flex-end; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .text-emerald-400 { color: #34d399; }
+    </style>
+</head>
+<body>
+    <canvas id="webgl-canvas"></canvas>
+
+    <div id="content-container">
+      <section id="section-hero" class="content-section justify-center">
+        <div class="content-box text-center">
+          <h1 class="section-heading">Define Your Atmosphere</h1>
+          <p class="section-subheading">
+            A revolutionary approach to air purification. We combine German
+            engineering with sophisticated design to create healthier, more
+            productive, and prestigious environments.
+          </p>
+        </div>
+      </section>
+
+      <section id="section-problem" class="content-section justify-start">
+        <div class="content-box text-left">
+          <h2 class="section-heading">The Invisible Compromise</h2>
+          <p class="section-subheading">
+            Your space is constantly infiltrated by microscopic pollutants. This
+            unseen threat impacts wellness, perception, and performance,
+            silently defining the experience of everyone who enters.
+          </p>
+        </div>
+      </section>
+
+      <section id="section-solution" class="content-section justify-end">
+        <div class="content-box text-left">
+          <h2 class="section-heading">
+            <span class="text-emerald-400">Purity</span>, Engineered.
+          </h2>
+          <p class="section-subheading">
+            The AirFinery unit is more than a purifier; it's a statement of
+            quality. As you scroll, explore the technology that sets a new
+            standard for clean air.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+      // --- Scene Setup ---
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById("webgl-canvas"),
+        antialias: true,
+        alpha: true,
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // --- Lighting ---
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+      
+      // --- Particle System (ADDED BACK) ---
+      const createParticles = (count, color, size) => {
+          const geometry = new THREE.BufferGeometry();
+          const positions = new Float32Array(count * 3);
+          for (let i = 0; i < count * 3; i++) {
+              positions[i] = (Math.random() - 0.5) * 15;
+          }
+          geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+          const material = new THREE.PointsMaterial({ color, size, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+          return new THREE.Points(geometry, material);
+      };
+      const particles1 = createParticles(150, 0x52525b, 0.03);
+      const particles2 = createParticles(200, 0x34d399, 0.05); // Changed color to match theme
+      scene.add(particles1, particles2);
+
+      // --- GLB Model Loading ---
+      const gltfLoader = new GLTFLoader();
+      let model = null;
+      const modelURL = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb";
+      gltfLoader.load(modelURL, (gltf) => {
+        model = gltf.scene;
+        model.scale.set(1.5, 1.5, 1.5);
+        model.position.y = -1;
+        scene.add(model);
+      });
+
+      // --- Interactivity & Scroll Logic ---
+      const contentBoxes = document.querySelectorAll(".content-box");
+      const sizes = { width: window.innerWidth, height: window.innerHeight };
+      const mouse = new THREE.Vector2();
+      let scrollY = window.scrollY;
+      let currentSection = 0;
+
+      window.addEventListener("scroll", () => {
+        scrollY = window.scrollY;
+        const newSection = Math.round(scrollY / sizes.height);
+        if (newSection !== currentSection) {
+          currentSection = newSection;
+          contentBoxes.forEach((box, index) => {
+            box.classList.toggle("is-visible", index === currentSection);
+          });
+        }
+      });
+      
+      if(contentBoxes.length > 0) {
+        contentBoxes[0].classList.add("is-visible");
+      }
+
+      window.addEventListener("mousemove", (event) => {
+        mouse.x = (event.clientX / sizes.width) * 2 - 1;
+        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+      });
+
+      // --- Animation Loop ---
+      const clock = new THREE.Clock();
+      const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+
+        // Animate Particles (ADDED BACK)
+        particles1.rotation.y = elapsedTime * 0.05;
+        particles2.rotation.y = -elapsedTime * 0.08;
+
+        // Animate Model
+        if (model) {
+          let targetX = 0;
+          let targetY = -1;
+          
+          if (currentSection === 0) targetX = 0;
+          else if (currentSection === 1) targetX = 3.5;
+          else if (currentSection === 2) targetX = -3.5;
+          else targetY = 10;
+
+          model.position.x += (targetX - model.position.x) * 0.05;
+          model.position.y += (targetY - model.position.y) * 0.05;
+
+          const overallProgress = scrollY / (sizes.height * (contentBoxes.length - 1));
+          const scrollRotationY = Math.PI * 2 * overallProgress;
+          const targetRotationX = mouse.y * 0.2;
+          const targetRotationY = scrollRotationY + mouse.x * 0.2;
+
+          model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
+          model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+        }
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+
+      tick();
+
+      // --- Resize Handler ---
+      window.addEventListener("resize", () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+    </script>
+</body>
+</html>

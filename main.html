@@ -509,27 +509,12 @@
         opacity: 1;
         transform: scale(1);
       }
-
     </style>
-
-    <!-- <style>
-      #air-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0; /* behind content */
-        pointer-events: none; /* allow clicks through */
-        background: transparent;
-      }
-    </style> -->
-
 
     <!-- new3 component  -->
 
     <style>
-       /* --- Global Elements --- */
+      /* --- Global Elements --- */
       #webgl-canvas {
         position: fixed;
         top: 0;
@@ -538,107 +523,66 @@
         z-index: 0;
       }
 
-      .content-section {
+      #content-container {
         position: relative;
-        z-index: 1;
+        z-index:-1; /* Text content is on top of the canvas */
+      }
+
+      .content-section {
         min-height: 100vh;
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
         padding: 4rem 1.5rem;
-        color: white;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        box-sizing: border-box; /* Ensures padding doesn't add to height */
       }
-      
+
+      /* --- Text Styling & Animation --- */
       .content-box {
-        max-width: 48rem;
-        text-align: center;
-        opacity: 0;
+        max-width: 28rem;
+        opacity: 1; /* Hidden by default */
         transform: translateY(30px);
         transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        z-index: 10;
       }
+
       .content-box.is-visible {
-          opacity: 1;
-          transform: translateY(0);
+        opacity: 1; /* Fades in when active */
+        transform: translateY(0);
       }
-      
-      .light-section {
-          background-color: #ffffff;
-          color: var(--color-text-light);
-          text-shadow: none;
-      }
-      
+
       .section-heading {
-          font-size: clamp(2.5rem, 6vw, 4rem);
-          font-weight: 900;
-          line-height: 1.1;
-          letter-spacing: -0.025em;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 900;
+        line-height: 1.1;
+        color: #f0f2f5;
+        letter-spacing: -0.025em;
       }
-      
+
       .section-subheading {
-          font-size: clamp(1.125rem, 2vw, 1.25rem);
-          margin-top: 1.5rem;
-          max-width: 42rem;
-          margin-left: auto;
-          margin-right: auto;
+        font-size: clamp(1.125rem, 2vw, 1.25rem);
+        margin-top: 1.5rem;
+        color: #a1a1aa; /* Zinc 400 */
       }
+    </style>
 
-      /* --- Preloader --- */
-      #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--color-secondary);
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.5s ease-in-out;
+    <!-- trusted partner section style -->
+    <style>
+      .partner-logo {
+        transition: transform 0.3s ease, filter 0.3s ease;
+        filter: grayscale(100%) opacity(0.6);
       }
-      #preloader.loaded {
-        opacity: 0;
-        pointer-events: none;
+      .partner-logo:hover {
+        transform: scale(1.05);
+        filter: grayscale(0%) opacity(1);
       }
-      .loader-bar {
-        width: 150px;
-        height: 2px;
-        background-color: rgba(255,255,255,0.2);
-        margin-top: 1rem;
-        position: relative;
-        overflow: hidden;
-      }
-      .loader-progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0;
-        background-color: var(--color-primary);
-        transition: width 0.3s;
-      }
-
     </style>
   </head>
   <body>
-    
     <!-- new3 sections full content  -->
 
-     <canvas id="webgl-canvas"></canvas>
-    <!-- Preloader -->
-    <!-- <div id="preloader">
-      <div class="preloader-logo"><span class="air-text">Air</span> Finery</div>
-      <div class="loading-animation"></div>
-      <div class="loading-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-      <div class="preloader-text">Purifying your experience...</div>
-    </div> -->
+    <canvas id="webgl-canvas"></canvas>
 
     <!-- header section code -->
     <header
@@ -673,7 +617,6 @@
 
     <!-- Section 1: The Interactive Reveal (Hero Section) -->
     <section id="hero-section" class="relative">
-
       <!-- The background image that will be blurred/cleared -->
       <div class="hero-background"></div>
 
@@ -753,99 +696,99 @@
       </div>
     </section>
 
+    <!--- Scrolling section tech --->
+    <!-- Specs Section -->
 
-             <!--- Scrolling section tech --->
-            <!-- Specs Section -->
-        
-    <section id="specs-section" class="relative ">
-                <div class="container  mx-auto px-6 bg-black/90 py-20 ">
-                  <div class="text-center reveal-on-scroll mb-16 md:mb-24">
-                    <h2 class="text-4xl md:text-6xl text-gray-50 font-bold tracking-tight">
-                      The Art of Purity:
-                      <span class="text-emerald-400">German Engineered.</span>
-                    </h2>
-                    <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-400">
-                      Our technology is a testament to meticulous engineering. We've
-                      harnessed decades of innovation to deliver the purest air
-                      possible, certified by the most rigorous standards.
-                    </p>
-                  </div>
-                  <div class="md:grid md:grid-cols-2 md:gap-24 items-start">
-                    <div class="md:sticky top-24 h-96 md:h-[80vh] mb-12 md:mb-0">
-                      <div id="product-viewer" class="relative w-full h-full">
-                        <img
-                          id="image-main"
-                          src="./img/Picsart_25-09-10_11-46-12-304.png"
-                          alt="Air Finery Purifier"
-                          class="product-image is-active"
-                        />
-                        <img
-                          id="image-filter"
-                          src="./img/Picsart_25-09-18_13-30-44-784.png"
-                          alt="Microfiber Media Highlight"
-                          class="product-image"
-                        />
-                        <img
-                          id="image-carbon"
-                          src="./img/Picsart_25-09-18_13-14-52-259.png"
-                          alt="Carbon Layer Highlight"
-                          class="product-image"
-                        />
-                        <img
-                          id="image-separation"
-                          src="./img/Picsart_25-09-18_13-26-57-834.png"
-                          alt="NO₂ Separation Highlight"
-                          class="product-image"
-                        />
-                      </div>
-                    </div>
-                    <div class="relative z-10">
-                      <div class="spec-item pl-8" data-highlight="image-main">
-                        <h3 class="text-3xl font-bold text-emerald-400">
-                          Certified Filtration
-                        </h3>
-                        <p class="mt-4 text-lg text-gray-400">
-                          PM2.5: 67% | PM10: 87% | NOx: 80% <br />
-                          These ratings are a guarantee of safer air, backed by rigorous
-                          German testing standards.
-                        </p>
-                      </div>
-                      <div class="spec-item pl-8" data-highlight="image-filter">
-                        <h3 class="text-3xl font-bold text-emerald-400">
-                          Advanced Microfiber Media
-                        </h3>
-                        <p class="mt-4 text-lg text-gray-400">
-                          Our filters utilize highly developed microfiber media, an
-                          innovation from German material science, for superior air
-                          purification and exceptional longevity.
-                        </p>
-                      </div>
-                      <div class="spec-item pl-8" data-highlight="image-carbon">
-                        <h3 class="text-3xl font-bold text-emerald-400">
-                          Activated Carbon Layer
-                        </h3>
-                        <p class="mt-4 text-lg text-gray-400">
-                          A specialized carbon layer, formulated in Germany, neutralizes
-                          NOx and other harmful gases with exceptional efficiency.
-                        </p>
-                      </div>
-                      <div class="spec-item pl-8" data-highlight="image-separation">
-                        <h3 class="text-3xl font-bold text-emerald-400">
-                          NO₂ Separation Tech
-                        </h3>
-                        <p class="mt-4 text-lg text-gray-400">
-                          Proprietary German technology captures and neutralizes NO₂
-                          through a sophisticated process of adsorption, binding, and
-                          catalytic reduction.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <section id="specs-section" class="relative">
+      <div class="container mx-auto px-6 bg-black/90 py-20">
+        <div class="text-center reveal-on-scroll mb-16 md:mb-24">
+          <h2
+            class="text-4xl md:text-6xl text-gray-50 font-bold tracking-tight"
+          >
+            The Art of Purity:
+            <span class="text-emerald-400">German Engineered.</span>
+          </h2>
+          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-400">
+            Our technology is a testament to meticulous engineering. We've
+            harnessed decades of innovation to deliver the purest air possible,
+            certified by the most rigorous standards.
+          </p>
+        </div>
+        <div class="md:grid md:grid-cols-2 md:gap-24 items-start">
+          <div class="md:sticky top-24 h-96 md:h-[80vh] mb-12 md:mb-0">
+            <div id="product-viewer" class="relative w-full h-full">
+              <img
+                id="image-main"
+                src="./img/Picsart_25-09-10_11-46-12-304.png"
+                alt="Air Finery Purifier"
+                class="product-image is-active"
+              />
+              <img
+                id="image-filter"
+                src="./img/Picsart_25-09-18_13-30-44-784.png"
+                alt="Microfiber Media Highlight"
+                class="product-image"
+              />
+              <img
+                id="image-carbon"
+                src="./img/Picsart_25-09-18_13-14-52-259.png"
+                alt="Carbon Layer Highlight"
+                class="product-image"
+              />
+              <img
+                id="image-separation"
+                src="./img/Picsart_25-09-18_13-26-57-834.png"
+                alt="NO₂ Separation Highlight"
+                class="product-image"
+              />
+            </div>
+          </div>
+          <div class="relative z-10">
+            <div class="spec-item pl-8" data-highlight="image-main">
+              <h3 class="text-3xl font-bold text-emerald-400">
+                Certified Filtration
+              </h3>
+              <p class="mt-4 text-lg text-gray-400">
+                PM2.5: 67% | PM10: 87% | NOx: 80% <br />
+                These ratings are a guarantee of safer air, backed by rigorous
+                German testing standards.
+              </p>
+            </div>
+            <div class="spec-item pl-8" data-highlight="image-filter">
+              <h3 class="text-3xl font-bold text-emerald-400">
+                Advanced Microfiber Media
+              </h3>
+              <p class="mt-4 text-lg text-gray-400">
+                Our filters utilize highly developed microfiber media, an
+                innovation from German material science, for superior air
+                purification and exceptional longevity.
+              </p>
+            </div>
+            <div class="spec-item pl-8" data-highlight="image-carbon">
+              <h3 class="text-3xl font-bold text-emerald-400">
+                Activated Carbon Layer
+              </h3>
+              <p class="mt-4 text-lg text-gray-400">
+                A specialized carbon layer, formulated in Germany, neutralizes
+                NOx and other harmful gases with exceptional efficiency.
+              </p>
+            </div>
+            <div class="spec-item pl-8" data-highlight="image-separation">
+              <h3 class="text-3xl font-bold text-emerald-400">
+                NO₂ Separation Tech
+              </h3>
+              <p class="mt-4 text-lg text-gray-400">
+                Proprietary German technology captures and neutralizes NO₂
+                through a sophisticated process of adsorption, binding, and
+                catalytic reduction.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-
- <!-- dragging image reveal section -->
+    <!-- dragging image reveal section -->
     <section
       class="py-20 md:py-32 select-none"
       style="
@@ -895,11 +838,46 @@
       </div>
     </section>
 
+    <div id="content-container" class="reveal-on-scroll bg-black/90">
+      <section id="section-hero"
+        class="content-section reveal-on-scroll justify-center"
+      >
+        <div class="content-box text-center">
+          <h1 class="section-heading">Define Your Atmosphere</h1>
+          <p class="section-subheading">
+            A revolutionary approach to air purification. We combine German
+            engineering with sophisticated design to create healthier, more
+            productive, and prestigious environments.
+          </p>
+        </div>
+      </section>
 
+      <section id="section-problem" class="content-section justify-start">
+        <div class="content-box text-left">
+          <h2 class="section-heading">The Invisible Compromise</h2>
+          <p class="section-subheading">
+            Your space is constantly infiltrated by microscopic pollutants. This
+            unseen threat impacts wellness, perception, and performance,
+            silently defining the experience of everyone who enters.
+          </p>
+        </div>
+      </section>
 
+      <section id="section-solution" class="content-section justify-end">
+        <div class="content-box text-left">
+          <h2 class="section-heading">
+            <span class="text-emerald-400">Purity</span>, Engineered.
+          </h2>
+          <p class="section-subheading">
+            The AirFinery unit is more than a purifier; it's a statement of
+            quality. As you scroll, explore the technology that sets a new
+            standard for clean air.
+          </p>
+        </div>
+      </section>
+    </div>
 
-    
-   <!-- carousel section code  -->
+    <!-- carousel section code  -->
 
     <!-- Applications Section - Stylish Carousel -->
     <section id="applications-section" class="py-20 md:py-28 overflow-hidden">
@@ -929,7 +907,11 @@
                 class="carousel-item active"
                 data-bg='linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(21, 128, 61, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f0f9ff" width="1200" height="800"/><circle fill="%23dbeafe" cx="200" cy="200" r="120"/><circle fill="%23bfdbfe" cx="800" cy="300" r="80"/><circle fill="%2393c5fd" cx="1000" cy="600" r="100"/></svg>&apos;)'
               >
-              <img src="./img/Picsart_25-09-18_17-11-33-250.png" class="h-[500px] ml-16" alt="">
+                <img
+                  src="./img/Picsart_25-09-18_17-11-33-250.png"
+                  class="h-[500px] ml-16"
+                  alt=""
+                />
                 <div class="carousel-content">
                   <div class="carousel-icon">
                     <svg
@@ -967,7 +949,11 @@
                 class="carousel-item"
                 data-bg='linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(29, 78, 216, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f8fafc" width="1200" height="800"/><rect fill="%23e2e8f0" x="100" y="100" width="200" height="300" rx="10"/><rect fill="%23cbd5e1" x="400" y="150" width="150" height="250" rx="8"/><rect fill="%2394a3b8" x="700" y="200" width="180" height="200" rx="6"/></svg>&apos;)'
               >
-              <img src="./img/Picsart_25-09-18_17-11-04-016.png" class="h-[500px] ml-16" alt="">
+                <img
+                  src="./img/Picsart_25-09-18_17-11-04-016.png"
+                  class="h-[500px] ml-16"
+                  alt=""
+                />
                 <div class="carousel-content">
                   <div class="carousel-icon">
                     <svg
@@ -1004,7 +990,11 @@
                 class="carousel-item"
                 data-bg='linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(124, 58, 237, 0.9)), url(&apos;data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23fefce8" width="1200" height="800"/><polygon fill="%23fef3c7" points="300,200 400,100 500,200 500,400 300,400"/><polygon fill="%23fde68a" points="700,250 850,150 1000,250 1000,450 700,450"/><circle fill="%23fbbf24" cx="200" cy="600" r="60"/></svg>&apos;)'
               >
-              <img src="./img/Picsart_25-09-18_17-11-20-291.png" class="h-[500px] ml-16" alt="">
+                <img
+                  src="./img/Picsart_25-09-18_17-11-20-291.png"
+                  class="h-[500px] ml-16"
+                  alt=""
+                />
                 <div class="carousel-content">
                   <div class="carousel-icon">
                     <svg
@@ -1086,13 +1076,11 @@
       </div>
     </section>
 
-
-
     <!-- Trust & Legacy Section -->
-    <section class="relative  bg-white overflow-hidden">
-      <video autoplay loop muted playsinline class="absolute z-0 w-full object-contain z-0">
+    <section class="relative bg-transparent overflow-hidden">
+      <!-- <video autoplay loop muted playsinline class="absolute z-0 w-full object-contain z-0">
                 <source src="./video/Black_Tower_Draws_Fog.mp4" type="video/mp4" />
-            </video>
+            </video> -->
       <div class="container py-32 mx-auto px-6 text-center">
         <h3
           class="text-4xl md:text-6xl font-bold text-gray-800 tracking-tight reveal-on-scroll"
@@ -1108,9 +1096,9 @@
             style="transition-delay: 100ms"
           >
             <img
-              src="./img/Picsart_25-09-16_12-27-03-047.jpg"
+              src="./img/Picsart_25-09-16_12-27-03-047.png"
               alt="MANN+HUMMEL Logo"
-              class="h-[240px] rounded-2xl partner-logo"
+              class="h-[180px] rounded-2xl partner-logo"
             />
           </div>
           <div
@@ -1118,9 +1106,9 @@
             style="transition-delay: 200ms"
           >
             <img
-              src="./img/Picsart_25-09-16_11-39-38-753.jpg"
+              src="./img/Picsart_25-09-16_11-39-38-753.png"
               alt="IIT Delhi Logo"
-              class="h-[240px] rounded-2xl partner-logo"
+              class="h-[180px] rounded-2xl partner-logo"
             />
           </div>
           <div
@@ -1128,9 +1116,9 @@
             style="transition-delay: 300ms"
           >
             <img
-              src="./img/Picsart_25-09-16_11-43-37-710.jpg"
+              src="./img/Picsart_25-09-16_11-43-37-710.png"
               alt="GD Goenka Logo"
-              class="h-[240px] rounded-2xl partner-logo"
+              class="h-[180px] rounded-2xl partner-logo"
             />
           </div>
           <div
@@ -1138,39 +1126,19 @@
             style="transition-delay: 400ms"
           >
             <img
-              src="./img/Picsart_25-09-16_11-44-19-434.jpg"
+              src="./img/Picsart_25-09-16_11-44-19-434.png"
               alt="OK Play Logo"
-              class="h-[240px] rounded-2xl partner-logo"
+              class="h-[180px] rounded-2xl partner-logo"
             />
           </div>
         </div>
       </div>
     </section>
 
- 
-
-   
-
     <!---------------------------------------------------------------- ALL SCRIPTS ---------------------------------------------------------------->
     <!-- nessesory javascript -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // --- General Reveal on Scroll ---
-        const revealElements = document.querySelectorAll(".reveal-on-scroll");
-        const revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-              }
-            });
-          },
-          {
-            threshold: 0.1,
-          }
-        );
-        revealElements.forEach((el) => revealObserver.observe(el));
-
         // --- Video Autoplay on Scroll ---
         const videos = document.querySelectorAll("video");
         const videoObserver = new IntersectionObserver(
@@ -1186,23 +1154,6 @@
           { threshold: 0.25 }
         );
         videos.forEach((video) => videoObserver.observe(video));
-      });
-
-      // --- Preloader Logic ---
-      window.addEventListener("load", function () {
-        const preloader = document.getElementById("preloader");
-        const mainContent = document.querySelector(".main-content");
-
-        // Minimum loading time of 2 seconds for better UX
-        setTimeout(() => {
-          preloader.classList.add("fade-out");
-          mainContent.classList.add("loaded");
-
-          // Start hero animations after preloader is gone
-          setTimeout(() => {
-            initHeroAnimations();
-          }, 800);
-        }, 2000);
       });
     </script>
 
@@ -1344,15 +1295,15 @@
 
           // Update active states
           items.forEach((item, index) => {
-        item.classList.toggle("active", index === currentSlide);
+            item.classList.toggle("active", index === currentSlide);
           });
 
           indicators.forEach((indicator, index) => {
-        indicator.classList.toggle("active", index === currentSlide);
+            indicator.classList.toggle("active", index === currentSlide);
           });
 
           setTimeout(() => {
-        isAnimating = false;
+            isAnimating = false;
           }, 800);
         }
 
@@ -1414,11 +1365,11 @@
           const diff = startX - moveX;
 
           if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
+            if (diff > 0) {
+              nextSlide();
+            } else {
+              prevSlide();
+            }
           }
 
           startAutoPlay();
@@ -1427,9 +1378,9 @@
         // Keyboard navigation
         document.addEventListener("keydown", (e) => {
           if (e.key === "ArrowLeft") {
-        prevSlide();
+            prevSlide();
           } else if (e.key === "ArrowRight") {
-        nextSlide();
+            nextSlide();
           }
         });
       });
@@ -1476,34 +1427,31 @@
     <script>
       // --- Specs Section (Image changes on scroll) ---
       const specItems = document.querySelectorAll(".spec-item");
-        const productImages = document.querySelectorAll(".product-image");
+      const productImages = document.querySelectorAll(".product-image");
 
-        if (specItems.length > 0) {
-          const specObserver = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                  const targetId = entry.target.dataset.highlight;
-                  specItems.forEach((item) =>
-                    item.classList.remove("is-active")
-                  );
-                  entry.target.classList.add("is-active");
-                  productImages.forEach((img) => {
-                    img.classList.toggle("is-active", img.id === targetId);
-                  });
-                }
-              });
-            },
-            { threshold: 0.5 }
-          );
-          specItems.forEach((item) => specObserver.observe(item));
-        }
+      if (specItems.length > 0) {
+        const specObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                const targetId = entry.target.dataset.highlight;
+                specItems.forEach((item) => item.classList.remove("is-active"));
+                entry.target.classList.add("is-active");
+                productImages.forEach((img) => {
+                  img.classList.toggle("is-active", img.id === targetId);
+                });
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+        specItems.forEach((item) => specObserver.observe(item));
+      }
     </script>
 
+    <!-- new 3 javascript -->
 
-<!-- new 3 javascript -->
-
-<script type="importmap">
+    <script type="importmap">
       {
         "imports": {
           "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
@@ -1513,180 +1461,171 @@
     </script>
 
     <script type="module">
-      import * as THREE from 'three';
-      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import * as THREE from "three";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-      // --- Preloader ---
-      const preloader = document.getElementById('preloader');
-      
-      // --- Content Sections ---
-      const contentBoxes = document.querySelectorAll('.content-box');
+  // --- Scene Setup ---
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = 5;
+  const renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById("webgl-canvas"),
+    antialias: true,
+    alpha: true,
+  });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      window.onload = function () {
-          setTimeout(() => {
-              if (preloader) preloader.classList.add('loaded');
-              if(contentBoxes.length > 0) contentBoxes[0].classList.add('is-visible');
-          }, 500);
-      };
-      setTimeout(() => {
-        if (preloader && !preloader.classList.contains('loaded')) preloader.classList.add('loaded');
-      }, 4000);
+  // --- Lighting ---
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  directionalLight.position.set(5, 5, 5);
+  scene.add(directionalLight);
 
-      // --- Scene Setup ---
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 5;
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl-canvas'), antialias: true, alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // --- Particle System (Unaffected, will show on whole page) ---
+  const createParticles = (count, color, size) => {
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 15;
+    }
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+    const material = new THREE.PointsMaterial({
+      color,
+      size,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    return new THREE.Points(geometry, material);
+  };
+  const particles1 = createParticles(150, 0x52525b, 0.03);
+  const particles2 = createParticles(200, 0x34d399, 0.05);
+  scene.add(particles1, particles2);
 
-      // --- Lighting ---
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-      scene.add(ambientLight);
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-      directionalLight.position.set(5, 5, 5);
-      scene.add(directionalLight);
-      
-      // --- GLB Model Loading ---
-      const gltfLoader = new GLTFLoader();
-      let model = null;
-      let fan, filter1, filter2; // Variables to hold named parts of the model
+  // --- GLB Model Loading ---
+  const gltfLoader = new GLTFLoader();
+  let model = null;
+  const modelURL =
+    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb";
+  gltfLoader.load(modelURL, (gltf) => {
+    model = gltf.scene;
+    model.scale.set(1.5, 1.5, 1.5);
+    model.position.y = -1;
+    model.visible = false; // --- MODIFICATION: Start with model hidden
+    scene.add(model);
+  });
 
-      // IMPORTANT: Replace this URL with the path to your own GLB model
-      const modelURL = '';
-      // const modelURL = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb';
-      
-      gltfLoader.load(modelURL, (gltf) => {
-          model = gltf.scene;
-          model.scale.set(1.2, 1.2, 1.2);
-          model.position.y = 0;
-          model.position.x = 2;
-          
-          // IMPORTANT: These names MUST match the object names in your 3D model software (e.g., Blender)
-          // The placeholder model does not have these parts, so these will be null.
-          fan = model.getObjectByName('Fan_Assembly');
-          filter1 = model.getObjectByName('Filter_Pleated');
-          filter2 = model.getObjectByName('Filter_Carbon');
+  // --- Interactivity & Scroll Logic ---
+  const contentBoxes = document.querySelectorAll(".content-box");
+  const sizes = { width: window.innerWidth, height: window.innerHeight };
+  const mouse = new THREE.Vector2();
+  
+  // --- MODIFICATION START: Get the container and use Intersection Observer ---
+  const container = document.getElementById("content-container");
 
-          model.visible = false;
-          scene.add(model);
-        },
-        undefined,
-        (error) => {
-            console.error('An error happened while loading the model.', error);
-        }
-      );
-      
-      // --- Particle Systems ---
-      const createParticles = (count, color, size) => {
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(count * 3);
-        for (let i = 0; i < count * 3; i++) {
-          positions[i] = (Math.random() - 0.5) * 20;
-        }
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const material = new THREE.PointsMaterial({
-          color: color,
-          size: size,
-          transparent: true,
-          blending: THREE.AdditiveBlending,
-          depthWrite: false
-        });
-        return new THREE.Points(geometry, material);
-      };
-      const pollutedParticles = createParticles(500, 0x52525b, 0.03);
-      const cleanParticles = createParticles(1000, 0x10b981, 0.05);
-      cleanParticles.visible = false;
-      scene.add(pollutedParticles, cleanParticles);
-
-      // --- Interactivity & Scroll Logic ---
-      let scrollY = window.scrollY;
-      let currentSection = 0;
-      const sizes = { width: window.innerWidth, height: window.innerHeight }
-      const mouse = new THREE.Vector2();
-
-      window.addEventListener('scroll', () => {
-        scrollY = window.scrollY;
-        const newSection = Math.round(scrollY / sizes.height);
-        if (newSection !== currentSection) {
-            currentSection = newSection;
-            contentBoxes.forEach((box, index) => {
-                box.classList.toggle('is-visible', index === currentSection);
-            });
-        }
-      });
-      
-      window.addEventListener('mousemove', (event) => {
-        mouse.x = (event.clientX / sizes.width) * 2 - 1;
-        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
-      });
-
-      const clock = new THREE.Clock();
-      const tick = () => {
-        const elapsedTime = clock.getElapsedTime();
-        const scrollPercent = (scrollY % sizes.height) / sizes.height;
-        
-        pollutedParticles.rotation.y = elapsedTime * 0.05;
-        cleanParticles.rotation.y = elapsedTime * 0.1;
-
-        // Animate model based on current section
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
         if (model) {
-            // SCENE 0 & 1: Hide model
-            if (currentSection < 2) model.visible = false;
-            
-            // SCENE 2: Reveal & Explode
-            if (currentSection === 2) {
-                const progress = scrollPercent;
-                model.visible = true;
-                model.rotation.y = -Math.PI / 4 + progress * 2.5;
-
-                // Explode animation (only if parts are found)
-                if(fan) fan.position.z = progress * 1.5;
-                if(filter1) filter1.position.z = -progress * 1;
-                if(filter2) filter2.position.z = -progress * 1.5;
-            }
-            
-            // SCENE 3 & BEYOND: Hide model
-            if (currentSection >= 3) model.visible = false;
-
-            // Mouse parallax effect when visible
-            if(model.visible) {
-                 model.rotation.x += (mouse.y * 0.2 - model.rotation.x) * 0.02;
-                 model.rotation.y += (mouse.x * 0.2 - model.rotation.y) * 0.02;
-            }
+          // If the container is on screen, show the model. Otherwise, hide it.
+          model.visible = entry.isIntersecting;
         }
-        
-        // Animate camera and particles
-        if (currentSection < 2) {
-             camera.position.z = 5 - (scrollY / (sizes.height * 2)) * 2;
-             pollutedParticles.visible = true;
-             cleanParticles.visible = false;
-        } else if (currentSection === 2) {
-            pollutedParticles.material.opacity = 1 - scrollPercent;
-            camera.position.z = 3;
-        } else if (currentSection >= 3) {
-            pollutedParticles.visible = false;
-            cleanParticles.visible = true;
-            const progress = currentSection === 3 ? scrollPercent : 1;
-            cleanParticles.material.opacity = progress;
-            camera.position.z = 3 + progress * 2;
-        }
-
-        renderer.render(scene, camera);
-        window.requestAnimationFrame(tick);
-      };
-      
-      tick();
-
-      // --- Resize Handler ---
-      window.addEventListener('resize', () => {
-        sizes.width = window.innerWidth;
-        sizes.height = window.innerHeight;
-        camera.aspect = sizes.width / sizes.height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(sizes.width, sizes.height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       });
-    </script>
+    },
+    { threshold: 0.01 } // Trigger even if 1% of the container is visible
+  );
+
+  observer.observe(container);
+  // --- MODIFICATION END ---
+
+  if (contentBoxes.length > 0) {
+    contentBoxes[0].classList.add("is-visible");
+  }
+
+  window.addEventListener("mousemove", (event) => {
+    mouse.x = (event.clientX / sizes.width) * 2 - 1;
+    mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+  });
+
+  // --- Animation Loop ---
+  const clock = new THREE.Clock();
+  let currentSection = 0; // Keep track of the section for text visibility
+
+  const tick = () => {
+    const elapsedTime = clock.getElapsedTime();
+
+    // Animate Particles (Always runs)
+    particles1.rotation.y = elapsedTime * 0.05;
+    particles2.rotation.y = -elapsedTime * 0.08;
+
+    // Animate Model (Only if it exists and is visible)
+    if (model && model.visible) {
+      // --- MODIFICATION START: Calculate scroll progress RELATIVE to the container ---
+      const rect = container.getBoundingClientRect();
+      // scrollAmount is how far we've scrolled past the container's top edge
+      const scrollAmount = -rect.top;
+      // scrollableHeight is the total scroll distance available within the container
+      const scrollableHeight = rect.height - sizes.height;
+      // progress is a value from 0 (top of container at top of screen) to 1 (bottom of container at bottom of screen)
+      const progress = Math.max(0, Math.min(1, scrollAmount / scrollableHeight));
+      
+      // Determine which text section should be visible based on progress
+      const newSection = Math.round(progress * (contentBoxes.length - 1));
+      if (newSection !== currentSection) {
+        currentSection = newSection;
+        contentBoxes.forEach((box, index) => {
+          box.classList.toggle("is-visible", index === currentSection);
+        });
+      }
+      // --- MODIFICATION END ---
+
+      let targetX = 0;
+      let targetY = -1;
+
+      // Use the new section calculation to position the model
+      if (currentSection === 0) targetX = 0;
+      else if (currentSection === 1) targetX = 3.5;
+      else if (currentSection === 2) targetX = -3.5;
+      // This 'else' case won't be reached if the model is correctly hidden, but it's safe to keep
+      else targetY = 10; 
+
+      model.position.x += (targetX - model.position.x) * 0.05;
+      model.position.y += (targetY - model.position.y) * 0.05;
+
+      // Use the overall progress for a smooth continuous rotation
+      const scrollRotationY = Math.PI * 2 * progress;
+      const targetRotationX = mouse.y * 0.2;
+      const targetRotationY = scrollRotationY + mouse.x * 0.2;
+
+      model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
+      model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+    }
+
+    renderer.render(scene, camera);
+    window.requestAnimationFrame(tick);
+  };
+
+  tick();
+
+  // --- Resize Handler ---
+  window.addEventListener("resize", () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  });
+</script>
   </body>
-</html> 
+</html>
