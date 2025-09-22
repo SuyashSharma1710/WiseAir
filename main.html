@@ -221,6 +221,22 @@
       }
     </style>
 
+    <!-- header style  -->
+     <style>
+       #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 50;
+            transition: transform 0.3s ease-out;
+            transform: translateY(0);
+        }
+     </style>
+
     <!-- carousel style  -->
     <style>
       /* Carousel Styles */
@@ -584,36 +600,31 @@
 
     <canvas id="webgl-canvas"></canvas>
 
-    <!-- header section code -->
-    <header
-      class="fixed top-0 left-1/2 -translate-x-1/2 w-[96vw] bg-white backdrop-blur rounded-full mx-auto my-4 shadow-sm z-50"
-    >
-      <nav
-        class="container w-full mx-auto flex justify-between items-center py-4 px-6"
-      >
-        <a href="#hero-section" class="scroll-link"
-          ><img
-            src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png"
-            class="h-10"
-            alt=""
-        /></a>
 
-        <ul class="flex gap-6 text-sm font-medium">
-          <li><a href="#Features-section" class="scroll-link">Features</a></li>
-          <li><a href="#product-section" class="scroll-link">Technology</a></li>
-          <li>
-            <a href="#Experience-section" class="scroll-link">Experience</a>
-          </li>
-        </ul>
-        <a href="#reservation-section" class="scroll-link">
-          <button
-            class="bg-green-800 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition duration-500"
-          >
-            Reserve Now
-          </button>
-        </a>
-      </nav>
+    
+
+    <!-- header section code -->
+    <header id="main-header">
+        <nav class="container max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+            <a href="#hero-section" class="scroll-link">
+                <img src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png" class="h-10" alt="AirFinery Logo" />
+            </a>
+            <ul class="flex gap-6 text-sm font-medium">
+                <li><a href="#Features-section" class="scroll-link">Features</a></li>
+                <li><a href="#product-section" class="scroll-link">Technology</a></li>
+                <li><a href="#Experience-section" class="scroll-link">Experience</a></li>
+            </ul>
+            <a href="#reservation-section" class="scroll-link">
+                <button class="bg-green-800 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition duration-500">
+                    Reserve Now
+                </button>
+            </a>
+        </nav>
     </header>
+
+    
+
+    
 
     <!-- Section 1: The Interactive Reveal (Hero Section) -->
     <section id="hero-section" class="relative">
@@ -1210,6 +1221,37 @@
         videos.forEach((video) => videoObserver.observe(video));
       });
     </script>
+
+    <!-- header animation script  -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.getElementById('main-header');
+            let lastScrollY = window.scrollY;
+            let currentOffset = 0; // Current header offset
+            const maxOffset = header.offsetHeight; // Maximum slide distance
+            const buffer = 100; // Only start hiding after 100px scroll
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                const delta = currentScrollY - lastScrollY;
+
+                // Do nothing until user scrolls more than the buffer
+                if (currentScrollY < buffer) {
+                    currentOffset = 0;
+                } else {
+                    currentOffset += delta;
+
+                    // Clamp offset between 0 and header height
+                    if (currentOffset < 0) currentOffset = 0;
+                    if (currentOffset > maxOffset) currentOffset = maxOffset;
+                }
+
+                header.style.transform = `translateY(-${currentOffset}px)`;
+                lastScrollY = currentScrollY;
+            });
+        });
+    </script>
+
 
     <!-- hero section script -->
     <script>
