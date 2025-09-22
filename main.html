@@ -525,7 +525,7 @@
 
       #content-container {
         position: relative;
-        z-index:-1; /* Text content is on top of the canvas */
+        z-index: -1; /* Text content is on top of the canvas */
       }
 
       .content-section {
@@ -630,9 +630,9 @@
       >
         <h1
           class="text-5xl md:text-8xl font-black tracking-tighter"
-          style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6)"
+          style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4)"
         >
-          Change the <span class="text-green-700">Air</span>
+          Change the <span class="text-emerald-500">Air</span>
         </h1>
         <h1
           class="text-5xl md:text-8xl font-black tracking-tighter"
@@ -672,7 +672,7 @@
     >
       <video
         class="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="./video/VN20250918_175645.mp4"
+        src="./video/whatyoubreathe.mp4"
         autoplay
         muted
         loop
@@ -684,7 +684,7 @@
           What you can't see,
         </h2>
         <h2
-          class="text-4xl md:text-6xl font-bold text-green-700 tracking-tight"
+          class="text-4xl md:text-6xl font-bold text-emerald-500 tracking-tight"
         >
           you breathe.
         </h2>
@@ -696,11 +696,64 @@
       </div>
     </section>
 
+    <!-- prodduct intro section  -->
+
+    <section
+      class="relative min-h-screen md:py-32 grid justify-center mx-auto px-6 text-center"
+    >
+      <video
+        class="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="./video/Black_Tower_Draws_Fog.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+      ></video>
+      <div class="absolute top-0 w-full h-full bg-black/50"></div>
+
+      <div class="reveal-on-scroll">
+        <h3 class="text-4xl md:text-6xl font-bold text-gray-50 tracking-tight">
+          Meet <span class="text-emerald-400">AirFinery</span>
+        </h3>
+
+        <h3 class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
+          Your solution for the unseen pollution you breathe
+        </h3>
+      </div>
+      <div class="flex flex-row-reverse w-scree justify-around items-center reveal-on-scroll">
+        <div class="w-full justify-evenly flex pl-8">
+          <div class="flex flex-col items-center gap-4 my-4">
+            <img src="./img/Picsart_25-09-16_12-27-03-047.jpg" alt="mann+hammel logo" class="h-[150px] rounded-2xl border-[15px] border-white" />
+            <h4 class="text-lg font-bold text-gray-50">
+              World-Class <br /> German Technology
+            </h4>
+          </div>
+          <div class="flex flex-col items-center gap-4 my-4">
+            <img src="./img/Picsart_25-09-16_11-39-38-753.jpg" alt="iit delhi logo" class="h-[150px] rounded-2xl border-[15px] border-white" />
+            <h4 class="text-lg font-bold text-gray-50">
+              Scientifically <br /> Proven in India
+            </h4>
+          </div>
+        </div>
+        <div class="w-full px-16 text-justify">
+          <p class="text-lg text-gray-50">
+            AirFinery is a revolutionary air purification tower for outdoor and
+            semi-indoor spaces. It was created through a strategic partnership
+            between MRH (a subsidiary of OK Play) and MANN+HUMMEL of Germany, a
+            global leader in filtration since 1941. It is the only system of its
+            kind scientifically validated by IIT Delhi to effectively clean the
+            air in real-world Indian conditions.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!--- Scrolling section tech --->
     <!-- Specs Section -->
 
     <section id="specs-section" class="relative">
-      <div class="container mx-auto px-6 bg-black/90 py-20">
+      <div class="container mx-auto px-6 bg-black/95 py-20">
         <div class="text-center reveal-on-scroll mb-16 md:mb-24">
           <h2
             class="text-4xl md:text-6xl text-gray-50 font-bold tracking-tight"
@@ -839,7 +892,8 @@
     </section>
 
     <div id="content-container" class="reveal-on-scroll bg-black/90">
-      <section id="section-hero"
+      <section
+        id="section-hero"
         class="content-section reveal-on-scroll justify-center"
       >
         <div class="content-box text-center">
@@ -1126,7 +1180,7 @@
             style="transition-delay: 400ms"
           >
             <img
-              src="./img/Picsart_25-09-16_11-44-19-434.png"
+              src="./img/Untitled-1.png"
               alt="OK Play Logo"
               class="h-[180px] rounded-2xl partner-logo"
             />
@@ -1461,171 +1515,226 @@
     </script>
 
     <script type="module">
-  import * as THREE from "three";
-  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-  // --- Scene Setup ---
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.z = 5;
-  const renderer = new THREE.WebGLRenderer({
-    canvas: document.getElementById("webgl-canvas"),
-    antialias: true,
-    alpha: true,
-  });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  // --- Lighting ---
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-  scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-  directionalLight.position.set(5, 5, 5);
-  scene.add(directionalLight);
-
-  // --- Particle System (Unaffected, will show on whole page) ---
-  const createParticles = (count, color, size) => {
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 15;
-    }
-    geometry.setAttribute(
-      "position",
-      new THREE.BufferAttribute(positions, 3)
-    );
-    const material = new THREE.PointsMaterial({
-      color,
-      size,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    return new THREE.Points(geometry, material);
-  };
-  const particles1 = createParticles(150, 0x52525b, 0.03);
-  const particles2 = createParticles(200, 0x34d399, 0.05);
-  scene.add(particles1, particles2);
-
-  // --- GLB Model Loading ---
-  const gltfLoader = new GLTFLoader();
-  let model = null;
-  const modelURL =
-    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb";
-  gltfLoader.load(modelURL, (gltf) => {
-    model = gltf.scene;
-    model.scale.set(1.5, 1.5, 1.5);
-    model.position.y = -1;
-    model.visible = false; // --- MODIFICATION: Start with model hidden
-    scene.add(model);
-  });
-
-  // --- Interactivity & Scroll Logic ---
-  const contentBoxes = document.querySelectorAll(".content-box");
-  const sizes = { width: window.innerWidth, height: window.innerHeight };
-  const mouse = new THREE.Vector2();
-  
-  // --- MODIFICATION START: Get the container and use Intersection Observer ---
-  const container = document.getElementById("content-container");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (model) {
-          // If the container is on screen, show the model. Otherwise, hide it.
-          model.visible = entry.isIntersecting;
-        }
+      // --- Scene Setup ---
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 5;
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById("webgl-canvas"),
+        antialias: true,
+        alpha: true,
       });
-    },
-    { threshold: 0.01 } // Trigger even if 1% of the container is visible
-  );
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  observer.observe(container);
-  // --- MODIFICATION END ---
+      // --- Lighting ---
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
 
-  if (contentBoxes.length > 0) {
-    contentBoxes[0].classList.add("is-visible");
-  }
+      const particleMouse = new THREE.Vector2();
 
-  window.addEventListener("mousemove", (event) => {
-    mouse.x = (event.clientX / sizes.width) * 2 - 1;
-    mouse.y = -(event.clientY / sizes.height) * 2 + 1;
-  });
+      // --- Particle System ---
+      const createParticles = (count, color, size) => {
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(count * 3);
+        const originalPositions = new Float32Array(count * 3);
 
-  // --- Animation Loop ---
-  const clock = new THREE.Clock();
-  let currentSection = 0; // Keep track of the section for text visibility
+        for (let i = 0; i < count * 3; i++) {
+          const pos = (Math.random() - 0.5) * 15;
+          positions[i] = pos;
+          originalPositions[i] = pos;
+        }
+        geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(positions, 3)
+        );
+        geometry.setAttribute(
+          "originalPosition",
+          new THREE.BufferAttribute(originalPositions, 3)
+        );
 
-  const tick = () => {
-    const elapsedTime = clock.getElapsedTime();
-
-    // Animate Particles (Always runs)
-    particles1.rotation.y = elapsedTime * 0.05;
-    particles2.rotation.y = -elapsedTime * 0.08;
-
-    // Animate Model (Only if it exists and is visible)
-    if (model && model.visible) {
-      // --- MODIFICATION START: Calculate scroll progress RELATIVE to the container ---
-      const rect = container.getBoundingClientRect();
-      // scrollAmount is how far we've scrolled past the container's top edge
-      const scrollAmount = -rect.top;
-      // scrollableHeight is the total scroll distance available within the container
-      const scrollableHeight = rect.height - sizes.height;
-      // progress is a value from 0 (top of container at top of screen) to 1 (bottom of container at bottom of screen)
-      const progress = Math.max(0, Math.min(1, scrollAmount / scrollableHeight));
-      
-      // Determine which text section should be visible based on progress
-      const newSection = Math.round(progress * (contentBoxes.length - 1));
-      if (newSection !== currentSection) {
-        currentSection = newSection;
-        contentBoxes.forEach((box, index) => {
-          box.classList.toggle("is-visible", index === currentSection);
+        const material = new THREE.PointsMaterial({
+          color,
+          size,
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
         });
+        return new THREE.Points(geometry, material);
+      };
+      const particles1 = createParticles(150, 0x52525b, 0.03);
+      const particles2 = createParticles(150, 0x34d399, 0.05);
+      scene.add(particles1, particles2);
+
+      // --- GLB Model Loading ---
+      const gltfLoader = new GLTFLoader();
+      let model = null;
+      // const modelURL = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb";
+      const modelURL = "./img/rectangle.glb";
+      gltfLoader.load(modelURL, (gltf) => {
+        model = gltf.scene;
+        model.scale.set(30, 50, 30);
+        model.position.y = 0;
+        model.visible = false;
+        scene.add(model);
+      });
+
+      // --- Interactivity & Scroll Logic ---
+      const contentBoxes = document.querySelectorAll(".content-box");
+      const sizes = { width: window.innerWidth, height: window.innerHeight };
+      const mouse = new THREE.Vector2();
+
+      const container = document.getElementById("content-container");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (model) {
+              model.visible = entry.isIntersecting;
+            }
+          });
+        },
+        { threshold: 0.01 }
+      );
+
+      observer.observe(container);
+
+      if (contentBoxes.length > 0) {
+        contentBoxes[0].classList.add("is-visible");
       }
-      // --- MODIFICATION END ---
 
-      let targetX = 0;
-      let targetY = -1;
+      window.addEventListener("mousemove", (event) => {
+        mouse.x = (event.clientX / sizes.width) * 2 - 1;
+        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+        particleMouse.x = event.clientX;
+        particleMouse.y = event.clientY;
+      });
 
-      // Use the new section calculation to position the model
-      if (currentSection === 0) targetX = 0;
-      else if (currentSection === 1) targetX = 3.5;
-      else if (currentSection === 2) targetX = -3.5;
-      // This 'else' case won't be reached if the model is correctly hidden, but it's safe to keep
-      else targetY = 10; 
+      // --- Animation Loop ---
+      const clock = new THREE.Clock();
+      let currentSection = 0;
 
-      model.position.x += (targetX - model.position.x) * 0.05;
-      model.position.y += (targetY - model.position.y) * 0.05;
+      // --- MODIFICATION: Pass elapsedTime for rotation ---
+      const animateInteractiveParticles = (particles, elapsedTime) => {
+        const positions = particles.geometry.attributes.position.array;
+        const originalPositions =
+          particles.geometry.attributes.originalPosition.array;
+        const count = positions.length / 3;
 
-      // Use the overall progress for a smooth continuous rotation
-      const scrollRotationY = Math.PI * 2 * progress;
-      const targetRotationX = mouse.y * 0.2;
-      const targetRotationY = scrollRotationY + mouse.x * 0.2;
+        for (let i = 0; i < count; i++) {
+          const i3 = i * 3;
 
-      model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
-      model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
-    }
+          // --- MODIFICATION START: Calculate the base orbiting position ---
+          const ox = originalPositions[i3];
+          const oy = originalPositions[i3 + 1];
+          const oz = originalPositions[i3 + 2];
 
-    renderer.render(scene, camera);
-    window.requestAnimationFrame(tick);
-  };
+          const angle = elapsedTime * 0.2;
+          const baseX = ox * Math.cos(angle) - oz * Math.sin(angle);
+          const baseY = oy;
+          const baseZ = ox * Math.sin(angle) + oz * Math.cos(angle);
+          // --- MODIFICATION END ---
 
-  tick();
+          const vertex = new THREE.Vector3(
+            positions[i3],
+            positions[i3 + 1],
+            positions[i3 + 2]
+          );
+          vertex.project(camera);
+          const screenX = (vertex.x * 0.5 + 0.5) * sizes.width;
+          const screenY = (-vertex.y * 0.5 + 0.5) * sizes.height;
 
-  // --- Resize Handler ---
-  window.addEventListener("resize", () => {
-    sizes.width = window.innerWidth;
-    sizes.height = window.innerHeight;
-    camera.aspect = sizes.width / sizes.height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  });
-</script>
+          const dx = particleMouse.x - screenX;
+          const dy = particleMouse.y - screenY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          const maxDistance = 150;
+          const force = Math.max(0, (maxDistance - distance) / maxDistance);
+
+          // --- MODIFICATION: The target is now the rotating base position + mouse displacement ---
+          const targetX = baseX + (dx / distance) * force * 1.5;
+          const targetY = baseY + (dy / distance) * force * 1.5;
+          const targetZ = baseZ;
+
+          positions[i3] += (targetX - positions[i3]) * 0.08;
+          positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
+          positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
+        }
+
+        particles.geometry.attributes.position.needsUpdate = true;
+      };
+
+      const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+
+        // --- MODIFICATION: Pass elapsedTime to the particle animation function ---
+        // Using different speeds for a nice parallax effect
+        animateInteractiveParticles(particles1, elapsedTime * 0.5);
+        animateInteractiveParticles(particles2, elapsedTime * 0.3);
+
+        // Animate Model (Only if it exists and is visible)
+        if (model && model.visible) {
+          const rect = container.getBoundingClientRect();
+          const scrollAmount = -rect.top;
+          const scrollableHeight = rect.height - sizes.height;
+          const progress = Math.max(
+            0,
+            Math.min(1, scrollAmount / scrollableHeight)
+          );
+
+          const newSection = Math.round(progress * (contentBoxes.length - 1));
+          if (newSection !== currentSection) {
+            currentSection = newSection;
+            contentBoxes.forEach((box, index) => {
+              box.classList.toggle("is-visible", index === currentSection);
+            });
+          }
+
+          let targetX = 0;
+          let targetY = -2.5;
+
+          if (currentSection === 0) targetX = 0;
+          else if (currentSection === 1) targetX = 3.5;
+          else if (currentSection === 2) targetX = -3.5;
+          else targetY = 10;
+
+          model.position.x += (targetX - model.position.x) * 0.05;
+          model.position.y += (targetY - model.position.y) * 0.05;
+
+          const scrollRotationY = Math.PI * 2 * progress;
+          const targetRotationX = mouse.y * 0.2;
+          const targetRotationY = scrollRotationY + mouse.x * 0.2;
+
+          model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
+          model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+        }
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+
+      tick();
+
+      // --- Resize Handler ---
+      window.addEventListener("resize", () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+    </script>
   </body>
 </html>
