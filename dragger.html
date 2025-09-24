@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirFinery - Experience the Difference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent;
+        }
+        #Experience-section {
+            position: relative;
+            background-image: url('./img/Group 4.png'); /* The CLEAN image is the background */
+            background-size: cover;
+            background-position: center;
+        }
+        .lens-slider {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            cursor: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .polluted-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            /* The polluted image is revealed inside the circle */
+            clip-path: circle(120px at -50% -50%); /* Initially hidden off-screen */
+        }
+        .lens-handle {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 240px; /* Diameter of the circle */
+            height: 240px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 3px solid #f59e0b; /* A contrasting amber/gold color */
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 0 15px rgba(245, 158, 11, 0.3);
+            backdrop-filter: blur(0px) grayscale(50%);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .lens-slider:hover .lens-handle {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<section id="Experience-section" class="relative w-[90%] max-h-screen mx-auto  py-20 md:py-28 text-white aspect-video rounded-2xl shadow-2xl overflow-hidden">
+    <!-- Dark overlay for text readability, placed over the background image -->
+    <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+    
+    <!-- THE FIX IS HERE: Added 'pointer-events-none' to this container -->
+    <div class="relative z-10 container mx-auto px-6 text-center pointer-events-none">
+        <div class="reveal-on-scroll">
+            <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-white">
+                Reveal the <span class="text-amber-400">Difference.</span>
+            </h2>
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-200">
+                Move the lens to reveal the unseen pollution that AirFinery eliminates from your environment.
+            </p>
+        </div>
+    </div>
+    
+    <!-- The interactive lens area now covers the entire section -->
+    <div id="lens-slider" class="lens-slider">
+        <!-- The "Before" (Polluted) image is clipped inside the lens -->
+        <img
+            src="./img/Group 3.png"
+            alt="Polluted air"
+            class="polluted-overlay"
+            draggable="false"
+        />
+        <!-- This is the visible handle the user interacts with -->
+        <div class="lens-handle">
+            Reveal Pollution
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const slider = document.getElementById("lens-slider");
+        if (slider) {
+            const pollutedOverlay = slider.querySelector(".polluted-overlay");
+            const handle = slider.querySelector(".lens-handle");
+
+            function moveLens(x, y) {
+                const rect = slider.getBoundingClientRect();
+                
+                let posX = ((x - rect.left) / rect.width) * 100;
+                let posY = ((y - rect.top) / rect.height) * 100;
+                
+                posX = Math.max(0, Math.min(100, posX));
+                posY = Math.max(0, Math.min(100, posY));
+
+                // Update the clip-path and handle position
+                pollutedOverlay.style.clipPath = `circle(120px at ${posX}% ${posY}%)`;
+                handle.style.left = `${posX}%`;
+                handle.style.top = `${posY}%`;
+            }
+
+            // Mouse events
+            slider.addEventListener("mousemove", (e) => {
+                moveLens(e.clientX, e.clientY);
+            });
+
+            // Touch events
+            slider.addEventListener("touchmove", (e) => {
+                e.preventDefault(); 
+                moveLens(e.touches[0].clientX, e.touches[0].clientY);
+            });
+
+             // Reset lens when mouse leaves the area
+            slider.addEventListener("mouseleave", () => {
+                 pollutedOverlay.style.clipPath = `circle(120px at -50% -50%)`;
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
+
