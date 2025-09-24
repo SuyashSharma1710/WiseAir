@@ -222,20 +222,20 @@
     </style>
 
     <!-- header style  -->
-     <style>
-       #main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 50;
-            transition: transform 0.3s ease-out;
-            transform: translateY(0);
-        }
-     </style>
+    <style>
+      #main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 50;
+        transition: transform 0.3s ease-out;
+        transform: translateY(0);
+      }
+    </style>
 
     <!-- carousel style  -->
     <style>
@@ -600,31 +600,34 @@
 
     <canvas id="webgl-canvas"></canvas>
 
-
-    
-
     <!-- header section code -->
     <header id="main-header">
-        <nav class="container max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
-            <a href="#hero-section" class="scroll-link">
-                <img src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png" class="h-10" alt="AirFinery Logo" />
-            </a>
-            <ul class="flex gap-6 text-sm font-medium">
-                <li><a href="#Features-section" class="scroll-link">Features</a></li>
-                <li><a href="#product-section" class="scroll-link">Technology</a></li>
-                <li><a href="#Experience-section" class="scroll-link">Experience</a></li>
-            </ul>
-            <a href="#reservation-section" class="scroll-link">
-                <button class="bg-green-800 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition duration-500">
-                    Reserve Now
-                </button>
-            </a>
-        </nav>
+      <nav
+        class="container max-w-6xl mx-auto flex justify-between items-center py-4 px-6"
+      >
+        <a href="#hero-section" class="scroll-link">
+          <img
+            src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png"
+            class="h-10"
+            alt="AirFinery Logo"
+          />
+        </a>
+        <ul class="flex gap-6 text-sm font-medium">
+          <li><a href="#Features-section" class="scroll-link">Features</a></li>
+          <li><a href="#product-section" class="scroll-link">Technology</a></li>
+          <li>
+            <a href="#Experience-section" class="scroll-link">Experience</a>
+          </li>
+        </ul>
+        <a href="#reservation-section" class="scroll-link">
+          <button
+            class="bg-green-800 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition duration-500"
+          >
+            Reserve Now
+          </button>
+        </a>
+      </nav>
     </header>
-
-    
-
-    
 
     <!-- Section 1: The Interactive Reveal (Hero Section) -->
     <section id="hero-section" class="relative">
@@ -676,9 +679,119 @@
       </div>
     </section>
 
+    <section class="container">
+      <div
+        class="flex min-h-screen justify-between items-center reveal-on-scroll gap-16 px-16"
+      >
+        <div class="w-full">
+          <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
+            A Legacy of
+            <span class="text-emerald-500">German Engineering.</span>
+          </h2>
+          <p class="mt-6 text-lg text-gray-600">
+            AirFinery is born from a strategic partnership between MRH
+            Technologies (a subsidiary of OK Play) and MANN+HUMMEL, Germany's
+            world-renowned filtration leader since 1941. This collaboration
+            combines an 84-year legacy of engineering excellence with robust
+            Indian manufacturing to create a solution built for our environment.
+          </p>
+        </div>
+        <div class="w-full">
+          <div
+            class="flex items-center justify-center gap-8 reveal-on-scroll"
+            style="transition-delay: 200ms"
+          >
+            <!-- Replace with your logos -->
+            <img
+              src="./img/Picsart_25-09-12_17-10-56-374-low_res-scale-4_00x.png"
+              alt="MRH Logo"
+              class="h-[200px]"
+            />
+            <span class="text-5xl font-light text-green-700">+</span>
+            <img
+              src="./img/Picsart_25-09-16_12-27-03-047.png"
+              alt="MANN+HUMMEL Logo"
+              class="h-[200px]"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- prodduct intro section  -->
+
+    <section class="relative py-20 md:py-2 px-16 text-white">
+      <video
+        class="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="./video/Black_Tower_Draws_Fog.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
+      <div
+        class="relative z-20 container mx-auto px-6 grid md:grid-cols-2 gap-12 min-h-screen items-center"
+      >
+        <div class="text-left reveal-on-scroll">
+          <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
+            Meet <span class="text-emerald-400">AirFinery.</span>
+          </h2>
+          <p class="mt-4 text-lg text-gray-200">
+            Your solution for the unseen pollution you breathe.
+          </p>
+          <p class="mt-6 text-gray-100">
+            AirFinery is a revolutionary air purification tower for outdoor and
+            semi-indoor spaces. It was created through a strategic partnership
+            between MRH (a subsidiary of OK Play) and MANN+HUMMEL of Germany, a
+            global leader in filtration since 1941. It is the only system of its
+            kind scientifically validated by IIT Delhi to effectively clean the
+            air in real-world Indian conditions.
+          </p>
+        </div>
+        <div
+          class="flex flex-col gap-8 items-center md:items-start reveal-on-scroll"
+          style="transition-delay: 200ms"
+        >
+          <div
+            class="bg-white/10 backdrop-blur-md p-6 rounded-2xl flex items-center gap-4 border border-white/20"
+          >
+            <!-- Replace with MANN+HUMMEL logo -->
+            <img
+              src="./img/Picsart_25-09-16_12-27-03-047.jpg"
+              alt="MANN+HUMMEL"
+              class="h-[140px] rounded-lg"
+            />
+            <div class="max-w-[300px]">
+              <h3 class="font-bold text-xl">World-Class German Technology</h3>
+              <p class="text-gray-300 text-sm">
+                Powered by an 84-year legacy of filtration excellence.
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white/10 backdrop-blur-md p-6 rounded-2xl flex items-center gap-4 border border-white/20"
+          >
+            <!-- Replace with IIT Delhi logo -->
+            <img
+              src="./img/Picsart_25-09-16_11-39-38-753.jpg"
+              alt="IIT Delhi"
+              class="h-[140px] rounded-lg"
+            />
+            <div class="max-w-[300px]">
+              <h3 class="font-bold text-xl">Scientifically Proven in India</h3>
+              <p class="text-gray-300 text-sm">
+                Validated by IIT Delhi to reduce PM2.5 & PM10 by over 80%.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- what you cant see section -->
     <section
-      class="relative md:py-32 grid items-center justify-center h-screen container mx-auto px-6 text-center"
+      class="relative md:py-32 grid items-center justify-center h-screen w-[90%] mx-auto rounded-2xl overflow-hidden my-16 container mx-auto px-6 text-center"
       id="Features-section"
     >
       <video
@@ -692,71 +805,18 @@
       ></video>
       <div class="reveal-on-scroll">
         <h2 class="text-4xl md:text-6xl font-bold text-gray-50 tracking-tight">
-          What you can't see,
+          Because Air You 
         </h2>
         <h2
           class="text-4xl md:text-6xl font-bold text-emerald-500 tracking-tight"
         >
-          you breathe.
+          Breathe Matters.
         </h2>
         <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
           Every day, our outdoor spaces are filled with invisible pollutants.
           From traffic emissions to industrial dust, these particles affect our
           health and wellbeing.
         </p>
-      </div>
-    </section>
-
-    <!-- prodduct intro section  -->
-
-    <section
-      class="relative min-h-screen md:py-32 grid justify-center mx-auto px-6 text-center"
-    >
-      <video
-        class="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="./video/Black_Tower_Draws_Fog.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="none"
-      ></video>
-      <div class="absolute top-0 w-full h-full bg-black/50"></div>
-
-      <div class="reveal-on-scroll">
-        <h3 class="text-4xl md:text-6xl font-bold text-gray-50 tracking-tight">
-          Meet <span class="text-emerald-400">AirFinery</span>
-        </h3>
-
-        <h3 class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
-          Your solution for the unseen pollution you breathe
-        </h3>
-      </div>
-      <div class="flex flex-row-reverse w-scree justify-around items-center reveal-on-scroll">
-        <div class="w-full justify-evenly flex pl-8">
-          <div class="flex flex-col items-center gap-4 my-4">
-            <img src="./img/Picsart_25-09-16_12-27-03-047.jpg" alt="mann+hammel logo" class="h-[150px] rounded-2xl border-[15px] border-white" />
-            <h4 class="text-lg font-bold text-gray-50">
-              World-Class <br /> German Technology
-            </h4>
-          </div>
-          <div class="flex flex-col items-center gap-4 my-4">
-            <img src="./img/Picsart_25-09-16_11-39-38-753.jpg" alt="iit delhi logo" class="h-[150px] rounded-2xl border-[15px] border-white" />
-            <h4 class="text-lg font-bold text-gray-50">
-              Scientifically <br /> Proven in India
-            </h4>
-          </div>
-        </div>
-        <div class="w-full px-16 text-justify">
-          <p class="text-lg text-gray-50">
-            AirFinery is a revolutionary air purification tower for outdoor and
-            semi-indoor spaces. It was created through a strategic partnership
-            between MRH (a subsidiary of OK Play) and MANN+HUMMEL of Germany, a
-            global leader in filtration since 1941. It is the only system of its
-            kind scientifically validated by IIT Delhi to effectively clean the
-            air in real-world Indian conditions.
-          </p>
-        </div>
       </div>
     </section>
 
@@ -1224,34 +1284,33 @@
 
     <!-- header animation script  -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const header = document.getElementById('main-header');
-            let lastScrollY = window.scrollY;
-            let currentOffset = 0; // Current header offset
-            const maxOffset = header.offsetHeight; // Maximum slide distance
-            const buffer = 100; // Only start hiding after 100px scroll
+      document.addEventListener("DOMContentLoaded", function () {
+        const header = document.getElementById("main-header");
+        let lastScrollY = window.scrollY;
+        let currentOffset = 0; // Current header offset
+        const maxOffset = header.offsetHeight; // Maximum slide distance
+        const buffer = 100; // Only start hiding after 100px scroll
 
-            window.addEventListener('scroll', () => {
-                const currentScrollY = window.scrollY;
-                const delta = currentScrollY - lastScrollY;
+        window.addEventListener("scroll", () => {
+          const currentScrollY = window.scrollY;
+          const delta = currentScrollY - lastScrollY;
 
-                // Do nothing until user scrolls more than the buffer
-                if (currentScrollY < buffer) {
-                    currentOffset = 0;
-                } else {
-                    currentOffset += delta;
+          // Do nothing until user scrolls more than the buffer
+          if (currentScrollY < buffer) {
+            currentOffset = 0;
+          } else {
+            currentOffset += delta;
 
-                    // Clamp offset between 0 and header height
-                    if (currentOffset < 0) currentOffset = 0;
-                    if (currentOffset > maxOffset) currentOffset = maxOffset;
-                }
+            // Clamp offset between 0 and header height
+            if (currentOffset < 0) currentOffset = 0;
+            if (currentOffset > maxOffset) currentOffset = maxOffset;
+          }
 
-                header.style.transform = `translateY(-${currentOffset}px)`;
-                lastScrollY = currentScrollY;
-            });
+          header.style.transform = `translateY(-${currentOffset}px)`;
+          lastScrollY = currentScrollY;
         });
+      });
     </script>
-
 
     <!-- hero section script -->
     <script>
