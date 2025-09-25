@@ -440,65 +440,7 @@
       }
     </style>
 
-    <!-- dragger image reveal section  -->
-    <style>
-      #Experience-section {
-        position: relative;
-        background-image: url("./img/Group 4.png"); /* The CLEAN image is the background */
-        background-size: cover;
-        background-position: center;
-      }
-      .lens-slider {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        cursor: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      .polluted-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        /* The polluted image is revealed inside the circle */
-        clip-path: circle(120px at -50% -50%); /* Initially hidden off-screen */
-      }
-      .lens-handle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 240px; /* Diameter of the circle */
-        height: 240px;
-        border-radius: 50%;
-        /* background-color: rgba(0, 0, 0, 0); */
-        border: 3px solid rgb(16 185 129); /* A contrasting amber/gold color */
-        box-shadow: 0 0 25px rgba(245, 158, 11, 0.5),
-          inset 0 0 15px rgba(245, 158, 11, 0.3);
-        backdrop-filter: blur(0px);
-        pointer-events: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: white;
-        font-weight: bold;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-      .lens-slider:hover .lens-handle {
-        opacity: 1;
-      }
-    </style>
-
+    
     <!--spec section-->
     <style>
       #specs-section {
@@ -916,42 +858,7 @@
       </div>
     </section>
 
-    <!-- dragging image reveal section -->
-    <section
-      id="Experience-section"
-      class="relative w-[90%] max-h-screen mx-auto my-16 py-20 md:py-28 text-white aspect-video rounded-2xl shadow-2xl overflow-hidden"
-    >
-      <!-- Dark overlay for text readability, placed over the background image -->
-      <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
-
-      <!-- THE FIX IS HERE: Added 'pointer-events-none' to this container -->
-      <div
-        class="relative z-10 container mx-auto px-6 text-center pointer-events-none"
-      >
-        <div class="reveal-on-scroll">
-          <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-white">
-            Reveal the <span class="text-emerald-500">Difference.</span>
-          </h2>
-          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-200">
-            Move the lens to reveal the unseen pollution that AirFinery
-            eliminates from your environment.
-          </p>
-        </div>
-      </div>
-
-      <!-- The interactive lens area now covers the entire section -->
-      <div id="lens-slider" class="lens-slider">
-        <!-- The "Before" (Polluted) image is clipped inside the lens -->
-        <img
-          src="./img/Group 3.png"
-          alt="Polluted air"
-          class="polluted-overlay"
-          draggable="false"
-        />
-        <!-- This is the visible handle the user interacts with -->
-        <div class="lens-handle">Reveal Pollution</div>
-      </div>
-    </section>
+    
 
     <div id="content-container" class="reveal-on-scroll bg-black/90">
       <section
@@ -1532,47 +1439,7 @@
       });
     </script>
 
-    <!-- dragging image reveal section  -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const slider = document.getElementById("lens-slider");
-        if (slider) {
-          const pollutedOverlay = slider.querySelector(".polluted-overlay");
-          const handle = slider.querySelector(".lens-handle");
-
-          function moveLens(x, y) {
-            const rect = slider.getBoundingClientRect();
-
-            let posX = ((x - rect.left) / rect.width) * 100;
-            let posY = ((y - rect.top) / rect.height) * 100;
-
-            posX = Math.max(0, Math.min(100, posX));
-            posY = Math.max(0, Math.min(100, posY));
-
-            // Update the clip-path and handle position
-            pollutedOverlay.style.clipPath = `circle(120px at ${posX}% ${posY}%)`;
-            handle.style.left = `${posX}%`;
-            handle.style.top = `${posY}%`;
-          }
-
-          // Mouse events
-          slider.addEventListener("mousemove", (e) => {
-            moveLens(e.clientX, e.clientY);
-          });
-
-          // Touch events
-          slider.addEventListener("touchmove", (e) => {
-            e.preventDefault();
-            moveLens(e.touches[0].clientX, e.touches[0].clientY);
-          });
-
-          // Reset lens when mouse leaves the area
-          slider.addEventListener("mouseleave", () => {
-            pollutedOverlay.style.clipPath = `circle(120px at -50% -50%)`;
-          });
-        }
-      });
-    </script>
+    
 
     <!-- tech filter scrolling section  -->
     <script>
