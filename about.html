@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - AirFinery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+
+    <!-- header css  -->
+    <style>
+      #main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(5px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 50;
+        transition: transform 0.3s ease-out;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-800">
+    <!-- Header Placeholder -->
+    <header id="main-header">
+      <nav
+        class="container max-w-6xl mx-auto flex justify-between items-center py-4 px-6"
+      >
+        <a href="#hero-section" class="scroll-link">
+          <img
+            src="./img/WhatsApp_Image_2025-08-28_at_09.29.15_94ba74ce-removebg-preview_cropped.png"
+            class="h-10"
+            alt="AirFinery Logo"
+          />
+        </a>
+        <ul class="flex gap-6 text-sm font-medium">
+          <li><a href="#Features-section" class="scroll-link">Features</a></li>
+          <li><a href="#product-section" class="scroll-link">Technology</a></li>
+          <li>
+            <a href="#Experience-section" class="scroll-link">Experience</a>
+          </li>
+        </ul>
+        <a href="#reservation-section" class="scroll-link">
+          <button
+            class="bg-green-800 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition duration-500"
+          >
+            Reserve Now
+          </button>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Section 1: Hero Section -->
+      <section
+        class="relative h-screen flex justify-center items-center bg-gray-800 text-white py-20 md:py-32 text-center overflow-hidden"
+      >
+        <img
+          src="./img/Frame 8.png"
+          alt="A team of engineers collaborating in a modern office"
+          class="absolute top-0 left-0 w-full h-full object-cover opacity-30 z-0"
+        />
+        <div class="relative z-10">
+          <h1 class="text-4xl md:text-6xl font-black tracking-tight">
+            Our Mission: Engineering a Healthier India
+          </h1>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-200">
+            We are a team of engineers, designers, and environmental experts
+            committed to solving one of India's greatest challenges: air
+            pollution. Our goal is to create safe, breathable environments where
+            communities can thrive.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: The Strategic Partnership -->
+      <section class="py-20 md:py-28 bg-white">
+        <div
+          class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"
+        >
+          <div class="text-left">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+              A <span class="text-green-700">Legacy</span> of German
+              Engineering, <span class="text-green-700">Proudly</span> Made in
+              India.
+            </h2>
+            <p class="mt-6 text-lg text-gray-600">
+              AirFinery is born from a strategic partnership between **MRH
+              Technologies (a subsidiary of OK Play)** and **MANN+HUMMEL**,
+              Germany's world-renowned filtration leader since 1941. This
+              collaboration combines an 84-year legacy of engineering excellence
+              with robust Indian manufacturing to create a solution built for
+              our environment, proudly supporting the 'Make in India'
+              initiative.
+            </p>
+          </div>
+          <div class="flex items-center justify-center gap-8">
+            <img
+              src="./img/Picsart_25-09-12_17-10-56-374-low_res-scale-4_00x.png"
+              alt="MRH Logo"
+              class="h-[120px] md:h-[200px]  "
+            />
+            <span class="text-5xl font-light text-gray-300">+</span>
+            <img
+              src="./img/Picsart_25-09-16_12-27-03-047.png"
+              alt="MANN+HUMMEL Logo"
+              class="h-[120px] md:h-[200px]"
+            />
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Section 3: The Scientific Proof (IIT Delhi Validation) - IMPROVED -->
+      <section class="py-20 md:py-28 bg-gray-50">   
+        <div class="container mx-auto px-6">
+          <div class="text-center">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight">
+              Scientifically Validated by IIT Delhi
+            </h2>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+              Recommended by the Prime Minister’s Office, IIT Delhi was
+              appointed to evaluate our technology. Their independent, 60-day
+              assessment during peak pollution periods confirmed the real-world
+              efficacy of our solutions.
+            </p>
+          </div>
+          <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <!-- Central Image -->
+            <div class="lg:col-span-1 flex justify-center items-center">
+              <img
+                src="./img/1600666438410.jpg"
+                alt="IIT Delhi Campus"
+                class="rounded-2xl shadow-lg object-cover h-full w-full max-h-[450px]"
+              />
+            </div>
+            <!-- Key Findings -->
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-green-700">
+                  80%+ PM Reduction
+                </h3>
+                <p class="mt-2 text-gray-600">
+                  Results showed a significant reduction of over 80% in both
+                  PM2.5 and PM10 levels across indoor and outdoor test areas.
+                </p>
+              </div>
+              <div class="bg-white p-6 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-green-700">
+                  AQI Improvement
+                </h3>
+                <p class="mt-2 text-gray-600">
+                  Air Quality Index was drastically improved, moving from "Very
+                  Poor" (301-400) down to "Good" (0-50).
+                </p>
+              </div>
+              <div class="bg-white p-6 rounded-2xl shadow-lg md:col-span-2">
+                <h3 class="text-2xl font-bold text-green-700">
+                  Proven in Extreme Conditions
+                </h3>
+                <p class="mt-2 text-gray-600">
+                  The tests were conducted during Delhi's toughest pollution
+                  periods, including stubble burning and post-Diwali smog,
+                  proving our technology's resilience and effectiveness even
+                  when AQI was "Severe" (>401).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Section 4: Our Vision -->
+      <section
+        class="relative bg-green-700 text-white py-20 md:py-32 text-center overflow-hidden"
+      >
+        <video
+          class="absolute top-0 left-0 w-full h-full object-cover z-0"
+          src="./video/Children Playing Basketball Stock Video(720P_HD).mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        ></video>
+        <div class="h-full w-full bg-black/50 absolute top-0 left-0 z-0"></div>
+        <div class="relative z-10">
+          <h2 class="text-4xl md:text-5xl font-black tracking-tight">
+            Our Vision: Clean Air for Every Child
+          </h2>
+          <p class="mt-4 max-w-3xl mx-auto text-lg text-green-100">
+            We believe every child has the right to breathe clean air. Our
+            primary mission is to transform our schools and communities into
+            safe havens, free from the harmful effects of air pollution,
+            ensuring a healthier future for the next generation. We are making
+            2025 the year of climate action.
+          </p>
+          <button
+            class="mt-8 bg-white text-green-700 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-300"
+          >
+            Join Our Mission
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="container mx-auto px-6 text-center">
+        <p>
+          &copy; 2025 AirFinery by MRH Technologies Pvt. Ltd. All Rights
+          Reserved.
+        </p>
+        <p class="mt-2 text-sm text-gray-400">
+          Powered by MANN+HUMMEL German Technology.
+        </p>
+      </div>
+    </footer>
+
+    <!-- header animation script  -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const header = document.getElementById("main-header");
+        let lastScrollY = window.scrollY;
+        let currentOffset = 0; // Current header offset
+        const maxOffset = header.offsetHeight; // Maximum slide distance
+        const buffer = 100; // Only start hiding after 100px scroll
+
+        window.addEventListener("scroll", () => {
+          const currentScrollY = window.scrollY;
+          const delta = currentScrollY - lastScrollY;
+
+          // Do nothing until user scrolls more than the buffer
+          if (currentScrollY < buffer) {
+            currentOffset = 0;
+          } else {
+            currentOffset += delta;
+
+            // Clamp offset between 0 and header height
+            if (currentOffset < 0) currentOffset = 0;
+            if (currentOffset > maxOffset) currentOffset = maxOffset;
+          }
+
+          header.style.transform = `translateY(-${currentOffset}px)`;
+          lastScrollY = currentScrollY;
+        });
+      });
+    </script>
+  </body>
+</html>
