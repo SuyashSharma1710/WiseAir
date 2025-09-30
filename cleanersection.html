@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Particle Lifecycle with Cursor Interaction</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { font-family:'Helvetica Neue', sans-serif; background:#0a0a0a; color:#fff; overflow-x:hidden; }
+    section { position:relative; width:100vw; height:100vh; overflow:hidden; }
+    canvas { position:absolute; top:0; left:0; outline:none; }
+    .section-content { position:relative; z-index:10; width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; pointer-events:none; }
+    #particle-lifecycle-section { background:#0d0d0d; cursor:none; }
+    #particle-lifecycle-section h1 { font-size:clamp(2.5rem,6vw,4rem); text-shadow:0 0 15px rgba(200,150,255,0.7); }
+    #particle-lifecycle-section p { font-size:clamp(1rem,2.5vw,1.25rem); margin-top:1rem; }
+    #custom-cursor { position:fixed; width:40px; height:40px; pointer-events:none; z-index:9999; transform:translate(-50%, -50%); display:none; transition:transform 0.1s ease-out; }
+</style>
+</head>
+<body>
+
+<section id="particle-lifecycle-section">
+    <canvas id="webgl-canvas-lifecycle"></canvas>
+    <div class="section-content">
+        <h1>Touch to Transform</h1>
+        <p>Particles fade and respawn.</p>
+    </div>
+</section>
+
+<img id="custom-cursor" src="./img/pm1.png" alt="Custom Cursor" 
+     onerror="this.src='./img.pm01.png'">
+
+<script type="module">
+import * as THREE from "https://cdn.skypack.dev/three@0.137.5";
+
+const canvas = document.getElementById("webgl-canvas-lifecycle");
+if (!canvas) return;
+
+const customCursor = document.getElementById('custom-cursor');
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.z = 5; // Moved camera closer
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 0); // Set clear color with 0 alpha
+
+const particleMouse = new THREE.Vector2(-100,-100);
+
+const textureLoader = new THREE.TextureLoader();
+const loadTexture = (path) => {
+    return new Promise((resolve) => {
+        textureLoader.load(
+            path,
+            (texture) => {
+                console.log(`Loaded texture: ${path}`);
+                resolve(texture);
+            },
+            undefined,
+            (error) => {
+                console.error(`Error loading texture ${path}:`, error);
+                resolve(null);
+            }
+        );
+    });
+};
+
+// Load all textures in parallel
+const dirtyTextures = [];
+const cleanTextures = [];
+
+Promise.all([
+    loadTexture('./img/pm01.png'),
+    loadTexture('./img/pm1.png'),
+    loadTexture('./img/pm25.png'),
+    loadTexture('./img/pm10.png'),
+    loadTexture('./img/no2.png'),
+    loadTexture('./img/cleanair.png')
+]).then(textures => {
+    dirtyTextures.push(...textures.slice(0, 5));
+    // Use the same cleanair texture for all clean states
+    const cleanTexture = textures[5];
+    for(let i = 0; i < 5; i++) {
+        cleanTextures.push(cleanTexture);
+    }
+    initParticles();
+});
+
+const vertexShader = `
+attribute float a_particle_type;
+attribute float a_life_state;
+attribute float a_clean_time;
+
+varying float v_particle_type;
+varying float v_life_state;
+varying float v_clean_time;
+
+void main() {
+    v_particle_type = a_particle_type;
+    v_life_state = a_life_state;
+    v_clean_time = a_clean_time;
+    vec4 viewPosition = viewMatrix * modelMatrix * vec4(position,1.0);
+    gl_Position = projectionMatrix * viewPosition;
+    gl_PointSize = 60.0 * (1.0 / -viewPosition.z); // Increased particle size
+}
+`;
+
+const fragmentShader = `
+uniform sampler2D u_dirty_0,u_dirty_1,u_dirty_2,u_dirty_3,u_dirty_4;
+uniform sampler2D u_clean_0,u_clean_1,u_clean_2,u_clean_3,u_clean_4;
+uniform float u_time;
+
+varying float v_particle_type;
+varying float v_life_state;
+varying float v_clean_time;
+
+void main() {
+    vec4 texColor;
+    if(v_life_state < 0.5){
+        if(v_particle_type<0.5) texColor = texture2D(u_dirty_0, gl_PointCoord);
+        else if(v_particle_type<1.5) texColor = texture2D(u_dirty_1, gl_PointCoord);
+        else if(v_particle_type<2.5) texColor = texture2D(u_dirty_2, gl_PointCoord);
+        else if(v_particle_type<3.5) texColor = texture2D(u_dirty_3, gl_PointCoord);
+        else texColor = texture2D(u_dirty_4, gl_PointCoord);
+    } else {
+        if(v_particle_type<0.5) texColor = texture2D(u_clean_0, gl_PointCoord);
+        else if(v_particle_type<1.5) texColor = texture2D(u_clean_1, gl_PointCoord);
+        else if(v_particle_type<2.5) texColor = texture2D(u_clean_2, gl_PointCoord);
+        else if(v_particle_type<3.5) texColor = texture2D(u_clean_3, gl_PointCoord);
+        else texColor = texture2D(u_clean_4, gl_PointCoord);
+
+        float life = (u_time - v_clean_time)/5.0;
+        life = clamp(life,0.0,1.0);
+        texColor.a *= (1.0-life);
+    }
+    if(texColor.a < 0.01) discard;
+    texColor.a *= 0.8; // Increase base opacity
+    gl_FragColor = texColor;
+}
+`;
+
+const PARTICLE_COUNT = 500;
+let particles;
+
+function initParticles() {
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(PARTICLE_COUNT*3);
+    const particleTypes = new Float32Array(PARTICLE_COUNT);
+    const lifeStates = new Float32Array(PARTICLE_COUNT);
+    const cleanTimes = new Float32Array(PARTICLE_COUNT);
+
+    function resetParticle(index, spreadFactor = 1) {
+        const i3 = index * 3;
+        positions[i3] = (Math.random() - 0.5) * 10 * spreadFactor;
+        positions[i3 + 1] = (Math.random() - 0.5) * 10 * spreadFactor;
+        positions[i3 + 2] = (Math.random() - 0.5) * 5 * spreadFactor;
+        particleTypes[index] = Math.floor(Math.random() * 5);
+        lifeStates[index] = 0.0;
+        cleanTimes[index] = 0.0;
+    }
+
+    for(let i = 0; i < PARTICLE_COUNT; i++) {
+        resetParticle(i);
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('a_particle_type', new THREE.BufferAttribute(particleTypes, 1));
+    geometry.setAttribute('a_life_state', new THREE.BufferAttribute(lifeStates, 1));
+    geometry.setAttribute('a_clean_time', new THREE.BufferAttribute(cleanTimes, 1));
+
+    const material = new THREE.ShaderMaterial({
+    uniforms:{
+        u_dirty_0:{value:dirtyTextures[0]}, u_dirty_1:{value:dirtyTextures[1]}, u_dirty_2:{value:dirtyTextures[2]},
+        u_dirty_3:{value:dirtyTextures[3]}, u_dirty_4:{value:dirtyTextures[4]},
+        u_clean_0:{value:cleanTextures[0]}, u_clean_1:{value:cleanTextures[1]}, u_clean_2:{value:cleanTextures[2]},
+        u_clean_3:{value:cleanTextures[3]}, u_clean_4:{value:cleanTextures[4]},
+        u_time:{value:0.0}
+    },
+    vertexShader, fragmentShader,
+    transparent:true, blending:THREE.AdditiveBlending, depthWrite:false
+});
+
+const particles = new THREE.Points(geometry, material);
+scene.add(particles);
+
+const clock = new THREE.Clock();
+
+const tick = ()=>{
+    const elapsedTime = clock.getElapsedTime();
+    material.uniforms.u_time.value = elapsedTime;
+
+    const posArray = geometry.attributes.position.array;
+    const lifeArray = geometry.attributes.a_life_state.array;
+    const cleanArray = geometry.attributes.a_clean_time.array;
+    const touchThreshold = 50;
+
+    // reuse a temp vector to avoid allocations each frame
+    const tmpVertex = new THREE.Vector3();
+    
+    // Add some gentle floating motion to all particles
+    for(let i = 0; i < PARTICLE_COUNT; i++) {
+        const i3 = i * 3;
+        
+        // Gentle floating motion
+        posArray[i3] += Math.sin(elapsedTime * 0.5 + i * 0.1) * 0.01;
+        posArray[i3 + 1] += Math.cos(elapsedTime * 0.3 + i * 0.05) * 0.01;
+        
+        // Handle particle lifecycle
+        if(lifeArray[i] === 1.0 && (elapsedTime - cleanArray[i] > 5.0)) {
+            // Reset particle position with a wider spread
+            posArray[i3] = (Math.random() - 0.5) * 15;
+            posArray[i3 + 1] = (Math.random() - 0.5) * 15;
+            posArray[i3 + 2] = (Math.random() - 0.5) * 10;
+            particleTypes[i] = Math.floor(Math.random() * 5);
+            lifeArray[i] = 0.0;
+            geometry.attributes.position.needsUpdate = true;
+            geometry.attributes.a_particle_type.needsUpdate = true;
+            geometry.attributes.a_life_state.needsUpdate = true;
+        }
+
+        if(lifeArray[i] === 0.0) {
+            tmpVertex.set(posArray[i3], posArray[i3+1], posArray[i3+2]);
+            tmpVertex.project(camera);
+            const screenX = (tmpVertex.x * 0.5 + 0.5) * window.innerWidth;
+            const screenY = (-tmpVertex.y * 0.5 + 0.5) * window.innerHeight;
+            const dx = particleMouse.x - screenX;
+            const dy = particleMouse.y - screenY;
+            const distance = Math.sqrt(dx*dx + dy*dy);
+            
+            // Smooth transition when particles are touched
+            if(distance < touchThreshold) {
+                lifeArray[i] = 1.0;
+                cleanArray[i] = elapsedTime;
+                
+                // Add a small push effect away from the cursor
+                const pushStrength = 0.1;
+                const angle = Math.atan2(dy, dx);
+                posArray[i3] += Math.cos(angle) * pushStrength;
+                posArray[i3 + 1] += Math.sin(angle) * pushStrength;
+                
+                geometry.attributes.position.needsUpdate = true;
+                geometry.attributes.a_life_state.needsUpdate = true;
+                geometry.attributes.a_clean_time.needsUpdate = true;
+            }
+        }
+    }
+
+    renderer.render(scene,camera);
+    window.requestAnimationFrame(tick);
+};
+tick();
+
+window.addEventListener("mousemove",(event)=>{
+    const rect = canvas.getBoundingClientRect();
+    if(customCursor){
+        customCursor.style.left=`${event.clientX}px`;
+        customCursor.style.top=`${event.clientY}px`;
+    }
+
+    if(event.clientY>rect.top && event.clientY<rect.bottom && event.clientX>rect.left && event.clientX<rect.right){
+        particleMouse.x = event.clientX - rect.left;
+        particleMouse.y = event.clientY - rect.top;
+        if(customCursor) customCursor.style.display='block';
+    } else {
+        if(customCursor) customCursor.style.display='none';
+    }
+});
+
+window.addEventListener("resize",()=>{
+    camera.aspect=window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+});
+</script>
+
+</body>
+</html>
