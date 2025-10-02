@@ -440,7 +440,6 @@
       }
     </style>
 
-    
     <!--spec section-->
     <style>
       #specs-section {
@@ -756,10 +755,11 @@
         <h2
           class="text-4xl md:text-6xl font-bold text-emerald-500 tracking-tight"
         >
-           as It Looks.
-          </h2>
-          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
-          Our outdoor spaces are filled with invisible pollutants from traffic and industry that are harmful to our health.
+          as It Looks.
+        </h2>
+        <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
+          Our outdoor spaces are filled with invisible pollutants from traffic
+          and industry that are harmful to our health.
         </p>
       </div>
     </section>
@@ -768,15 +768,15 @@
     <!-- Specs Section -->
 
     <section id="specs-section" class="relative">
-      <div class="container mx-auto px-6 bg-black/95 py-20">
+      <div class="container mx-auto px-6 py-20">
         <div class="text-center reveal-on-scroll mb-16 md:mb-24">
           <h2
-            class="text-4xl md:text-6xl text-gray-50 font-bold tracking-tight"
+            class="text-4xl md:text-6xl text-gray-700 font-bold tracking-tight"
           >
             The Art of Purity:
             <span class="text-emerald-400">German Engineered.</span>
           </h2>
-          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-400">
+          <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
             Our technology is a testament to meticulous engineering. We've
             harnessed decades of innovation to deliver the purest air possible,
             certified by the most rigorous standards.
@@ -816,7 +816,7 @@
               <h3 class="text-3xl font-bold text-emerald-400">
                 Certified Filtration
               </h3>
-              <p class="mt-4 text-lg text-gray-400">
+              <p class="mt-4 text-lg text-gray-600">
                 PM2.5: 67% | PM10: 87% | NOx: 80% <br />
                 These ratings are a guarantee of safer air, backed by rigorous
                 German testing standards.
@@ -826,7 +826,7 @@
               <h3 class="text-3xl font-bold text-emerald-400">
                 Advanced Microfiber Media
               </h3>
-              <p class="mt-4 text-lg text-gray-400">
+              <p class="mt-4 text-lg text-gray-600">
                 Our filters utilize highly developed microfiber media, an
                 innovation from German material science, for superior air
                 purification and exceptional longevity.
@@ -836,7 +836,7 @@
               <h3 class="text-3xl font-bold text-emerald-400">
                 Activated Carbon Layer
               </h3>
-              <p class="mt-4 text-lg text-gray-400">
+              <p class="mt-4 text-lg text-gray-600">
                 A specialized carbon layer, formulated in Germany, neutralizes
                 NOx and other harmful gases with exceptional efficiency.
               </p>
@@ -845,7 +845,7 @@
               <h3 class="text-3xl font-bold text-emerald-400">
                 NO₂ Separation Tech
               </h3>
-              <p class="mt-4 text-lg text-gray-400">
+              <p class="mt-4 text-lg text-gray-600">
                 Proprietary German technology captures and neutralizes NO₂
                 through a sophisticated process of adsorption, binding, and
                 catalytic reduction.
@@ -855,8 +855,6 @@
         </div>
       </div>
     </section>
-
-    
 
     <div id="content-container" class="reveal-on-scroll bg-black/90">
       <section
@@ -1437,8 +1435,6 @@
       });
     </script>
 
-    
-
     <!-- tech filter scrolling section  -->
     <script>
       // --- Specs Section (Image changes on scroll) ---
@@ -1477,236 +1473,256 @@
     </script>
 
     <script type="module">
-    import * as THREE from "three";
-    import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+  import * as THREE from "three";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-    // --- Scene Setup ---
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000
-    );
-    camera.position.z = 5;
-    const renderer = new THREE.WebGLRenderer({
-        canvas: document.getElementById("webgl-canvas"),
-        antialias: true,
-        alpha: true,
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // --- Scene Setup ---
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z = 5;
+  const renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById("webgl-canvas"),
+    antialias: true,
+    alpha: true,
+  });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // --- Lighting ---
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
+  // --- Lighting ---
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  directionalLight.position.set(5, 5, 5);
+  scene.add(directionalLight);
 
-    const particleMouse = new THREE.Vector2();
-    
-    // --- MODIFICATION 1: Load Textures ---
-    const textureLoader = new THREE.TextureLoader();
-    const particleTextures = [
-        textureLoader.load('./img/pm01'),
-        textureLoader.load('./img/pm1.png'),
-        textureLoader.load('./img/pm25.png'),
-        textureLoader.load('./img/pm10.png'),
-        textureLoader.load('./img/no2.png'),
-    ];
+  const particleMouse = new THREE.Vector2();
 
-    // --- MODIFICATION 2: Update Particle Creation Function ---
-    const createParticles = (count, texture, size) => {
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(count * 3);
-        const originalPositions = new Float32Array(count * 3);
+  // --- Textures & Particles (No changes here) ---
+  const textureLoader = new THREE.TextureLoader();
+  const particleTextures = [
+    textureLoader.load("./img/pm01"),
+    textureLoader.load("./img/pm1.png"),
+    textureLoader.load("./img/pm25.png"),
+    textureLoader.load("./img/pm10.png"),
+    textureLoader.load("./img/no2.png"),
+  ];
 
-        for (let i = 0; i < count * 3; i++) {
-            const pos = (Math.random() - 0.5) * 15;
-            positions[i] = pos;
-            originalPositions[i] = pos;
-        }
-        geometry.setAttribute(
-            "position",
-            new THREE.BufferAttribute(positions, 3)
-        );
-        geometry.setAttribute(
-            "originalPosition",
-            new THREE.BufferAttribute(originalPositions, 3)
-        );
+  const createParticles = (count, texture, size) => {
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(count * 3);
+    const originalPositions = new Float32Array(count * 3);
 
-        const material = new THREE.PointsMaterial({
-            size,
-            transparent: true,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false,
-            map: texture, // Apply the texture here
-            color: 0xffffff, // Set color to white to use original texture colors
-        });
-        return new THREE.Points(geometry, material);
-    };
-
-    // --- MODIFICATION 3: Create 5 Particle Systems with different textures ---
-    const allParticles = [
-        createParticles(20, particleTextures[0], 0.1),
-        createParticles(20, particleTextures[1], 0.15),
-        createParticles(20, particleTextures[2], 0.2),
-        createParticles(20, particleTextures[3], 0.25),
-        createParticles(20, particleTextures[4], 0.3),
-    ];
-    scene.add(...allParticles); // Use spread operator to add all to scene
-
-    // --- GLB Model Loading ---
-    const gltfLoader = new GLTFLoader();
-    let model = null;
-    const modelURL = "./img/rectangle.glb";
-    gltfLoader.load(modelURL, (gltf) => {
-        model = gltf.scene;
-        model.scale.set(30, 50, 30);
-        model.position.y = 0;
-        model.visible = false;
-        scene.add(model);
-    });
-
-    // --- Interactivity & Scroll Logic (No changes needed here) ---
-    const contentBoxes = document.querySelectorAll(".content-box");
-    const sizes = { width: window.innerWidth, height: window.innerHeight };
-    const mouse = new THREE.Vector2();
-    const container = document.getElementById("content-container");
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (model) {
-                    model.visible = entry.isIntersecting;
-                }
-            });
-        }, { threshold: 0.01 }
-    );
-    observer.observe(container);
-    if (contentBoxes.length > 0) {
-        contentBoxes[0].classList.add("is-visible");
+    for (let i = 0; i < count * 3; i++) {
+      const pos = (Math.random() - 0.5) * 15;
+      positions[i] = pos;
+      originalPositions[i] = pos;
     }
-    window.addEventListener("mousemove", (event) => {
-        mouse.x = (event.clientX / sizes.width) * 2 - 1;
-        mouse.y = -(event.clientY / sizes.height) * 2 + 1;
-        particleMouse.x = event.clientX;
-        particleMouse.y = event.clientY;
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+    geometry.setAttribute(
+      "originalPosition",
+      new THREE.BufferAttribute(originalPositions, 3)
+    );
+
+    const material = new THREE.PointsMaterial({
+      size,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      map: texture,
+      color: 0xffffff,
+    });
+    return new THREE.Points(geometry, material);
+  };
+
+  const allParticles = [
+    createParticles(20, particleTextures[0], 0.1),
+    createParticles(20, particleTextures[1], 0.15),
+    createParticles(20, particleTextures[2], 0.2),
+    createParticles(20, particleTextures[3], 0.25),
+    createParticles(20, particleTextures[4], 0.3),
+  ];
+  scene.add(...allParticles);
+
+  // --- MODIFICATION 1: Define the colors for each section ---
+  const sectionColors = [
+    new THREE.Color("#f0f2f5"), // Color for Section 0 (Hero) - Light Grey
+    new THREE.Color("#ff6b6b"), // Color for Section 1 (Problem) - Red-ish
+    new THREE.Color("#48bb78"), // Color for Section 2 (Solution) - Emerald Green
+  ];
+
+  // --- GLB Model Loading ---
+  const gltfLoader = new GLTFLoader();
+  let model = null;
+  const modelURL = "./img/rectangle.glb";
+  gltfLoader.load(modelURL, (gltf) => {
+    model = gltf.scene;
+
+    // --- MODIFICATION 2: Set the initial color of the model ---
+    // We traverse the model to find any meshes and apply the first color.
+    model.traverse((child) => {
+      if (child.isMesh && child.material) {
+        // Important: You might need to clone the material if multiple objects share it
+        // but you want to color them independently. For a single object, this is fine.
+        child.material = child.material.clone();
+        child.material.color.set(sectionColors[0]);
+      }
     });
 
-    // --- Animation Loop ---
-    const clock = new THREE.Clock();
-    let currentSection = 0;
+    model.scale.set(30, 50, 30);
+    model.position.y = 0;
+    model.visible = false;
+    scene.add(model);
+  });
 
-    // --- Animation Function (No changes needed here) ---
-    const animateInteractiveParticles = (particles, elapsedTime) => {
-        const positions = particles.geometry.attributes.position.array;
-        const originalPositions =
-            particles.geometry.attributes.originalPosition.array;
-        const count = positions.length / 3;
-
-        for (let i = 0; i < count; i++) {
-            const i3 = i * 3;
-            const ox = originalPositions[i3];
-            const oy = originalPositions[i3 + 1];
-            const oz = originalPositions[i3 + 2];
-
-            const angle = elapsedTime * 0.2;
-            const baseX = ox * Math.cos(angle) - oz * Math.sin(angle);
-            const baseY = oy;
-            const baseZ = ox * Math.sin(angle) + oz * Math.cos(angle);
-
-            const vertex = new THREE.Vector3(
-                positions[i3],
-                positions[i3 + 1],
-                positions[i3 + 2]
-            );
-            vertex.project(camera);
-            const screenX = (vertex.x * 0.5 + 0.5) * sizes.width;
-            const screenY = (-vertex.y * 0.5 + 0.5) * sizes.height;
-
-            const dx = particleMouse.x - screenX;
-            const dy = particleMouse.y - screenY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            const maxDistance = 150;
-            const force = Math.max(0, (maxDistance - distance) / maxDistance);
-
-            const targetX = baseX + (dx / distance) * force * 1.5;
-            const targetY = baseY + (dy / distance) * force * 1.5;
-            const targetZ = baseZ;
-
-            positions[i3] += (targetX - positions[i3]) * 0.08;
-            positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
-            positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
+  // --- Interactivity & Scroll Logic (No changes here) ---
+  const contentBoxes = document.querySelectorAll(".content-box");
+  const sizes = { width: window.innerWidth, height: window.innerHeight };
+  const mouse = new THREE.Vector2();
+  const container = document.getElementById("content-container");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (model) {
+          model.visible = entry.isIntersecting;
         }
+      });
+    },
+    { threshold: 0.01 }
+  );
+  observer.observe(container);
+  if (contentBoxes.length > 0) {
+    contentBoxes[0].classList.add("is-visible");
+  }
+  window.addEventListener("mousemove", (event) => {
+    mouse.x = (event.clientX / sizes.width) * 2 - 1;
+    mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+    particleMouse.x = event.clientX;
+    particleMouse.y = event.clientY;
+  });
 
-        particles.geometry.attributes.position.needsUpdate = true;
-    };
+  // --- Animation Loop ---
+  const clock = new THREE.Clock();
+  let currentSection = 0;
 
-    const tick = () => {
-        const elapsedTime = clock.getElapsedTime();
+  // --- Animation Function (No changes needed here) ---
+  const animateInteractiveParticles = (particles, elapsedTime) => {
+    const positions = particles.geometry.attributes.position.array;
+    const originalPositions =
+      particles.geometry.attributes.originalPosition.array;
+    const count = positions.length / 3;
 
-        // --- MODIFICATION 4: Animate all 5 particle systems ---
-        // Using different speeds for a nice parallax effect
-        animateInteractiveParticles(allParticles[0], elapsedTime * 0.5);
-        animateInteractiveParticles(allParticles[1], elapsedTime * 0.3);
-        animateInteractiveParticles(allParticles[2], elapsedTime * 0.6);
-        animateInteractiveParticles(allParticles[3], elapsedTime * 0.4);
-        animateInteractiveParticles(allParticles[4], elapsedTime * 0.55);
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3;
+      const ox = originalPositions[i3];
+      const oy = originalPositions[i3 + 1];
+      const oz = originalPositions[i3 + 2];
+      const angle = elapsedTime * 0.2;
+      const baseX = ox * Math.cos(angle) - oz * Math.sin(angle);
+      const baseY = oy;
+      const baseZ = ox * Math.sin(angle) + oz * Math.cos(angle);
+      const vertex = new THREE.Vector3(
+        positions[i3],
+        positions[i3 + 1],
+        positions[i3 + 2]
+      );
+      vertex.project(camera);
+      const screenX = (vertex.x * 0.5 + 0.5) * sizes.width;
+      const screenY = (-vertex.y * 0.5 + 0.5) * sizes.height;
+      const dx = particleMouse.x - screenX;
+      const dy = particleMouse.y - screenY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const maxDistance = 150;
+      const force = Math.max(0, (maxDistance - distance) / maxDistance);
+      const targetX = baseX + (dx / distance) * force * 1.5;
+      const targetY = baseY + (dy / distance) * force * 1.5;
+      const targetZ = baseZ;
+      positions[i3] += (targetX - positions[i3]) * 0.08;
+      positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
+      positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
+    }
+    particles.geometry.attributes.position.needsUpdate = true;
+  };
 
-        // Animate Model (No changes needed here)
-        if (model && model.visible) {
-            const rect = container.getBoundingClientRect();
-            const scrollAmount = -rect.top;
-            const scrollableHeight = rect.height - sizes.height;
-            const progress = Math.max(
-                0,
-                Math.min(1, scrollAmount / scrollableHeight)
-            );
+  const tick = () => {
+    const elapsedTime = clock.getElapsedTime();
 
-            const newSection = Math.round(progress * (contentBoxes.length - 1));
-            if (newSection !== currentSection) {
-                currentSection = newSection;
-                contentBoxes.forEach((box, index) => {
-                    box.classList.toggle("is-visible", index === currentSection);
-                });
-            }
+    // Animate Particles
+    animateInteractiveParticles(allParticles[0], elapsedTime * 0.5);
+    animateInteractiveParticles(allParticles[1], elapsedTime * 0.3);
+    animateInteractiveParticles(allParticles[2], elapsedTime * 0.6);
+    animateInteractiveParticles(allParticles[3], elapsedTime * 0.4);
+    animateInteractiveParticles(allParticles[4], elapsedTime * 0.55);
 
-            let targetX = 0;
-            let targetY = -2.5;
+    // Animate Model
+    if (model && model.visible) {
+      const rect = container.getBoundingClientRect();
+      const scrollAmount = -rect.top;
+      const scrollableHeight = rect.height - sizes.height;
+      const progress = Math.max(
+        0,
+        Math.min(1, scrollAmount / scrollableHeight)
+      );
 
-            if (currentSection === 0) targetX = 0;
-            else if (currentSection === 1) targetX = 3.5;
-            else if (currentSection === 2) targetX = -3.5;
-            else targetY = 10;
+      const newSection = Math.round(progress * (contentBoxes.length - 1));
+      if (newSection !== currentSection) {
+        currentSection = newSection;
+        contentBoxes.forEach((box, index) => {
+          box.classList.toggle("is-visible", index === currentSection);
+        });
+      }
 
-            model.position.x += (targetX - model.position.x) * 0.05;
-            model.position.y += (targetY - model.position.y) * 0.05;
+      // Position Animation
+      let targetX = 0;
+      let targetY = -2.5;
+      if (currentSection === 0) targetX = 0;
+      else if (currentSection === 1) targetX = 3.5;
+      else if (currentSection === 2) targetX = -3.5;
+      else targetY = 10;
+      model.position.x += (targetX - model.position.x) * 0.05;
+      model.position.y += (targetY - model.position.y) * 0.05;
 
-            const scrollRotationY = Math.PI * 2 * progress;
-            const targetRotationX = mouse.y * 0.2;
-            const targetRotationY = scrollRotationY + mouse.x * 0.2;
+      // Rotation Animation
+      const scrollRotationY = Math.PI * 2 * progress;
+      const targetRotationX = mouse.y * 0.2;
+      const targetRotationY = scrollRotationY + mouse.x * 0.2;
+      model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
+      model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
 
-            model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
-            model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+      // --- MODIFICATION 3: Animate the color change ---
+      const targetColor = sectionColors[currentSection];
+      model.traverse((child) => {
+        if (child.isMesh && child.material) {
+          // Use lerp for a smooth transition. The second argument (alpha)
+          // controls the speed of the transition. 0.05 is a good start.
+          child.material.color.lerp(targetColor, 0.05);
         }
+      });
+    }
 
-        renderer.render(scene, camera);
-        window.requestAnimationFrame(tick);
-    };
+    renderer.render(scene, camera);
+    window.requestAnimationFrame(tick);
+  };
 
-    tick();
+  tick();
 
-    // --- Resize Handler (No changes needed here) ---
-    window.addEventListener("resize", () => {
-        sizes.width = window.innerWidth;
-        sizes.height = window.innerHeight;
-        camera.aspect = sizes.width / sizes.height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(sizes.width, sizes.height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    });
+  // --- Resize Handler (No changes needed here) ---
+  window.addEventListener("resize", () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  });
 </script>
   </body>
 </html>
+ ̰
