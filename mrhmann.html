@@ -624,16 +624,24 @@
       </div>
     </section>
 
-    <section class="container">
+    <section class="container mx-auto">
+      <!-- 
+    Key Changes:
+    - flex-col lg:flex-row: Stacks vertically on mobile, becomes a row on large screens.
+    - px-4 md:px-8 lg:px-16: Responsive padding that's smaller on mobile.
+    - gap-12 lg:gap-16: Responsive gap that's smaller on mobile.
+    - text-center lg:text-left: Centers text on mobile for a better stacked layout.
+  -->
       <div
-        class="flex min-h-screen justify-between items-center reveal-on-scroll gap-16 px-16"
+        class="flex flex-col lg:flex-row min-h-screen justify-center items-center reveal-on-scroll gap-12 lg:gap-16 px-4 md:px-8 lg:px-16"
       >
-        <div class="w-full">
+        <!-- Text Content Block -->
+        <div class="w-full lg:w-1/2 text-center lg:text-left">
           <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
             A Legacy of
             <span class="text-emerald-500">German Engineering.</span>
           </h2>
-          <p class="mt-6 text-lg text-gray-600">
+          <p class="mt-6 text-lg text-gray-600 max-w-xl mx-auto lg:mx-0">
             AirFinery is born from a strategic partnership between MRH
             Technologies (a subsidiary of OK Play) and MANN+HUMMEL, Germany's
             world-renowned filtration leader since 1941. This collaboration
@@ -641,22 +649,29 @@
             Indian manufacturing to create a solution built for our environment.
           </p>
         </div>
-        <div class="w-full">
+
+        <!-- Logo Block -->
+        <div class="w-full lg:w-1/2">
           <div
-            class="flex items-center justify-center gap-8 reveal-on-scroll"
+            class="flex items-center justify-center gap-4 sm:gap-8 reveal-on-scroll"
             style="transition-delay: 200ms"
           >
-            <!-- Replace with your logos -->
+            <!-- 
+          Key Changes:
+          - h-[120px] lg:h-[200px]: Logos are smaller on mobile to not overwhelm the screen.
+        -->
             <img
               src="./img/Picsart_25-09-12_17-10-56-374-low_res-scale-4_00x.png"
               alt="MRH Logo"
-              class="h-[200px]"
+              class="h-[120px] lg:h-[200px] object-contain"
             />
-            <span class="text-5xl font-light text-green-700">+</span>
+            <span class="text-4xl sm:text-5xl font-light text-green-700"
+              >+</span
+            >
             <img
               src="./img/Picsart_25-09-16_12-27-03-047.png"
               alt="MANN+HUMMEL Logo"
-              class="h-[200px]"
+              class="h-[120px] lg:h-[200px] object-contain"
             />
           </div>
         </div>
@@ -665,7 +680,7 @@
 
     <!-- prodduct intro section  -->
 
-    <section class="relative py-20 md:py-2 px-16 text-white">
+    <section class="relative py-20 md:py-2 px-4 sm:px-16 text-white">
       <video
         class="absolute top-0 left-0 w-full h-full object-cover z-0"
         src="./video/Black_Tower_Draws_Fog.mp4"
@@ -675,10 +690,11 @@
         playsinline
       ></video>
       <div class="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
+
       <div
         class="relative z-20 container mx-auto px-6 grid md:grid-cols-2 gap-12 min-h-screen items-center"
       >
-        <div class="text-left reveal-on-scroll">
+        <div class="text-left">
           <h2 class="text-4xl md:text-6xl font-bold tracking-tight">
             Meet <span class="text-emerald-400">AirFinery.</span>
           </h2>
@@ -694,40 +710,39 @@
             air in real-world Indian conditions.
           </p>
         </div>
+
         <div
-          class="flex flex-col gap-8 items-center md:items-start reveal-on-scroll"
-          style="transition-delay: 200ms"
+          class="flex flex-col items-center justify-center gap-6 w-full h-full"
         >
           <div
-            class="bg-white/10 backdrop-blur-md p-6 rounded-2xl flex items-center gap-4 border border-white/20"
+            id="model-container"
+            class="w-full h-96 md:h-[500px] cursor-grab"
           >
-            <!-- Replace with MANN+HUMMEL logo -->
-            <img
-              src="./img/Picsart_25-09-16_12-27-03-047.jpg"
-              alt="MANN+HUMMEL"
-              class="h-[140px] rounded-lg"
-            />
-            <div class="max-w-[300px]">
-              <h3 class="font-bold text-xl">World-Class German Technology</h3>
-              <p class="text-gray-300 text-sm">
-                Powered by an 84-year legacy of filtration excellence.
-              </p>
-            </div>
+            <canvas id="model-canvas"></canvas>
           </div>
-          <div
-            class="bg-white/10 backdrop-blur-md p-6 rounded-2xl flex items-center gap-4 border border-white/20"
-          >
-            <!-- Replace with IIT Delhi logo -->
-            <img
-              src="./img/Picsart_25-09-16_11-39-38-753.jpg"
-              alt="IIT Delhi"
-              class="h-[140px] rounded-lg"
-            />
-            <div class="max-w-[300px]">
-              <h3 class="font-bold text-xl">Scientifically Proven in India</h3>
-              <p class="text-gray-300 text-sm">
-                Validated by IIT Delhi to reduce PM2.5 & PM10 by over 80%.
-              </p>
+
+          <div class="flex flex-col items-center gap-3">
+            <p class="text-sm text-gray-300 font-medium">CHOOSE COLOR</p>
+            <div
+              id="color-picker"
+              class="flex items-center justify-center gap-4 p-2 bg-black/20 backdrop-blur-sm rounded-full"
+            >
+              <div
+                class="color-swatch w-8 h-8 bg-[#ffb703] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                data-color="#ffb703"
+              ></div>
+              <div
+                class="color-swatch w-8 h-8 bg-[#007200] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                data-color="#007200"
+              ></div>
+              <div
+                class="color-swatch w-8 h-8 bg-[#ff542d] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                data-color="#ff542d"
+              ></div>
+              <div
+                class="color-swatch w-8 h-8 bg-[#007ea7] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                data-color="#007ea7"
+              ></div>
             </div>
           </div>
         </div>
@@ -768,7 +783,7 @@
     <!-- Specs Section -->
 
     <section id="specs-section" class="relative">
-      <div class="container mx-auto px-6 py-20">
+      <div class="container w-full mx-auto px-6 py-20">
         <div class="text-center reveal-on-scroll mb-16 md:mb-24">
           <h2
             class="text-4xl md:text-6xl text-gray-700 font-bold tracking-tight"
@@ -1155,11 +1170,28 @@
     </section>
 
     <!---------------------------------------------------------------- ALL SCRIPTS ---------------------------------------------------------------->
-    <!-- nessesory javascript -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // --- Video Autoplay on Scroll ---
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script type="module">
+      // Import Three.js modules at the top level
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+      // =======================================================================
+      // UTILITY: Video Autoplay on Scroll
+      // =======================================================================
+      function initVideoObserver() {
         const videos = document.querySelectorAll("video");
+        if (videos.length === 0) return;
+
         const videoObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -1173,77 +1205,73 @@
           { threshold: 0.25 }
         );
         videos.forEach((video) => videoObserver.observe(video));
-      });
-    </script>
+      }
 
-    <!-- header animation script  -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      // =======================================================================
+      // ANIMATION: Header Hiding on Scroll
+      // =======================================================================
+      function initHeaderAnimation() {
         const header = document.getElementById("main-header");
+        if (!header) return;
+
         let lastScrollY = window.scrollY;
-        let currentOffset = 0; // Current header offset
-        const maxOffset = header.offsetHeight; // Maximum slide distance
-        const buffer = 100; // Only start hiding after 100px scroll
+        let currentOffset = 0;
+        const maxOffset = header.offsetHeight;
+        const buffer = 100;
 
         window.addEventListener("scroll", () => {
           const currentScrollY = window.scrollY;
           const delta = currentScrollY - lastScrollY;
 
-          // Do nothing until user scrolls more than the buffer
           if (currentScrollY < buffer) {
             currentOffset = 0;
           } else {
             currentOffset += delta;
-
-            // Clamp offset between 0 and header height
-            if (currentOffset < 0) currentOffset = 0;
-            if (currentOffset > maxOffset) currentOffset = maxOffset;
+            currentOffset = Math.max(0, Math.min(currentOffset, maxOffset)); // Clamp
           }
 
           header.style.transform = `translateY(-${currentOffset}px)`;
           lastScrollY = currentScrollY;
         });
-      });
-    </script>
+      }
 
-    <!-- hero section script -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // --- New Hero Section Animation ---
+      // =======================================================================
+      // ANIMATION: Hero Section Mist Effect & General Reveal on Scroll
+      // =======================================================================
+      function initHeroAndReveal() {
+        // --- 2D Canvas Mist Effect ---
         const canvas = document.getElementById("mist-canvas");
         if (canvas) {
           const ctx = canvas.getContext("2d");
           const textElement = document.getElementById("hero-content");
           const bgImage = document.querySelector(".hero-background");
-
           let particles = [];
           const numParticles = 200;
           let isDissipating = false;
 
-          function resizeCanvas() {
+          const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            if (particles.length > 0) {
-              init();
-            }
-          }
+            if (particles.length > 0) initParticles();
+          };
           window.addEventListener("resize", resizeCanvas);
           resizeCanvas();
 
           class Particle {
             constructor() {
+              this.reset();
+            }
+            reset() {
               this.x = Math.random() * canvas.width;
               this.y = Math.random() * canvas.height;
               this.radius = Math.random() * 100 + 100;
               this.alpha = Math.random() * 0.5 + 0.25;
-              this.initialAlpha = this.alpha;
               this.vx = (Math.random() - 0.5) * 0.2;
               this.vy = (Math.random() - 0.5) * 0.2;
               this.fadeOutSpeed = 0.005 + Math.random() * 0.003;
             }
             draw() {
               ctx.beginPath();
-              ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
               const gradient = ctx.createRadialGradient(
                 this.x,
                 this.y,
@@ -1255,193 +1283,127 @@
               gradient.addColorStop(0, `rgba(200, 200, 200, ${this.alpha})`);
               gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
               ctx.fillStyle = gradient;
+              ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
               ctx.fill();
             }
             update() {
               if (isDissipating) {
                 this.x += this.vx;
                 this.y += this.vy;
-                if (this.alpha > 0) {
-                  this.alpha -= this.fadeOutSpeed;
-                }
+                if (this.alpha > 0) this.alpha -= this.fadeOutSpeed;
               }
             }
           }
 
-          function init() {
-            particles = [];
-            for (let i = 0; i < numParticles; i++) {
-              particles.push(new Particle());
-            }
-          }
+          const initParticles = () => {
+            particles = Array.from(
+              { length: numParticles },
+              () => new Particle()
+            );
+          };
 
-          function animate() {
+          const animateMist = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (const particle of particles) {
-              particle.update();
-              particle.draw();
-            }
-            requestAnimationFrame(animate);
-          }
+            particles.forEach((p) => {
+              p.update();
+              p.draw();
+            });
+            requestAnimationFrame(animateMist);
+          };
 
-          init();
-          animate();
+          initParticles();
+          animateMist();
 
           setTimeout(() => {
             isDissipating = true;
-            bgImage.classList.add("clear");
+            if (bgImage) bgImage.classList.add("clear");
           }, 1000);
-
           setTimeout(() => {
-            textElement.classList.add("is-visible");
+            if (textElement) textElement.classList.add("is-visible");
           }, 1500);
         }
 
         // --- General Reveal on Scroll ---
         const revealElements = document.querySelectorAll(".reveal-on-scroll");
+        if (revealElements.length === 0) return;
         const revealObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.isIntersecting) {
+              if (entry.isIntersecting)
                 entry.target.classList.add("is-visible");
-              }
             });
           },
-          {
-            threshold: 0.1,
-          }
+          { threshold: 0.1 }
         );
         revealElements.forEach((el) => revealObserver.observe(el));
-      });
-    </script>
+      }
 
-    <!-- carousel script  -->
-    <script>
-      // Enhanced Carousel Functionality
-      document.addEventListener("DOMContentLoaded", function () {
+      // =======================================================================
+      // WIDGET: Carousel
+      // =======================================================================
+      function initCarousel() {
+        const wrapper = document.querySelector(".carousel-wrapper");
+        if (!wrapper) return;
+
         const track = document.getElementById("carousel-track");
-        const items = document.querySelectorAll(".carousel-item");
+        const items = Array.from(track.children);
         const prevBtn = document.getElementById("carousel-prev");
         const nextBtn = document.getElementById("carousel-next");
         const indicators = document.querySelectorAll(".indicator");
+        if (items.length === 0) return;
 
         let currentSlide = 0;
-        let isAnimating = false;
-        let autoPlayInterval;
+        let autoPlayInterval = null;
 
-        // Set initial backgrounds
-        items.forEach((item) => {
-          const bg = item.getAttribute("data-bg");
-          item.style.background = bg;
-        });
+        const updateCarousel = () => {
+          track.style.transform = `translateX(-${currentSlide * (100 / 3)}%)`;
+          items.forEach((item, index) =>
+            item.classList.toggle("active", index === currentSlide)
+          );
+          indicators.forEach((ind, index) =>
+            ind.classList.toggle("active", index === currentSlide)
+          );
+        };
 
-        function updateCarousel() {
-          if (isAnimating) return;
-          isAnimating = true;
-
-          const translateX = -currentSlide * (100 / 3);
-          track.style.transform = `translateX(${translateX}%)`;
-
-          // Update active states
-          items.forEach((item, index) => {
-            item.classList.toggle("active", index === currentSlide);
-          });
-
-          indicators.forEach((indicator, index) => {
-            indicator.classList.toggle("active", index === currentSlide);
-          });
-
-          setTimeout(() => {
-            isAnimating = false;
-          }, 800);
-        }
-
-        function nextSlide() {
+        const next = () => {
           currentSlide = (currentSlide + 1) % items.length;
           updateCarousel();
-        }
-
-        function prevSlide() {
+        };
+        const prev = () => {
           currentSlide = (currentSlide - 1 + items.length) % items.length;
           updateCarousel();
-        }
-
-        function goToSlide(index) {
+        };
+        const goTo = (index) => {
           currentSlide = index;
           updateCarousel();
-        }
-
-        // Event Listeners
-        nextBtn.addEventListener("click", nextSlide);
-        prevBtn.addEventListener("click", prevSlide);
-
-        indicators.forEach((indicator, index) => {
-          indicator.addEventListener("click", () => goToSlide(index));
-        });
-
-        // Auto-play functionality
-        function startAutoPlay() {
+        };
+        const startAutoPlay = () => {
           stopAutoPlay();
-          autoPlayInterval = setInterval(nextSlide, 5000);
-        }
+          autoPlayInterval = setInterval(next, 5000);
+        };
+        const stopAutoPlay = () => clearInterval(autoPlayInterval);
 
-        function stopAutoPlay() {
-          clearInterval(autoPlayInterval);
-        }
+        items.forEach((item) => (item.style.background = item.dataset.bg));
+        nextBtn.addEventListener("click", next);
+        prevBtn.addEventListener("click", prev);
+        indicators.forEach((ind, i) =>
+          ind.addEventListener("click", () => goTo(i))
+        );
+        wrapper.addEventListener("mouseenter", stopAutoPlay);
+        wrapper.addEventListener("mouseleave", startAutoPlay);
 
-        // Start auto-play
         startAutoPlay();
+        updateCarousel();
+      }
 
-        // Pause auto-play on hover
-        const carouselWrapper = document.querySelector(".carousel-wrapper");
-        carouselWrapper.addEventListener("mouseenter", stopAutoPlay);
-        carouselWrapper.addEventListener("mouseleave", startAutoPlay);
+      // =======================================================================
+      // ANIMATION: Tech Filter Scrolling Section
+      // =======================================================================
+      function initTechFilterScroll() {
+        const specItems = document.querySelectorAll(".spec-item");
+        const productImages = document.querySelectorAll(".product-image");
+        if (specItems.length === 0 || productImages.length === 0) return;
 
-        // Touch/Swipe Support
-        let startX = 0;
-        let moveX = 0;
-
-        carouselWrapper.addEventListener("touchstart", (e) => {
-          startX = e.touches[0].clientX;
-          stopAutoPlay();
-        });
-
-        carouselWrapper.addEventListener("touchmove", (e) => {
-          moveX = e.touches[0].clientX;
-        });
-
-        carouselWrapper.addEventListener("touchend", () => {
-          const diff = startX - moveX;
-
-          if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-              nextSlide();
-            } else {
-              prevSlide();
-            }
-          }
-
-          startAutoPlay();
-        });
-
-        // Keyboard navigation
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowLeft") {
-            prevSlide();
-          } else if (e.key === "ArrowRight") {
-            nextSlide();
-          }
-        });
-      });
-    </script>
-
-    <!-- tech filter scrolling section  -->
-    <script>
-      // --- Specs Section (Image changes on scroll) ---
-      const specItems = document.querySelectorAll(".spec-item");
-      const productImages = document.querySelectorAll(".product-image");
-
-      if (specItems.length > 0) {
         const specObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -1449,9 +1411,9 @@
                 const targetId = entry.target.dataset.highlight;
                 specItems.forEach((item) => item.classList.remove("is-active"));
                 entry.target.classList.add("is-active");
-                productImages.forEach((img) => {
-                  img.classList.toggle("is-active", img.id === targetId);
-                });
+                productImages.forEach((img) =>
+                  img.classList.toggle("is-active", img.id === targetId)
+                );
               }
             });
           },
@@ -1459,270 +1421,336 @@
         );
         specItems.forEach((item) => specObserver.observe(item));
       }
-    </script>
 
-    <!-- new 3 javascript -->
+      // =======================================================================
+      // 3D SCENE 1: Fullscreen Scrolling Background (MODIFIED FOR MOBILE)
+      // =======================================================================
+      function setupFullScreenScrollEffect() {
+        const canvas = document.getElementById("webgl-canvas");
+        const container = document.getElementById("content-container");
+        if (!canvas || !container) return;
 
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
-        }
-      }
-    </script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        camera.position.z = 5;
 
-    <script type="module">
-  import * as THREE from "three";
-  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: true,
+          alpha: true,
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // --- Scene Setup ---
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.z = 5;
-  const renderer = new THREE.WebGLRenderer({
-    canvas: document.getElementById("webgl-canvas"),
-    antialias: true,
-    alpha: true,
-  });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
 
-  // --- Lighting ---
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-  directionalLight.position.set(5, 5, 5);
-  scene.add(directionalLight);
+        const particleMouse = new THREE.Vector2();
+        const textureLoader = new THREE.TextureLoader();
+        const particleTextures = [
+          textureLoader.load("./img/pm01.png"),
+          textureLoader.load("./img/pm1.png"),
+          textureLoader.load("./img/pm25.png"),
+          textureLoader.load("./img/pm10.png"),
+          textureLoader.load("./img/no2.png"),
+        ];
 
-  const particleMouse = new THREE.Vector2();
+        const createParticles = (count, texture, size) => {
+          const geometry = new THREE.BufferGeometry();
+          const positions = new Float32Array(count * 3);
+          const originalPositions = new Float32Array(count * 3);
+          for (let i = 0; i < count * 3; i++) {
+            const pos = (Math.random() - 0.5) * 15;
+            positions[i] = pos;
+            originalPositions[i] = pos;
+          }
+          geometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(positions, 3)
+          );
+          geometry.setAttribute(
+            "originalPosition",
+            new THREE.BufferAttribute(originalPositions, 3)
+          );
+          const material = new THREE.PointsMaterial({
+            size,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            map: texture,
+            color: 0xffffff,
+          });
+          return new THREE.Points(geometry, material);
+        };
 
-  // --- Textures & Particles (No changes here) ---
-  const textureLoader = new THREE.TextureLoader();
-  const particleTextures = [
-    textureLoader.load("./img/pm01"),
-    textureLoader.load("./img/pm1.png"),
-    textureLoader.load("./img/pm25.png"),
-    textureLoader.load("./img/pm10.png"),
-    textureLoader.load("./img/no2.png"),
-  ];
+        const allParticles = [
+          createParticles(20, particleTextures[0], 0.1),
+          createParticles(20, particleTextures[1], 0.15),
+          createParticles(20, particleTextures[2], 0.2),
+          createParticles(20, particleTextures[3], 0.25),
+          createParticles(20, particleTextures[4], 0.3),
+        ];
+        scene.add(...allParticles);
 
-  const createParticles = (count, texture, size) => {
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    const originalPositions = new Float32Array(count * 3);
+        const sectionColors = [
+          new THREE.Color("#ffb703"),
+          new THREE.Color("#0582ca"),
+          new THREE.Color("#007200"),
+        ];
 
-    for (let i = 0; i < count * 3; i++) {
-      const pos = (Math.random() - 0.5) * 15;
-      positions[i] = pos;
-      originalPositions[i] = pos;
-    }
-    geometry.setAttribute(
-      "position",
-      new THREE.BufferAttribute(positions, 3)
-    );
-    geometry.setAttribute(
-      "originalPosition",
-      new THREE.BufferAttribute(originalPositions, 3)
-    );
+        let model = null;
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load("./3dmodel/3D Model/APBlue.glb", (gltf) => {
+          model = gltf.scene;
+          model.traverse((child) => {
+            if (child.isMesh && child.material) {
+              child.material = child.material.clone();
+              child.material.color.set(sectionColors[0]);
+            }
+          });
+          model.scale.set(1, 1, 1);
+          model.position.y = 0;
+          model.visible = false;
+          scene.add(model);
+        });
 
-    const material = new THREE.PointsMaterial({
-      size,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      map: texture,
-      color: 0xffffff,
-    });
-    return new THREE.Points(geometry, material);
-  };
+        const contentBoxes = document.querySelectorAll(".content-box");
+        const sizes = { width: window.innerWidth, height: window.innerHeight };
+        const mouse = new THREE.Vector2();
+        let currentSection = 0;
 
-  const allParticles = [
-    createParticles(20, particleTextures[0], 0.1),
-    createParticles(20, particleTextures[1], 0.15),
-    createParticles(20, particleTextures[2], 0.2),
-    createParticles(20, particleTextures[3], 0.25),
-    createParticles(20, particleTextures[4], 0.3),
-  ];
-  scene.add(...allParticles);
+        new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              if (model) model.visible = e.isIntersecting;
+            }),
+          { threshold: 0.01 }
+        ).observe(container);
 
-  // --- MODIFICATION 1: Define the colors for each section ---
-  const sectionColors = [
-    new THREE.Color("#f0f2f5"), // Color for Section 0 (Hero) - Light Grey
-    new THREE.Color("#ff6b6b"), // Color for Section 1 (Problem) - Red-ish
-    new THREE.Color("#48bb78"), // Color for Section 2 (Solution) - Emerald Green
-  ];
+        window.addEventListener("mousemove", (event) => {
+          mouse.x = (event.clientX / sizes.width) * 2 - 1;
+          mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+          particleMouse.x = event.clientX;
+          particleMouse.y = event.clientY;
+        });
 
-  // --- GLB Model Loading ---
-  const gltfLoader = new GLTFLoader();
-  let model = null;
-  const modelURL = "./img/rectangle.glb";
-  gltfLoader.load(modelURL, (gltf) => {
-    model = gltf.scene;
+        const clock = new THREE.Clock();
 
-    // --- MODIFICATION 2: Set the initial color of the model ---
-    // We traverse the model to find any meshes and apply the first color.
-    model.traverse((child) => {
-      if (child.isMesh && child.material) {
-        // Important: You might need to clone the material if multiple objects share it
-        // but you want to color them independently. For a single object, this is fine.
-        child.material = child.material.clone();
-        child.material.color.set(sectionColors[0]);
-      }
-    });
+        const animateInteractiveParticles = (particles, elapsedTime) => {
+          const positions = particles.geometry.attributes.position.array;
+          const originalPositions =
+            particles.geometry.attributes.originalPosition.array;
+          const count = positions.length / 3;
+          for (let i = 0; i < count; i++) {
+            const i3 = i * 3;
+            const ox = originalPositions[i3];
+            const oy = originalPositions[i3 + 1];
+            const oz = originalPositions[i3 + 2];
+            const angle = elapsedTime * 0.2;
+            const baseX = ox * Math.cos(angle) - oz * Math.sin(angle);
+            const baseY = oy;
+            const baseZ = ox * Math.sin(angle) + oz * Math.cos(angle);
+            const vertex = new THREE.Vector3(
+              positions[i3],
+              positions[i3 + 1],
+              positions[i3 + 2]
+            );
+            vertex.project(camera);
+            const screenX = (vertex.x * 0.5 + 0.5) * sizes.width;
+            const screenY = (-vertex.y * 0.5 + 0.5) * sizes.height;
+            const dx = particleMouse.x - screenX;
+            const dy = particleMouse.y - screenY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const maxDistance = 150;
+            const force = Math.max(0, (maxDistance - distance) / maxDistance);
+            const targetX = baseX + (dx / distance) * force * 1.5;
+            const targetY = baseY + (dy / distance) * force * 1.5;
+            const targetZ = baseZ;
+            positions[i3] += (targetX - positions[i3]) * 0.08;
+            positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
+            positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
+          }
+          particles.geometry.attributes.position.needsUpdate = true;
+        };
 
-    model.scale.set(30, 50, 30);
-    model.position.y = 0;
-    model.visible = false;
-    scene.add(model);
-  });
+        const tick = () => {
+          const elapsedTime = clock.getElapsedTime();
 
-  // --- Interactivity & Scroll Logic (No changes here) ---
-  const contentBoxes = document.querySelectorAll(".content-box");
-  const sizes = { width: window.innerWidth, height: window.innerHeight };
-  const mouse = new THREE.Vector2();
-  const container = document.getElementById("content-container");
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (model) {
-          model.visible = entry.isIntersecting;
-        }
-      });
-    },
-    { threshold: 0.01 }
-  );
-  observer.observe(container);
-  if (contentBoxes.length > 0) {
-    contentBoxes[0].classList.add("is-visible");
-  }
-  window.addEventListener("mousemove", (event) => {
-    mouse.x = (event.clientX / sizes.width) * 2 - 1;
-    mouse.y = -(event.clientY / sizes.height) * 2 + 1;
-    particleMouse.x = event.clientX;
-    particleMouse.y = event.clientY;
-  });
+          animateInteractiveParticles(allParticles[0], elapsedTime * 0.5);
+          animateInteractiveParticles(allParticles[1], elapsedTime * 0.3);
+          animateInteractiveParticles(allParticles[2], elapsedTime * 0.6);
+          animateInteractiveParticles(allParticles[3], elapsedTime * 0.4);
+          animateInteractiveParticles(allParticles[4], elapsedTime * 0.55);
 
-  // --- Animation Loop ---
-  const clock = new THREE.Clock();
-  let currentSection = 0;
+          if (model && model.visible) {
+            const rect = container.getBoundingClientRect();
+            const scrollAmount = -rect.top;
+            const scrollableHeight = rect.height - sizes.height;
+            const progress = Math.max(
+              0,
+              Math.min(1, scrollAmount / scrollableHeight)
+            );
+            const newSection = Math.round(progress * (contentBoxes.length - 1));
 
-  // --- Animation Function (No changes needed here) ---
-  const animateInteractiveParticles = (particles, elapsedTime) => {
-    const positions = particles.geometry.attributes.position.array;
-    const originalPositions =
-      particles.geometry.attributes.originalPosition.array;
-    const count = positions.length / 3;
+            if (newSection !== currentSection) {
+              currentSection = newSection;
+              contentBoxes.forEach((box, i) =>
+                box.classList.toggle("is-visible", i === currentSection)
+              );
+            }
 
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      const ox = originalPositions[i3];
-      const oy = originalPositions[i3 + 1];
-      const oz = originalPositions[i3 + 2];
-      const angle = elapsedTime * 0.2;
-      const baseX = ox * Math.cos(angle) - oz * Math.sin(angle);
-      const baseY = oy;
-      const baseZ = ox * Math.sin(angle) + oz * Math.cos(angle);
-      const vertex = new THREE.Vector3(
-        positions[i3],
-        positions[i3 + 1],
-        positions[i3 + 2]
-      );
-      vertex.project(camera);
-      const screenX = (vertex.x * 0.5 + 0.5) * sizes.width;
-      const screenY = (-vertex.y * 0.5 + 0.5) * sizes.height;
-      const dx = particleMouse.x - screenX;
-      const dy = particleMouse.y - screenY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const maxDistance = 150;
-      const force = Math.max(0, (maxDistance - distance) / maxDistance);
-      const targetX = baseX + (dx / distance) * force * 1.5;
-      const targetY = baseY + (dy / distance) * force * 1.5;
-      const targetZ = baseZ;
-      positions[i3] += (targetX - positions[i3]) * 0.08;
-      positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
-      positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
-    }
-    particles.geometry.attributes.position.needsUpdate = true;
-  };
+            // ==== START: MOBILE BEHAVIOR MODIFICATION ====
+            const isMobile = window.innerWidth < 768; // Using 768px as the breakpoint
 
-  const tick = () => {
-    const elapsedTime = clock.getElapsedTime();
+            if (isMobile) {
+              // On mobile: stay centered, only rotate with scroll
+              model.position.x += (0 - model.position.x) * 0.05; // Target X is always 0
+              model.position.y += (-1 - model.position.y) * 0.05; // Keep vertical movement
 
-    // Animate Particles
-    animateInteractiveParticles(allParticles[0], elapsedTime * 0.5);
-    animateInteractiveParticles(allParticles[1], elapsedTime * 0.3);
-    animateInteractiveParticles(allParticles[2], elapsedTime * 0.6);
-    animateInteractiveParticles(allParticles[3], elapsedTime * 0.4);
-    animateInteractiveParticles(allParticles[4], elapsedTime * 0.55);
+              // Simpler rotation based only on scroll progress
+              model.rotation.y +=
+                (Math.PI * 2 * progress - model.rotation.y) * 0.05;
+              model.rotation.x += (0 - model.rotation.x) * 0.05; // Keep model level
+            } else {
+              // On desktop: original behavior with side-to-side movement and mouse interaction
+              let targetX = 0,
+                targetY = -1;
+              if (currentSection === 1) targetX = 3.5;
+              if (currentSection === 2) targetX = -3.5;
+              model.position.x += (targetX - model.position.x) * 0.05;
+              model.position.y += (targetY - model.position.y) * 0.05;
 
-    // Animate Model
-    if (model && model.visible) {
-      const rect = container.getBoundingClientRect();
-      const scrollAmount = -rect.top;
-      const scrollableHeight = rect.height - sizes.height;
-      const progress = Math.max(
-        0,
-        Math.min(1, scrollAmount / scrollableHeight)
-      );
+              model.rotation.x += (mouse.y * 0.2 - model.rotation.x) * 0.05;
+              model.rotation.y +=
+                (Math.PI * 2 * progress + mouse.x * 0.2 - model.rotation.y) *
+                0.05;
+            }
+            // ==== END: MOBILE BEHAVIOR MODIFICATION ====
 
-      const newSection = Math.round(progress * (contentBoxes.length - 1));
-      if (newSection !== currentSection) {
-        currentSection = newSection;
-        contentBoxes.forEach((box, index) => {
-          box.classList.toggle("is-visible", index === currentSection);
+            model.traverse((child) => {
+              if (child.isMesh)
+                child.material.color.lerp(sectionColors[currentSection], 0.05);
+            });
+          }
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        };
+        tick();
+
+        window.addEventListener("resize", () => {
+          sizes.width = window.innerWidth;
+          sizes.height = window.innerHeight;
+          camera.aspect = sizes.width / sizes.height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(sizes.width, sizes.height);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         });
       }
 
-      // Position Animation
-      let targetX = 0;
-      let targetY = -2.5;
-      if (currentSection === 0) targetX = 0;
-      else if (currentSection === 1) targetX = 3.5;
-      else if (currentSection === 2) targetX = -3.5;
-      else targetY = 10;
-      model.position.x += (targetX - model.position.x) * 0.05;
-      model.position.y += (targetY - model.position.y) * 0.05;
+      // =======================================================================
+      // 3D SCENE 2: INTERACTIVE MODEL VIEWER
+      // =======================================================================
+      function setupInteractiveModelViewer() {
+        const canvas = document.getElementById("model-canvas");
+        const container = document.getElementById("model-container");
+        if (!canvas || !container) return;
 
-      // Rotation Animation
-      const scrollRotationY = Math.PI * 2 * progress;
-      const targetRotationX = mouse.y * 0.2;
-      const targetRotationY = scrollRotationY + mouse.x * 0.2;
-      model.rotation.x += (targetRotationX - model.rotation.x) * 0.05;
-      model.rotation.y += (targetRotationY - model.rotation.y) * 0.05;
+        const scene = new THREE.Scene();
+        const sizes = {
+          width: container.clientWidth,
+          height: container.clientHeight,
+        };
+        const camera = new THREE.PerspectiveCamera(
+          45,
+          sizes.width / sizes.height,
+          0.1,
+          100
+        );
+        camera.position.set(0, 2, 10);
 
-      // --- MODIFICATION 3: Animate the color change ---
-      const targetColor = sectionColors[currentSection];
-      model.traverse((child) => {
-        if (child.isMesh && child.material) {
-          // Use lerp for a smooth transition. The second argument (alpha)
-          // controls the speed of the transition. 0.05 is a good start.
-          child.material.color.lerp(targetColor, 0.05);
-        }
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: true,
+          alpha: true,
+        });
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 10, 7.5);
+        scene.add(directionalLight);
+
+        const controls = new OrbitControls(camera, canvas);
+        controls.enableDamping = true;
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+
+        let model = null;
+        let targetColor = new THREE.Color(0xe4e4e7);
+
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load("./3dmodel/3D Model/APBlue.glb", (gltf) => {
+          model = gltf.scene;
+          model.traverse((child) => {
+            if (child.isMesh) child.material = child.material.clone();
+          });
+          model.scale.set(1, 1, 1);
+          model.position.y = -1;
+          scene.add(model);
+        });
+
+        document.querySelectorAll(".color-swatch").forEach((swatch) => {
+          swatch.addEventListener("click", () =>
+            targetColor.set(swatch.dataset.color)
+          );
+        });
+
+        const animate = () => {
+          controls.update();
+          if (model) {
+            model.traverse((child) => {
+              if (child.isMesh) child.material.color.lerp(targetColor, 0.1);
+            });
+          }
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+        };
+        animate();
+
+        window.addEventListener("resize", () => {
+          sizes.width = container.clientWidth;
+          sizes.height = container.clientHeight;
+          camera.aspect = sizes.width / sizes.height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(sizes.width, sizes.height);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+      }
+
+      // =======================================================================
+      // MAIN INITIALIZATION
+      // =======================================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        initVideoObserver();
+        initHeaderAnimation();
+        initHeroAndReveal();
+        initCarousel();
+        initTechFilterScroll();
+        setupFullScreenScrollEffect();
+        setupInteractiveModelViewer();
       });
-    }
-
-    renderer.render(scene, camera);
-    window.requestAnimationFrame(tick);
-  };
-
-  tick();
-
-  // --- Resize Handler (No changes needed here) ---
-  window.addEventListener("resize", () => {
-    sizes.width = window.innerWidth;
-    sizes.height = window.innerHeight;
-    camera.aspect = sizes.width / sizes.height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(sizes.width, sizes.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  });
-</script>
+    </script>
   </body>
 </html>
  ̰
