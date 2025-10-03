@@ -9,26 +9,26 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <!-- The <model-viewer> script is required for 3D/AR functionality -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
+    ></script>
     <style>
       body {
         font-family: "Inter", sans-serif;
       }
-      /* We will control the size with Tailwind classes, but keep this for a base */
       model-viewer {
         width: 100%;
-        background-color: #374151; /* gray-700 */
-        border-radius: 0.75rem; /* rounded-xl */
+        height: 256px;
+        background-color: transparent;
+        border-radius: 0.75rem;
       }
     </style>
   </head>
   <body class="bg-gray-100">
     <section class="py-20 md:py-28">
-      <!-- Added responsive padding: px-4 on mobile, sm:px-6 on small screens and up -->
       <div class="container mx-auto px-4 sm:px-6">
         <div class="text-center mb-16">
-          <!-- Added responsive typography: starts smaller on mobile and gets bigger -->
           <h2
             class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-700 tracking-tight"
           >
@@ -40,32 +40,26 @@
           </p>
         </div>
 
-        <!-- The grid-cols-1 md:grid-cols-2 class is the core of the responsive layout.
-             It's 1 column on mobile (default) and 2 columns on medium screens and up. -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          
-          <!-- Product Card 1: PureAir (Indoor) -->
           <div
-            class="bg-gray-600 border border-gray-700 rounded-2xl shadow-lg overflow-hidden flex flex-col"
+            class="airfinery-product-card bg-gray-800 border border-gray-700 rounded-2xl shadow-lg overflow-hidden flex flex-col"
           >
-            <!-- Changed padding to be more consistent: p-6 md:p-8 -->
             <div class="p-6 md:p-8 flex-grow">
-              <!-- Responsive heading for the card title -->
               <h3 class="text-2xl sm:text-3xl font-bold text-emerald-400">
                 PureAir® (Indoor)
               </h3>
 
-              <div class="my-6">
-                 <!-- Added responsive height: h-56 on mobile, md:h-64 on medium screens -->
-                <model-viewer 
+              <div class="my-6 bg-gray-700 rounded-xl">
+                <model-viewer
                   class="h-56 md:h-64"
-                  src="./3dmodel/3D Model/Water Purifier Gold.glb"
-                  ios-src="https://modelviewer.dev/shared-assets/models/Astronaut.usdz"
+                  src="./3dmodel/3D Model/APGold.glb"
+                  ios-src="./3dmodel/3D Model/APGold.usdz"
                   alt="A 3D model of the PureAir indoor unit"
                   ar
                   camera-controls
                   auto-rotate
-                  shadow-intensity="5">
+                  shadow-intensity="1"
+                >
                 </model-viewer>
               </div>
 
@@ -76,82 +70,196 @@
 
               <ul class="mt-6 space-y-3 text-gray-200">
                 <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    ></path>
                   </svg>
                   <span><strong>Air Flow:</strong> 2,800 m³/h </span>
                 </li>
                 <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5" />
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    stroke="none"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4.75 9.233C4.75 9.64721 5.08579 9.983 5.5 9.983C5.91421 9.983 6.25 9.64721 6.25 9.233H4.75ZM6.25 5.5C6.25 5.08579 5.91421 4.75 5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5H6.25ZM5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5C4.75 5.91421 5.08579 6.25 5.5 6.25V4.75ZM9.233 6.25C9.64721 6.25 9.983 5.91421 9.983 5.5C9.983 5.08579 9.64721 4.75 9.233 4.75V6.25ZM6.03033 4.96967C5.73744 4.67678 5.26256 4.67678 4.96967 4.96967C4.67678 5.26256 4.67678 5.73744 4.96967 6.03033L6.03033 4.96967ZM9.96967 11.0303C10.2626 11.3232 10.7374 11.3232 11.0303 11.0303C11.3232 10.7374 11.3232 10.2626 11.0303 9.96967L9.96967 11.0303ZM15.767 18.75C15.3528 18.75 15.017 19.0858 15.017 19.5C15.017 19.9142 15.3528 20.25 15.767 20.25V18.75ZM19.5 20.25C19.9142 20.25 20.25 19.9142 20.25 19.5C20.25 19.0858 19.9142 18.75 19.5 18.75V20.25ZM18.75 19.5C18.75 19.9142 19.0858 20.25 19.5 20.25C19.9142 20.25 20.25 19.9142 20.25 19.5H18.75ZM20.25 15.767C20.25 15.3528 19.9142 15.017 19.5 15.017C19.0858 15.017 18.75 15.3528 18.75 15.767H20.25ZM18.9697 20.0303C19.2626 20.3232 19.7374 20.3232 20.0303 20.0303C20.3232 19.7374 20.3232 19.2626 20.0303 18.9697L18.9697 20.0303ZM15.0303 13.9697C14.7374 13.6768 14.2626 13.6768 13.9697 13.9697C13.6768 14.2626 13.6768 14.7374 13.9697 15.0303L15.0303 13.9697ZM6.25 15.767C6.25 15.3528 5.91421 15.017 5.5 15.017C5.08579 15.017 4.75 15.3528 4.75 15.767H6.25ZM4.75 19.5C4.75 19.9142 5.08579 20.25 5.5 20.25C5.91421 20.25 6.25 19.9142 6.25 19.5H4.75ZM5.5 18.75C5.08579 18.75 4.75 19.0858 4.75 19.5C4.75 19.9142 5.08579 20.25 5.5 20.25V18.75ZM9.233 20.25C9.64721 20.25 9.983 19.9142 9.983 19.5C9.983 19.0858 9.64721 18.75 9.233 18.75V20.25ZM4.96967 18.9697C4.67678 19.2626 4.67678 19.7374 4.96967 20.0303C5.26256 20.3232 5.73744 20.3232 6.03033 20.0303L4.96967 18.9697ZM11.0303 15.0303C11.3232 14.7374 11.3232 14.2626 11.0303 13.9697C10.7374 13.6768 10.2626 13.6768 9.96967 13.9697L11.0303 15.0303ZM15.767 4.75C15.3528 4.75 15.017 5.08579 15.017 5.5C15.017 5.91421 15.3528 6.25 15.767 6.25V4.75ZM19.5 6.25C19.9142 6.25 20.25 5.91421 20.25 5.5C20.25 5.08579 19.9142 4.75 19.5 4.75V6.25ZM20.25 5.5C20.25 5.08579 19.9142 4.75 19.5 4.75C19.0858 4.75 18.75 5.08579 18.75 5.5H20.25ZM18.75 9.233C18.75 9.64721 19.0858 9.983 19.5 9.983C19.9142 9.983 20.25 9.64721 20.25 9.233H18.75ZM20.0303 6.03033C20.3232 5.73744 20.3232 5.26256 20.0303 4.96967C19.7374 4.67678 19.2626 4.67678 18.9697 4.96967L20.0303 6.03033ZM13.9697 9.96967C13.6768 10.2626 13.6768 10.7374 13.9697 11.0303C14.2626 11.3232 14.7374 11.3232 15.0303 11.0303L13.9697 9.96967ZM6.25 9.233V5.5H4.75V9.233H6.25ZM5.5 6.25H9.233V4.75H5.5V6.25ZM4.96967 6.03033L9.96967 11.0303L11.0303 9.96967L6.03033 4.96967L4.96967 6.03033ZM15.767 20.25H19.5V18.75H15.767V20.25ZM20.25 19.5V15.767H18.75V19.5H20.25ZM20.0303 18.9697L15.0303 13.9697L13.9697 15.0303L18.9697 20.0303L20.0303 18.9697ZM4.75 15.767V19.5H6.25V15.767H4.75ZM5.5 20.25H9.233V18.75H5.5V20.25ZM6.03033 20.0303L11.0303 15.0303L9.96967 13.9697L4.96967 18.9697L6.03033 20.0303ZM15.767 6.25H19.5V4.75H15.767V6.25ZM18.75 5.5V9.233H20.25V5.5H18.75ZM18.9697 4.96967L13.9697 9.96967L15.0303 11.0303L20.0303 6.03033L18.9697 4.96967Z"
+                    />
                   </svg>
                   <span><strong>Area Covered:</strong> 2,000 sq. ft. </span>
                 </li>
                 <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
                   </svg>
-                  <span>Recirculates air in a 1000 sq. ft. area in 4 minutes</span>
+                  <span
+                    >Recirculates air in a 1000 sq. ft. area in 4 minutes</span
+                  >
                 </li>
               </ul>
+
+              <div class="mt-6 flex flex-col items-center gap-3">
+                <p class="text-sm text-gray-300 font-medium">CHOOSE FINISH</p>
+                <div
+                  class="flex items-center justify-center gap-4 p-2 bg-black/20 backdrop-blur-sm rounded-full"
+                >
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#ffb703] rounded-full cursor-pointer transition-transform hover:scale-110 border-4 border-emerald-400"
+                    data-color="#ffb703"
+                  ></div>
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#4A5568] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                    data-color="#4A5568"
+                  ></div>
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#8B4513] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                    data-color="#8B4513"
+                  ></div>
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#ffffff] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                    data-color="#ffffff"
+                  ></div>
+                </div>
+              </div>
             </div>
-            <div class="p-6 md:p-8 pt-0">
-              <button class="w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-colors duration-300">
+            <div class="p-6 md:p-8 pt-4">
+              <button
+                class="w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-colors duration-300"
+              >
                 View Product
               </button>
             </div>
           </div>
 
-          <!-- Product Card 2: AirFinery (Outdoor) -->
           <div
-            class="bg-gray-600 border border-gray-700 rounded-2xl shadow-lg overflow-hidden flex flex-col"
+            class="airfinery-product-card bg-gray-800 border border-gray-700 rounded-2xl shadow-lg overflow-hidden flex flex-col"
           >
             <div class="p-6 md:p-8 flex-grow">
               <h3 class="text-2xl sm:text-3xl font-bold text-emerald-400">
                 AirFinery® (Outdoor)
               </h3>
 
-              <div class="my-6">
-                <model-viewer 
+              <div class="my-6 bg-gray-700 rounded-xl">
+                <model-viewer
                   class="h-56 md:h-64"
-                  src="./3dmodel/3D Model/Water Purifier Gold.glb"
-                  ios-src="https://modelviewer.dev/shared-assets/models/Astronaut.usdz"
+                  src="./3dmodel/3D Model/APGold.glb"
+                  ios-src="./3dmodel/3D Model/APGold.usdz"
                   alt="A 3D model of the AirFinery outdoor unit"
                   ar
                   camera-controls
                   auto-rotate
-                  shadow-intensity="5">
+                  shadow-intensity="1"
+                >
                 </model-viewer>
               </div>
 
               <p class="mt-2 text-gray-300">
                 The only proven outdoor tower, engineered to clean large
-                semi-indoor and outdoor spaces like playgrounds and plazas.
+                semi-indoor and outdoor spaces.
               </p>
 
               <ul class="mt-6 space-y-3 text-gray-200">
                 <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    ></path>
                   </svg>
                   <span><strong>Air Flow:</strong> 3,600 m³/h </span>
                 </li>
                 <li class="flex items-center gap-3">
-                   <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5" />
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    stroke="none"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4.75 9.233C4.75 9.64721 5.08579 9.983 5.5 9.983C5.91421 9.983 6.25 9.64721 6.25 9.233H4.75ZM6.25 5.5C6.25 5.08579 5.91421 4.75 5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5H6.25ZM5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5C4.75 5.91421 5.08579 6.25 5.5 6.25V4.75ZM9.233 6.25C9.64721 6.25 9.983 5.91421 9.983 5.5C9.983 5.08579 9.64721 4.75 9.233 4.75V6.25ZM6.03033 4.96967C5.73744 4.67678 5.26256 4.67678 4.96967 4.96967C4.67678 5.26256 4.67678 5.73744 4.96967 6.03033L6.03033 4.96967ZM9.96967 11.0303C10.2626 11.3232 10.7374 11.3232 11.0303 11.0303C11.3232 10.7374 11.3232 10.2626 11.0303 9.96967L9.96967 11.0303ZM15.767 18.75C15.3528 18.75 15.017 19.0858 15.017 19.5C15.017 19.9142 15.3528 20.25 15.767 20.25V18.75ZM19.5 20.25C19.9142 20.25 20.25 19.9142 20.25 19.5C20.25 19.0858 19.9142 18.75 19.5 18.75V20.25ZM18.75 19.5C18.75 19.9142 19.0858 20.25 19.5 20.25C19.9142 20.25 20.25 19.9142 20.25 19.5H18.75ZM20.25 15.767C20.25 15.3528 19.9142 15.017 19.5 15.017C19.0858 15.017 18.75 15.3528 18.75 15.767H20.25ZM18.9697 20.0303C19.2626 20.3232 19.7374 20.3232 20.0303 20.0303C20.3232 19.7374 20.3232 19.2626 20.0303 18.9697L18.9697 20.0303ZM15.0303 13.9697C14.7374 13.6768 14.2626 13.6768 13.9697 13.9697C13.6768 14.2626 13.6768 14.7374 13.9697 15.0303L15.0303 13.9697ZM6.25 15.767C6.25 15.3528 5.91421 15.017 5.5 15.017C5.08579 15.017 4.75 15.3528 4.75 15.767H6.25ZM4.75 19.5C4.75 19.9142 5.08579 20.25 5.5 20.25C5.91421 20.25 6.25 19.9142 6.25 19.5H4.75ZM5.5 18.75C5.08579 18.75 4.75 19.0858 4.75 19.5C4.75 19.9142 5.08579 20.25 5.5 20.25V18.75ZM9.233 20.25C9.64721 20.25 9.983 19.9142 9.983 19.5C9.983 19.0858 9.64721 18.75 9.233 18.75V20.25ZM4.96967 18.9697C4.67678 19.2626 4.67678 19.7374 4.96967 20.0303C5.26256 20.3232 5.73744 20.3232 6.03033 20.0303L4.96967 18.9697ZM11.0303 15.0303C11.3232 14.7374 11.3232 14.2626 11.0303 13.9697C10.7374 13.6768 10.2626 13.6768 9.96967 13.9697L11.0303 15.0303ZM15.767 4.75C15.3528 4.75 15.017 5.08579 15.017 5.5C15.017 5.91421 15.3528 6.25 15.767 6.25V4.75ZM19.5 6.25C19.9142 6.25 20.25 5.91421 20.25 5.5C20.25 5.08579 19.9142 4.75 19.5 4.75V6.25ZM20.25 5.5C20.25 5.08579 19.9142 4.75 19.5 4.75C19.0858 4.75 18.75 5.08579 18.75 5.5H20.25ZM18.75 9.233C18.75 9.64721 19.0858 9.983 19.5 9.983C19.9142 9.983 20.25 9.64721 20.25 9.233H18.75ZM20.0303 6.03033C20.3232 5.73744 20.3232 5.26256 20.0303 4.96967C19.7374 4.67678 19.2626 4.67678 18.9697 4.96967L20.0303 6.03033ZM13.9697 9.96967C13.6768 10.2626 13.6768 10.7374 13.9697 11.0303C14.2626 11.3232 14.7374 11.3232 15.0303 11.0303L13.9697 9.96967ZM6.25 9.233V5.5H4.75V9.233H6.25ZM5.5 6.25H9.233V4.75H5.5V6.25ZM4.96967 6.03033L9.96967 11.0303L11.0303 9.96967L6.03033 4.96967L4.96967 6.03033ZM15.767 20.25H19.5V18.75H15.767V20.25ZM20.25 19.5V15.767H18.75V19.5H20.25ZM20.0303 18.9697L15.0303 13.9697L13.9697 15.0303L18.9697 20.0303L20.0303 18.9697ZM4.75 15.767V19.5H6.25V15.767H4.75ZM5.5 20.25H9.233V18.75H5.5V20.25ZM6.03033 20.0303L11.0303 15.0303L9.96967 13.9697L4.96967 18.9697L6.03033 20.0303ZM15.767 6.25H19.5V4.75H15.767V6.25ZM18.75 5.5V9.233H20.25V5.5H18.75ZM18.9697 4.96967L13.9697 9.96967L15.0303 11.0303L20.0303 6.03033L18.9697 4.96967Z"
+                    />
                   </svg>
                   <span><strong>Area Covered:</strong> 3,600 sq. ft. </span>
                 </li>
                 <li class="flex items-center gap-3">
-                  <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
                   </svg>
                   <span>Removes Particles (PM2.5, PM10) & Gases (NO₂) </span>
                 </li>
               </ul>
+
+              <div class="mt-6 flex flex-col items-center gap-3">
+                <p class="text-sm text-gray-300 font-medium">CHOOSE FINISH</p>
+                <div
+                  class="flex items-center justify-center gap-4 p-2 bg-black/20 backdrop-blur-sm rounded-full"
+                >
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#ffb703] rounded-full cursor-pointer transition-transform hover:scale-110 border-4 border-emerald-400"
+                    data-color="#ffb703"
+                  ></div>
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#4A5568] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                    data-color="#4A5568"
+                  ></div>
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#8B4513] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                    data-color="#8B4513"
+                  ></div>
+                  <div
+                    class="airfinery-color-swatch w-8 h-8 bg-[#ffffff] rounded-full cursor-pointer transition-transform hover:scale-110 border-2 border-white/50"
+                    data-color="#ffffff"
+                  ></div>
+                </div>
+              </div>
             </div>
-            <div class="p-6 md:p-8 pt-0">
-              <button class="w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-colors duration-300">
+            <div class="p-6 md:p-8 pt-4">
+              <button
+                class="w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-colors duration-300"
+              >
                 View Product
               </button>
             </div>
@@ -159,5 +267,65 @@
         </div>
       </div>
     </section>
+
+    <script>
+      // Namespace: AirfineryModelViewer to prevent conflicts
+      (function() {
+        'use strict';
+        
+        document.addEventListener("DOMContentLoaded", () => {
+          // Helper function to convert HEX color to an RGB array for model-viewer
+          function hexToRgb(hex) {
+            let r = 0, g = 0, b = 0;
+            // 3 digits
+            if (hex.length == 4) {
+              r = "0x" + hex[1] + hex[1];
+              g = "0x" + hex[2] + hex[2];
+              b = "0x" + hex[3] + hex[3];
+            // 6 digits
+            } else if (hex.length == 7) {
+              r = "0x" + hex[1] + hex[2];
+              g = "0x" + hex[3] + hex[4];
+              b = "0x" + hex[5] + hex[6];
+            }
+            // Return normalized RGB values (0-1)
+            return [+r / 255, +g / 255, +b / 255];
+          }
+
+          // Only target elements with specific namespace classes
+          const airfineryProductCards = document.querySelectorAll(".airfinery-product-card");
+
+          airfineryProductCards.forEach((card) => {
+            const viewer = card.querySelector("model-viewer");
+            const swatches = card.querySelectorAll(".airfinery-color-swatch");
+
+            swatches.forEach((swatch) => {
+              swatch.addEventListener("click", () => {
+                const hexColor = swatch.dataset.color;
+                const rgbColor = hexToRgb(hexColor);
+
+                if (viewer && viewer.model && rgbColor) {
+                  // Update the active swatch visually within this card only
+                  swatches.forEach((s) =>
+                    s.classList.remove("border-emerald-400", "border-4")
+                  );
+                  swatches.forEach((s) =>
+                    s.classList.add("border-white/50", "border-2")
+                  );
+                  swatch.classList.remove("border-white/50", "border-2");
+                  swatch.classList.add("border-emerald-400", "border-4");
+
+                  // Access the first material of the model and change its color
+                  const material = viewer.model.materials[0];
+                  if (material && material.pbrMetallicRoughness) {
+                    material.pbrMetallicRoughness.setBaseColorFactor(rgbColor);
+                  }
+                }
+              });
+            });
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
