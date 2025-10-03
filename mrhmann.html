@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Air Finery - Outdoor Air Purifier</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
+    ></script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
       rel="stylesheet"
@@ -539,6 +544,15 @@
         filter: grayscale(0%) opacity(1);
       }
     </style>
+
+    <!-- model viewer style  -->
+    <style>
+      model-viewer {
+        width: 100%;
+        background-color: #374151; /* gray-700 */
+        border-radius: 0.75rem; /* rounded-xl */
+      }
+    </style>
   </head>
   <body>
     <!-- new3 sections full content  -->
@@ -646,7 +660,7 @@
             Technologies (a subsidiary of OK Play) and MANN+HUMMEL, Germany's
             world-renowned filtration leader since 1941. This collaboration
             combines an 84-year legacy of engineering excellence with robust
-            Indian manufacturing to create a solution built for our environment.
+            Indian manufacturing to solve a critical problem.
           </p>
         </div>
 
@@ -675,6 +689,36 @@
             />
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- what you cant see section -->
+    <section
+      class="relative md:py-32 grid items-center justify-center h-screen w-[90%] mx-auto rounded-2xl overflow-hidden my-16 container mx-auto px-6 text-center"
+      id="Features-section"
+    >
+      <video
+        class="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="./video/whatyoubreathe.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+      ></video>
+      <div class="reveal-on-scroll">
+        <h2 class="text-4xl md:text-6xl font-bold text-gray-100 tracking-tight">
+          The Air Isn't as Clean
+        </h2>
+        <h2
+          class="text-4xl md:text-6xl font-bold text-emerald-500 tracking-tight"
+        >
+          as It Looks.
+        </h2>
+        <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
+          Our outdoor spaces are filled with invisible pollutants from traffic
+          and industry that are harmful to our health.
+        </p>
       </div>
     </section>
 
@@ -709,6 +753,14 @@
             kind scientifically validated by IIT Delhi to effectively clean the
             air in real-world Indian conditions.
           </p>
+          <div class="mt-6">
+            <p class="text-emerald-400 text-lg font-semibold">
+              World-Class German Technology
+            </p>
+            <p class="text-emerald-400 text-lg font-semibold">
+              Scientifically Proven in India
+            </p>
+          </div>
         </div>
 
         <div
@@ -749,33 +801,209 @@
       </div>
     </section>
 
-    <!-- what you cant see section -->
-    <section
-      class="relative md:py-32 grid items-center justify-center h-screen w-[90%] mx-auto rounded-2xl overflow-hidden my-16 container mx-auto px-6 text-center"
-      id="Features-section"
-    >
-      <video
-        class="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="./video/whatyoubreathe.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="none"
-      ></video>
-      <div class="reveal-on-scroll">
-        <h2 class="text-4xl md:text-6xl font-bold text-gray-100 tracking-tight">
-          The Air Isn't as Clean
-        </h2>
-        <h2
-          class="text-4xl md:text-6xl font-bold text-emerald-500 tracking-tight"
+    <!-- product card section  -->
+    <section class="py-20 md:py-28">
+      <!-- Added responsive padding: px-4 on mobile, sm:px-6 on small screens and up -->
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-16 reveal-on-scroll">
+          <!-- Added responsive typography: starts smaller on mobile and gets bigger -->
+          <h2
+            class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-700 tracking-tight"
+          >
+            End-to-End Protection Everywhere
+          </h2>
+          <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400">
+            We provide a complete suite of solutions, validated by IIT Delhi, to
+            ensure clean air across every zone of your environment.
+          </p>
+        </div>
+
+        <!-- The grid-cols-1 md:grid-cols-2 class is the core of the responsive layout.
+             It's 1 column on mobile (default) and 2 columns on medium screens and up. -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 reveal-on-scroll"
         >
-          as It Looks.
-        </h2>
-        <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-50">
-          Our outdoor spaces are filled with invisible pollutants from traffic
-          and industry that are harmful to our health.
-        </p>
+          <!-- Product Card 1: PureAir (Indoor) -->
+          <div
+            class="bg-gray-600 border border-gray-700 rounded-2xl shadow-lg overflow-hidden flex flex-col"
+          >
+            <!-- Changed padding to be more consistent: p-6 md:p-8 -->
+            <div class="p-6 md:p-8 flex-grow">
+              <!-- Responsive heading for the card title -->
+              <h3 class="text-2xl sm:text-3xl font-bold text-emerald-400">
+                PureAir® (Indoor)
+              </h3>
+
+              <div class="my-6">
+                <!-- Added responsive height: h-56 on mobile, md:h-64 on medium screens -->
+                <model-viewer
+                  class="h-56 md:h-64"
+                  src="./3dmodel/3D Model/Water Purifier Gold.glb"
+                  ios-src="https://modelviewer.dev/shared-assets/models/Astronaut.usdz"
+                  alt="A 3D model of the PureAir indoor unit"
+                  ar
+                  camera-controls
+                  auto-rotate
+                  shadow-intensity="5"
+                >
+                </model-viewer>
+              </div>
+
+              <p class="mt-2 text-gray-300">
+                Designed for classrooms, libraries, and labs, PureAir removes
+                over 99% of airborne particles in enclosed spaces.
+              </p>
+
+              <ul class="mt-6 space-y-3 text-gray-200">
+                <li class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    ></path>
+                  </svg>
+                  <span><strong>Air Flow:</strong> 2,800 m³/h </span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5"
+                    />
+                  </svg>
+                  <span><strong>Area Covered:</strong> 2,000 sq. ft. </span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span
+                    >Recirculates air in a 1000 sq. ft. area in 4 minutes</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="p-6 md:p-8 pt-0">
+              <button
+                class="w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-colors duration-300"
+              >
+                View Product
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Card 2: AirFinery (Outdoor) -->
+          <div
+            class="bg-gray-600 border border-gray-700 rounded-2xl shadow-lg overflow-hidden flex flex-col"
+          >
+            <div class="p-6 md:p-8 flex-grow">
+              <h3 class="text-2xl sm:text-3xl font-bold text-emerald-400">
+                AirFinery® (Outdoor)
+              </h3>
+
+              <div class="my-6">
+                <model-viewer
+                  class="h-56 md:h-64"
+                  src="./3dmodel/3D Model/Water Purifier Gold.glb"
+                  ios-src="https://modelviewer.dev/shared-assets/models/Astronaut.usdz"
+                  alt="A 3D model of the AirFinery outdoor unit"
+                  ar
+                  camera-controls
+                  auto-rotate
+                  shadow-intensity="5"
+                >
+                </model-viewer>
+              </div>
+
+              <p class="mt-2 text-gray-300">
+                The only proven outdoor tower, engineered to clean large
+                semi-indoor and outdoor spaces like playgrounds and plazas.
+              </p>
+
+              <ul class="mt-6 space-y-3 text-gray-200">
+                <li class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    ></path>
+                  </svg>
+                  <span><strong>Air Flow:</strong> 3,600 m³/h </span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5"
+                    />
+                  </svg>
+                  <span><strong>Area Covered:</strong> 3,600 sq. ft. </span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-emerald-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>Removes Particles (PM2.5, PM10) & Gases (NO₂) </span>
+                </li>
+              </ul>
+            </div>
+            <div class="p-6 md:p-8 pt-0">
+              <button
+                class="w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-colors duration-300"
+              >
+                View Product
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -802,7 +1030,7 @@
             <div id="product-viewer" class="relative w-full h-full">
               <img
                 id="image-main"
-                src="./img/Picsart_25-09-10_11-46-12-304.png"
+                src="./img/Picsart_25-09-01_16-52-14-910.png"
                 alt="Air Finery Purifier"
                 class="product-image is-active"
               />
@@ -877,22 +1105,22 @@
         class="content-section reveal-on-scroll justify-center"
       >
         <div class="content-box text-center">
-          <h1 class="section-heading">Define Your Atmosphere</h1>
+          <h1 class="section-heading">A New Standard for Clean Air</h1>
           <p class="section-subheading">
-            A revolutionary approach to air purification. We combine German
-            engineering with sophisticated design to create healthier, more
-            productive, and prestigious environments.
+            AirFinery is the definitive solution to ambient air pollution,
+            engineered to transform the health and experience of your outdoor
+            and semi-indoor environments.
           </p>
         </div>
       </section>
 
       <section id="section-problem" class="content-section justify-start">
         <div class="content-box text-left">
-          <h2 class="section-heading">The Invisible Compromise</h2>
+          <h2 class="section-heading">The Science of the Unseen</h2>
           <p class="section-subheading">
-            Your space is constantly infiltrated by microscopic pollutants. This
-            unseen threat impacts wellness, perception, and performance,
-            silently defining the experience of everyone who enters.
+            The AirFinery tower is designed to combat the invisible pollutants
+            that fill our air, from microscopic Particulate Matter (PM2.5) to
+            harmful gases like NO 2
           </p>
         </div>
       </section>
@@ -900,12 +1128,13 @@
       <section id="section-solution" class="content-section justify-end">
         <div class="content-box text-left">
           <h2 class="section-heading">
-            <span class="text-emerald-400">Purity</span>, Engineered.
+            <span class="text-emerald-400">Purity</span>, Engineered With German
+            Tech.
           </h2>
           <p class="section-subheading">
-            The AirFinery unit is more than a purifier; it's a statement of
-            quality. As you scroll, explore the technology that sets a new
-            standard for clean air.
+            Powered by an 84-year legacy of filtration excellence from
+            MANN+HUMMEL, every component is designed for maximum performance.
+            Scroll down to explore the technology inside.
           </p>
         </div>
       </section>
@@ -1606,7 +1835,7 @@
               );
             }
 
-            // ==== START: MOBILE BEHAVIOR MODIFICATION ====
+            // ==== START: RESPONSIVE BEHAVIOR MODIFICATION ====
             const isMobile = window.innerWidth < 768; // Using 768px as the breakpoint
 
             if (isMobile) {
@@ -1617,7 +1846,7 @@
               // Simpler rotation based only on scroll progress
               model.rotation.y +=
                 (Math.PI * 2 * progress - model.rotation.y) * 0.05;
-              model.rotation.x += (0 - model.rotation.x) * 0.05; // Keep model level
+              model.rotation.x += (0 - model.rotation.x) * 0.05; // Keep model level, remove mouse interaction
             } else {
               // On desktop: original behavior with side-to-side movement and mouse interaction
               let targetX = 0,
@@ -1632,7 +1861,7 @@
                 (Math.PI * 2 * progress + mouse.x * 0.2 - model.rotation.y) *
                 0.05;
             }
-            // ==== END: MOBILE BEHAVIOR MODIFICATION ====
+            // ==== END: RESPONSIVE BEHAVIOR MODIFICATION ====
 
             model.traverse((child) => {
               if (child.isMesh)
@@ -1668,7 +1897,7 @@
           height: container.clientHeight,
         };
         const camera = new THREE.PerspectiveCamera(
-          45,
+          30,
           sizes.width / sizes.height,
           0.1,
           100
@@ -1753,4 +1982,3 @@
     </script>
   </body>
 </html>
- ̰
